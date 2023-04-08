@@ -1,0 +1,122 @@
+/* ==UserStyle==
+@name           Wikipedia Enhanced
+@namespace      https://github.com/schalkburger/website-enhancements
+@version        1.0.0
+@description    Wikipedia Enhanced
+@author         Schalk Burger
+==/UserStyle== */
+@-moz-document domain("wikipedia.org") {
+  :root {
+    --bgcolor-main: #111216;
+  }
+
+  .mw-page-container {
+    background-color: var(--bgcolor-main);
+  }
+
+  main#content {
+    max-width: 75%;
+    margin: 0 auto;
+  }
+
+  .vector-toc.vector-pinnable-element,
+  #vector-main-menu,
+  .portal-bar.noprint.metadata.noviewer.portal-bar-bordered {
+    background-color: var(--bgcolor-main);
+  }
+
+  div#vector-toc.vector-toc.vector-pinnable-element::after,
+  div.mwe-popups-container a.mwe-popups-extract::after {
+    display: none;
+  }
+
+  .vector-page-toolbar {
+    visibility: hidden;
+  }
+
+  tr,
+  div.center,
+  .catlinks,
+  .cdx-menu,
+  div.mwe-popups-container footer,
+  div.side-box.metadata.side-box-right.sister-box.sistersitebox.plainlinks,
+  .mw-message-box-notice.vector-language-sidebar-alert.mw-message-box,
+  .side-box-flex,
+  div.noprint.metadata.sister-bar,
+  ul.noprint.portalbox.portalborder.portalright,
+  div.rt-tooltip.rt-tooltip-above.rt-fade-in-down,
+  span.portalbox-link {
+    background-color: transparent;
+  }
+
+  th,
+  .sidebar-list-title {
+    background-color: #222 !important;
+  }
+
+  tr td,
+  div.thumbcaption,
+  tr::before {
+    background-color: var(--bgcolor-main) !important;
+  }
+
+  * {
+    color: #9fa0a5;
+  }
+
+  a,
+  a.external.text,
+  .mw-parser-output a.extiw {
+    color: #b4caff;
+  }
+
+  div.mwe-popups-container a.mwe-popups-extract {
+    background-color: #222;
+    padding: 8px;
+    padding-bottom: 6px;
+    padding-top: 4px;
+    margin: 0;
+  }
+
+  span.mw-logo-container img,
+  #mw-sidebar-button:before,
+  .mw-ui-icon:before {
+    filter: invert(1);
+  }
+
+  .vector-limited-width-toggle {
+    border: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #9fa0a5;
+  }
+
+  .mw-body h1,
+  .mw-body-content h1 {
+    font-size: 2.8em;
+  }
+
+  .vector-body h2 {
+    font-size: 2.5em;
+  }
+
+  .vector-body p {
+    font-size: 1.4em;
+    line-height: 1.8;
+    text-align: justify;
+  }
+
+  .vector-page-titlebar {
+    box-shadow: none;
+  }
+
+  .infobox {
+    border-collapse: collapse;
+  }
+}
