@@ -1,10 +1,6 @@
-# Website Enhancements
+# Soap2day Enhanced
 
-My collection of userstyles and userscripts of websites that I visit on a daily basis.
-
-- [Hacker News](hackernews-enhanced/)
-- [Soap2day](soap2day-enhanced/)
-- [Wikipedia](wikipedia-enhanced/)
+Soap2day Enhanced
 
 ## Requirements
 

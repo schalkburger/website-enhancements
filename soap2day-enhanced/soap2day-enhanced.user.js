@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name           Soap2Day Enhanced
+// @name           Soap2day  Enhanced
 // @version        1.0.0
-// @description    Soap2Day - Various functions to enhance Soap2Day like autoplay, fullscreen mode and semantic titles.
+// @description    Soap2day - Various functions to enhance Soap2day like autoplay, fullscreen mode and semantic titles.
 // @author         Schalk Burger
 // @include        https://soap2day.to/*
 // @include        https://soap2day.im/*
@@ -14,7 +14,7 @@
 // @include        https://s2dfree.in/*
 // @include        https://s2dfree.nl/*
 // @run-at         document-idle
-// @namespace https://greasyfork.org/users/776541
+// @namespace    https://github.com/schalkburger/website-enhancements
 // ==/UserScript==
 
 (function () {

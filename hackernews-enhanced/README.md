@@ -1,10 +1,6 @@
-# Website Enhancements
+# Hacker News Enhanced
 
-My collection of userstyles and userscripts of websites that I visit on a daily basis.
-
-- [Hacker News](hackernews-enhanced/)
-- [Soap2day](soap2day-enhanced/)
-- [Wikipedia](wikipedia-enhanced/)
+A more readable, dark version of Hacker News inspired by Instapaper and [Serendipity](https://marketplace.visualstudio.com/items?itemName=wicked-labs.old-serendipity).
 
 ## Requirements
 
