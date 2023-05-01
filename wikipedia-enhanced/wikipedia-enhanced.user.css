@@ -10,7 +10,13 @@
     --bgcolor-main: #111216;
   }
 
-  .mw-page-container {
+  body,
+  .mw-page-container,
+  .vector-feature-zebra-design-disabled .vector-header-container,
+  .vector-feature-zebra-design-disabled body,
+  .vector-feature-zebra-design-disabled .mw-page-container,
+  .mw-parser-output .navbox,
+  .mw-parser-output .navbox-subgroup {
     background-color: var(--bgcolor-main);
   }
 
@@ -57,7 +63,9 @@
   tr td,
   div.thumbcaption,
   tr::before {
-    background-color: var(--bgcolor-main) !important;
+    background-color: #0b0c0f !important;
+    border-color: var(--bgcolor-main) !important;
+    color: #9fa0a5 !important;
   }
 
   * {
@@ -108,15 +116,68 @@
 
   .vector-body p {
     font-size: 1.4em;
-    line-height: 1.8;
-    text-align: justify;
+    line-height: 1.65;
+    text-align: left;
+    font-family: Avenir, "Avenir Next LT Pro", Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif;
   }
 
   .vector-page-titlebar {
     box-shadow: none;
   }
 
-  .infobox {
+  .infobox,
+  th,
+  .sidebar-list-title {
     border-collapse: collapse;
+    border-color: transparent;
+    background-color: transparent !important;
+  }
+
+  .infobox-label,
+  .infobox-data,
+  .infobox th,
+  .infobox td {
+    padding: 0.25em 0.75em;
+  }
+
+  .vector-toc::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: var(--bgcolor-main);
+  }
+
+  .vector-toc::-webkit-scrollbar {
+    width: 12px;
+    background-color: var(--bgcolor-main);
+  }
+
+  .vector-toc::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #555;
+  }
+
+  .vector-feature-zebra-design-disabled .vector-pinnable-element > *:not(:last-child),
+  .vector-feature-zebra-design-disabled .vector-dropdown-content > *:not(:last-child),
+  h1,
+  h2 {
+    border-bottom: 1px solid #202328;
+  }
+  .wikitable,
+  .wikitable > * > tr > th {
+    border-color: var(--bgcolor-main);
+  }
+
+  .wikitable > * > tr > th.headerSort,
+  .wikitable > * > tr > th.unsortable,
+  .wikitable > * > tr > th[scope="row"] {
+    background-color: #15171d !important;
+    border-color: var(--bgcolor-main);
+  }
+  .wikitable > * > tr > th {
+    padding-left: 1.5em;
+  }
+  .wikitable > * > tr > td {
+    padding: 0 0.75em;
   }
 }
