@@ -2,6 +2,10 @@
 
 Soap2day Enhanced
 
+- Auto clicks "Home" button to enter website
+- Auto plays next episode
+- Auto fullscreen
+
 ## Requirements
 
 ### Userstyles

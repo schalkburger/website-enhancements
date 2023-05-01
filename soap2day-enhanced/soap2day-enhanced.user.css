@@ -383,4 +383,14 @@ url-prefix("https://soapgate.org")
   .divDark + .col-sm-8 .panel-body {
     padding: 0;
   }
+
+  .panel-player,
+  .panel-player > #player {
+    min-height: 100vh;
+  }
+  #player {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
