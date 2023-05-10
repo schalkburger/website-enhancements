@@ -1,13 +1,30 @@
 /* ==UserStyle==
 @name           Wikipedia Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.0
+@version        1.0.2
 @description    Wikipedia Enhanced
 @author         Schalk Burger
 ==/UserStyle== */
 @-moz-document domain("wikipedia.org") {
   :root {
     --bgcolor-main: #111216;
+  }
+
+  .vector-toc::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: var(--bgcolor-main);
+  }
+
+  .vector-toc::-webkit-scrollbar {
+    width: 12px;
+    background-color: var(--bgcolor-main);
+  }
+
+  .vector-toc::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #555;
   }
 
   body,
@@ -22,7 +39,7 @@
 
   main#content {
     max-width: 75%;
-    margin: 0 auto;
+    margin: 0;
   }
 
   .vector-toc.vector-pinnable-element,
@@ -121,8 +138,24 @@
     font-family: Avenir, "Avenir Next LT Pro", Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif;
   }
 
+  .mw-body-content sub,
+  .mw-body-content sup {
+    font-weight: 300;
+    font-size: 65%;
+    padding: 0 0.5px;
+  }
+
+  .mw-body-content sub a,
+  .mw-body-content sup a {
+    color: #9fa0a5;
+  }
+
   .vector-page-titlebar {
     box-shadow: none;
+  }
+
+  .vector-search-box-input {
+    background-color: rgb(255 255 255);
   }
 
   .infobox,
@@ -130,7 +163,7 @@
   .sidebar-list-title {
     border-collapse: collapse;
     border-color: transparent;
-    background-color: transparent !important;
+    background-color: #191b20 !important;
   }
 
   .infobox-label,
@@ -138,23 +171,6 @@
   .infobox th,
   .infobox td {
     padding: 0.25em 0.75em;
-  }
-
-  .vector-toc::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: var(--bgcolor-main);
-  }
-
-  .vector-toc::-webkit-scrollbar {
-    width: 12px;
-    background-color: var(--bgcolor-main);
-  }
-
-  .vector-toc::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #555;
   }
 
   .vector-feature-zebra-design-disabled .vector-pinnable-element > *:not(:last-child),

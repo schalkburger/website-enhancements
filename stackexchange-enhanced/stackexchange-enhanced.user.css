@@ -1,0 +1,76 @@
+/* ==UserStyle==
+@name           Stack Exchange Enhanced
+@namespace      https://github.com/schalkburger/website-enhancements
+@version        1.0.0
+@description    Stack Exchange Enhanced
+@author         Schalk Burger
+==/UserStyle== */
+@-moz-document domain("stackexchange.com"), domain("superuser.com"), domain("askubuntu.com") {
+  :root {
+    --color-raisinblack: #232834;
+    --color-ebonyclay: #1f2430;
+    --color-timberwolf: #cbccc6;
+    --color-lightsalmon: #f29e74;
+    --color-cyclamen: #f06897;
+    --color-mauve: #d4bfff;
+    --color-celeste: #9ef0f0;
+    --color-lightskyblue: #73d0ff;
+    --color-frenchskyblue: #78a9ff;
+    --color-bluegreen: #519aba;
+    --color-manatee: #8c94a3;
+    --color-white: #ffffff;
+    --color-charcoal: #333b4e;
+    --color-darkgunmental: #191e2a;
+    --color-davysgrey: #4f535e;
+    --shadow-color: 223deg 30% 8%;
+    --theme-header-background-color: #232834;
+  }
+
+  #content,
+  body.unified-theme {
+    background-color: var(--color-raisinblack);
+    border-color: transparent;
+  }
+  header.siteHeader h1 {
+    filter: grayscale(1) brightness(0) contrast(15) invert(1);
+  }
+  .siteHeader,
+  .site-header {
+    background-color: var(--color-charcoal);
+  }
+  .site-footer {
+    background-color: var(--color-raisinblack);
+  }
+  .question-container {
+    border-color: var(--color-ebonyclay);
+    box-shadow: 0 1px 0 var(--color-charcoal);
+    -webkit-box-shadow: 0 1px 0 var(--color-charcoal);
+  }
+  a,
+  .featured-site .stats-label,
+  ul.navMain li a,
+  #question-header .question-hyperlink {
+    color: var(--color-timberwolf);
+  }
+  .post-tag {
+    background-color: var(--color-ebonyclay);
+    border-color: transparent;
+  }
+  .subheader {
+    border-color: var(--color-charcoal);
+  }
+  .heading,
+  .module h3,
+  .subheader h1,
+  .site-footer .-title a {
+    color: var(--color-manatee);
+  }
+  body:not(.theme-dark),
+  body.theme-dark .theme-light__forced,
+  body.theme-system .theme-light__forced,
+  body:not(.theme-dark) .themed,
+  body.theme-dark .theme-light__forced .themed,
+  body.theme-system .theme-light__forced .themed {
+    color: var(--color-manatee);
+  }
+}
