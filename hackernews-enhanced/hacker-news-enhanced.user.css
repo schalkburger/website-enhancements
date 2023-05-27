@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Hacker News Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.0
+@version        1.0.1
 @description    Hacker News Enhanced
 @author         Schalk Burger
 ==/UserStyle== */
@@ -176,7 +176,7 @@
   }
 
   .fatitem .comment {
-    background: #f7f5f5;
+    background: transparent;
     padding: 15px 25px;
   }
 
