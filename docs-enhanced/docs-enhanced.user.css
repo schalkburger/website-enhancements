@@ -1,0 +1,21 @@
+/* ==UserStyle==
+@name           Google Docs Enhanced
+@namespace      https://github.com/schalkburger/website-enhancements
+@version        1.0.0
+@description    Google Docs Enhanced
+@author         Schalk Burger
+==/UserStyle== */
+@-moz-document domain("docs.google.com") {
+  /* Insert code here... */
+  body {
+    filter: invert(85%) hue-rotate(180deg);
+  }
+  img {
+    filter: invert(1) hue-rotate(180deg);
+  }
+  #canvas-container,
+  #pages > svg,
+  .punch-filmstrip-thumbnail {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
