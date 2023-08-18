@@ -1,0 +1,70 @@
+/* ==UserStyle==
+@name           Know Your Meme Enhanced
+@namespace      https://github.com/schalkburger/website-enhancements
+@version        1.0.0
+@description    Know Your Meme Enhanced
+@author         Schalk Burger
+==/UserStyle== */
+@-moz-document domain("knowyourmeme.com") {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+@-moz-document url-prefix("https://knowyourmeme.com")
+{
+  :root {
+    --color-raisinblack: #232834;
+    --color-ebonyclay: #1f2430;
+    --color-timberwolf: #cbccc6;
+    --color-lightsalmon: #f29e74;
+    --color-cyclamen: #f06897;
+    --color-mauve: #d4bfff;
+    --color-celeste: #9ef0f0;
+    --color-lightskyblue: #73d0ff;
+    --color-frenchskyblue: #78a9ff;
+    --color-bluegreen: #519aba;
+    --color-manatee: #8c94a3;
+    --color-white: #ffffff;
+    --color-charcoal: #333b4e;
+    --color-darkgunmental: #191e2a;
+    --color-davysgrey: #4f535e;
+    --shadow-color: 223deg 30% 8%;
+  }
+
+  .cols #maru {
+    max-width: 100%;
+    min-width: 100%;
+    float: none;
+  }
+
+  .cols #sidebar {
+    display: none;
+  }
+
+  #infinite-scroll-wrapper {
+    column-count: 4;
+    column-gap: 10px;
+  }
+
+  #photo_gallery {
+    width: 100%;
+    min-width: 1200px;
+    display: flex;
+  }
+
+  /* #photo_gallery {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    break-inside: avoid;
+  }
+
+  #photo_gallery .item {
+    position: relative !important;
+    grid-row: 1 / -1;
+    grid-column: 1;
+    left: auto !important;
+    top: auto !important;
+  } */
+}
