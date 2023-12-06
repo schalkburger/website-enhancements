@@ -1,0 +1,123 @@
+/* ==UserStyle==
+@name           Picture Cards Enhanced
+@namespace      https://github.com/schalkburger/website-enhancements
+@version        1.0.0
+@description    Picture Cards Enhanced
+@author         Schalk Burger
+==/UserStyle== */
+@-moz-document domain("picturecards.online") {
+  /* Insert code here... */
+  .main-menu,
+  .btn {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .tab-bar {
+    background: #000 !important;
+  }
+
+  .info-vert {
+    margin: 1rem;
+  }
+
+  .cc {
+    margin: 1rem;
+  }
+
+  .react-card.white {
+    background: #fff !important;
+    color: #000 !important;
+    border-radius: 4px;
+    min-height: 230px;
+  }
+
+  .react-card.white .text {
+    color: #000 !important;
+    font-weight: bold;
+    font-size: 1.25rem;
+    padding: 0.2rem;
+    letter-spacing: -0.5px;
+  }
+
+  .react-card.black {
+    background: #000 !important;
+    color: #fff !important;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    min-height: 300px;
+    padding: 1rem;
+    max-width: 250px;
+    margin-bottom: 2rem;
+  }
+
+  .react-card.black .text {
+    color: #fff !important;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  .react-card > .select-btns > .select-btn {
+    opacity: 1;
+  }
+
+  .select-btn:hover .layer {
+    background: #3bf95d !important;
+    opacity: 1 !important;
+  }
+  .game-layout .alt-top .info-vert .upper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .bar {
+    width: 100%;
+  }
+  .bar ._button {
+    background: transparent !important;
+  }
+  .react-stats > .cell {
+    margin: 0.2rem 0;
+  }
+  .react-stats > .cell .icon-box {
+    margin-right: 0.5rem;
+  }
+
+  .react-stats > .cell .fa-gavel {
+    color: #3b97f9 !important;
+  }
+  .react-stats > .cell .fa-star {
+    color: #f9ca3b !important;
+  }
+  .timer-and-title .timer {
+    background: #f93b48 !important;
+    color: #fff !important;
+  }
+  .react-submissions > .submission {
+    flex-direction: column-reverse;
+    margin: 0 0.75rem;
+  }
+
+  .react-submissions > .submission > .react-card {
+    margin: 0;
+  }
+
+  .react-submissions > .submission > .left-box > .submitter {
+    height: auto;
+  }
+
+  .react-submissions > .submission > .left-box {
+    width: 100%;
+    margin: 0;
+  }
+
+  .react-submissions > .submission > .left-box > .vote-btn {
+    border-radius: 0;
+    height: 48px;
+    width: 100%;
+  }
+  .react-submissions > .submission > .left-box > .vote-btn:hover {
+    background: #8aea9b !important;
+    color: #000 !important;
+  }
+}

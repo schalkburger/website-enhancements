@@ -1,6 +1,4 @@
-# Hacker News Enhanced
-
-A more readable, dark version of Hacker News inspired by Instapaper and [Serendipity](https://marketplace.visualstudio.com/items?itemName=wicked-labs.old-serendipity).
+# Know Your Meme Enhanced
 
 ## Requirements
 

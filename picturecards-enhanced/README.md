@@ -1,6 +1,6 @@
-# Stack Exchange Enhanced
+# Picture Cards Online Enhanced
 
-Stack Exchange Enhanced
+Picture Cards Online Enhanced
 
 ## Requirements
 
