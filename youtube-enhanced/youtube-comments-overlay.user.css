@@ -1,0 +1,76 @@
+/* ==UserStyle==
+@name           YouTube Enhanced
+@namespace      https://github.com/schalkburger/website-enhancements
+@version        1.0.0
+@description    YouTube Enhanced
+@author         Schalk Burger
+==/UserStyle== */
+@-moz-document domain("www.youtube.com") {
+  /* Insert code here... */
+  ytd-comments#comments {
+      position: fixed;
+      top: 65px;
+      right: 15px;
+      background: rgb(15 15 15 / 95%);
+      z-index: 400;
+      max-width: 400px;
+      max-height: 70vh;
+      overflow: scroll;
+      overflow-x: hidden;
+      padding: 2rem;
+      opacity: 0;
+      transition: 100ms opacity ease-in;
+      border-radius: 10px;
+  }
+
+  ytd-comments#comments:hover {
+      opacity: 1;
+  }
+
+  ytd-comments#comments {
+      scrollbar-width: auto;
+      scrollbar-color: #2f2f2f #00000000;
+  }
+
+  /* Chrome, Edge, and Safari */
+  ytd-comments#comments::-webkit-scrollbar {
+      width: 20px;
+  }
+
+  ytd-comments#comments::-webkit-scrollbar-track {
+      background: #00000000;
+  }
+
+  ytd-comments#comments::-webkit-scrollbar-thumb {
+      background-color: #787878;
+      border-radius: 15px;
+      border: 15px solid #ffffff;
+  }
+
+
+  #content-text.ytd-comment-renderer {
+      font-size: 1.85rem;
+      line-height: 2.6rem;
+  }
+
+  ytd-comments-header-renderer {
+      margin-top: 0;
+  }
+
+  #replies #expander-contents #contents > ytd-comment-renderer {
+      padding: 1rem;
+      margin: 0;
+      border-radius: 0;
+      border-left: 1px solid #6f6f6f;
+  }
+
+  #replies #expander-contents #contents > ytd-comment-renderer:nth-child(even) {
+      background: rgb(18 18 18);
+      padding-top: 1rem;
+  }
+
+  #replies #expander-contents #contents > ytd-comment-renderer:nth-child(odd) {
+      background: rgb(15 15 15);
+      padding-top: 1rem;
+  }
+}
