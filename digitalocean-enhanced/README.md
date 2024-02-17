@@ -1,6 +1,6 @@
-# Wikipedia Enhanced
+# DigitalOcean Enhanced
 
-Wikipedia Enhanced
+DigitalOcean Enhanced
 
 ## Requirements
 

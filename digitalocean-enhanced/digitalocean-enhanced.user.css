@@ -1,0 +1,33 @@
+/* ==UserStyle==
+@name           DigitalOcean Enhanced
+@namespace      https://github.com/schalkburger/website-enhancements
+@version        1.0.0
+@description    DigitalOcean  Enhanced
+@author         Schalk Burger
+==/UserStyle== */
+@-moz-document domain("cloud.digitalocean.com") {
+  body {
+    filter: invert(1) hue-rotate(180deg);
+    background: #000c25;
+  }
+
+  .aurora-container-left,
+  .simple-select.has-label .current,
+  .sub-header,
+  figure.dashboard {
+    filter: invert(1) hue-rotate(180deg);
+  }
+
+  .simple-select .list-item > strong,
+  .simple-select.has-label .current > strong {
+    color: #8d8d8d;
+  }
+
+  .nav-bar {
+    filter: invert(0) hue-rotate(0deg) brightness(0.99) contrast(0.9);
+  }
+
+  table {
+    filter: invert(0) brightness(0.95) contrast(0.95) hue-rotate(360deg);
+  }
+}
