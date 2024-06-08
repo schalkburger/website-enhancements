@@ -1,30 +1,62 @@
 /* ==UserStyle==
 @name           Pomofocus Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.0
+@version        1.0.2
 @description    Pomofocus Enhanced
 @author         Schalk Burger
 ==/UserStyle== */
 @-moz-document domain("pomofocus.io") {
+  body {
+    min-width: 420px;
+  }
   #target > div > div > div:nth-of-type(2) {
     visibility: hidden;
     opacity: 0;
     display: flex;
     width: 100%;
-    position: fixed;
+    position: relative;
+    height: 65px;
     top: 0;
-    transition: all 100ms ease-in-out;
-    background: rgb(186, 73, 73);
+    transition: all 200ms ease-in;
+    background: transparent;
     z-index: 500;
+  }
+  #target > div > div > div:nth-of-type(2) > div {
+    width: 100%;
   }
   #target > div > div:hover > div:nth-of-type(2) {
     visibility: visible;
     opacity: 1;
+    height: 65px;
   }
   #target > div > div > div > div > div:nth-of-type(1) {
     margin-bottom: 0;
+    justify-content: space-around;
   }
   #target > div > div > div > div > div:nth-of-type(2) > div {
     background-color: transparent;
+    padding: 0;
+  }
+
+  #target > div > div > div > div > div {
+    padding: 0 20px;
+  }
+
+  @media only screen and (max-width: 419px) {
+    body,
+    #target > div {
+      background: rgb(219, 152, 152);
+    }
+  }
+
+  @media only screen and (max-width: 350px) {
+    #timer-string {
+      font-size: 100px;
+    }
+  }
+  @media only screen and (max-width: 68px) {
+    #timer-string {
+      font-size: 125px;
+    }
   }
 }
