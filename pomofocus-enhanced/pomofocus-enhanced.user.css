@@ -1,17 +1,18 @@
 /* ==UserStyle==
 @name           Pomofocus Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.2
+@version        1.0.4
 @description    Pomofocus Enhanced
 @author         Schalk Burger
 ==/UserStyle== */
 @-moz-document domain("pomofocus.io") {
   body {
-    min-width: 420px;
+    font-family: ui-rounded, "Hiragino Maru Gothic ProN", Quicksand, Comfortaa, Manjari, "Arial Rounded MT", "Arial Rounded MT Bold", Calibri, source-sans-pro, sans-serif;
   }
+
   #target > div > div > div:nth-of-type(2) {
-    visibility: hidden;
-    opacity: 0;
+    visibility: visible;
+    opacity: 1;
     display: flex;
     width: 100%;
     position: relative;
@@ -21,8 +22,14 @@
     background: transparent;
     z-index: 500;
   }
+  #target > div > div > div:nth-of-type(3) {
+    padding: 0;
+    max-width: 100%;
+  }
   #target > div > div > div:nth-of-type(2) > div {
     width: 100%;
+    padding: 0 20px;
+    max-width: none;
   }
   #target > div > div:hover > div:nth-of-type(2) {
     visibility: visible;
@@ -31,7 +38,7 @@
   }
   #target > div > div > div > div > div:nth-of-type(1) {
     margin-bottom: 0;
-    justify-content: space-around;
+    margin-top: 0;
   }
   #target > div > div > div > div > div:nth-of-type(2) > div {
     background-color: transparent;
@@ -39,15 +46,23 @@
   }
 
   #target > div > div > div > div > div {
-    padding: 0 20px;
+    padding: 0;
+    margin-top: 12px;
+    max-width: 100%;
   }
 
-  @media only screen and (max-width: 419px) {
-    body,
-    #target > div {
-      background: rgb(219, 152, 152);
-    }
+  #target > div > div > div > div > div:nth-of-type(3) {
+    max-width: 90%;
   }
+
+  /* div[id^="activity_wrapper"] {
+    filter: invert(1) brightness(5) contrast(1);
+    background: #f9f9f9;
+  }
+
+  #target > div > div > div > div > div:nth-of-type(3) > div:nth-of-type(3) {
+    background: red;
+  } */
 
   @media only screen and (max-width: 350px) {
     #timer-string {
@@ -57,6 +72,25 @@
   @media only screen and (max-width: 68px) {
     #timer-string {
       font-size: 125px;
+    }
+  }
+
+  @media only screen and (min-width: 1200px) {
+    #timer-string {
+      font-size: 350px;
+    }
+
+    #target > div > div > div > div > div:nth-of-type(3) {
+      max-width: 75%;
+    }
+
+    #target > div > div > div > div > div:nth-of-type(2) > div > div:nth-of-type(1) {
+      padding: 0;
+      width: 55vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto;
     }
   }
 }
