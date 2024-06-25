@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Pomofocus Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.4
+@version        1.0.5
 @description    Pomofocus Enhanced
 @author         Schalk Burger
 ==/UserStyle== */
@@ -72,6 +72,18 @@
   @media only screen and (max-width: 68px) {
     #timer-string {
       font-size: 125px;
+    }
+  }
+
+  @media only screen and (min-width: 400px) {
+    #timer-string {
+      font-size: 150px;
+    }
+  }
+
+  @media only screen and (min-width: 600px) {
+    #timer-string {
+      font-size: 250px;
     }
   }
 
