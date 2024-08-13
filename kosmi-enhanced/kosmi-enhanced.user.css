@@ -1,0 +1,38 @@
+/* ==UserStyle==
+@name           Kosmi Enhanced
+@namespace      https://github.com/schalkburger/website-enhancements
+@version        1.0.1
+@description    Kosmi Enhanced
+@author         Schalk Burger
+==/UserStyle== */
+@-moz-document url-prefix("https://app.kosmi.io/room/")
+{
+  /* Insert code here... */
+  #app > div > div > div > div > div > div > div > div > div > div > div > div {
+    width: 100%;
+    max-height: 94vh;
+    border-color: transparent;
+  }
+
+  #app > div > div > div > div > div > div > div > div > div > div > div > div > svg {
+    visibility: hidden;
+  }
+
+  #app > div > div > div > div > div > div > div:nth-of-type(1) {
+    background: #000;
+  }
+
+  #app > div > div > div > div > div > div > div > div:nth-of-type(1) {
+    right: -15rem;
+    transition: all 100ms ease-in-out;
+    opacity: 0.25;
+  }
+
+  #app > div > div > div > div > div > div > div > div:nth-of-type(1):hover {
+    right: 0;
+    opacity: 1;
+  }
+  #app > div > div > div > div > div > div > div > div > div > div > div:nth-of-type(1) {
+    background: transparent;
+  }
+}
