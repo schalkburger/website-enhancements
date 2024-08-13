@@ -1,121 +1,79 @@
 /* ==UserStyle==
 @name           Pomofocus Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.6
+@version        1.0.10
 @description    Pomofocus Enhanced
 @author         Schalk Burger
 ==/UserStyle== */
 @-moz-document domain("pomofocus.io") {
+  :root {
+    --background-inherit: inherit;
+    --background-transparent: transparent;
+    --background-red: #5a1210;
+  }
   body {
     font-family: ui-rounded, "Hiragino Maru Gothic ProN", Quicksand, Comfortaa, Manjari, "Arial Rounded MT", "Arial Rounded MT Bold", Calibri, source-sans-pro, sans-serif;
+    background: var(--background-transparent);
   }
 
-  #target > div > div > div:nth-of-type(2) {
-    visibility: hidden;
+  #target > div > div > div:nth-of-type(1) {
+    height: 0;
     opacity: 0;
-    display: flex;
-    width: 100%;
-    position: relative;
-    height: 65px;
-    top: 0;
-    transition: all 200ms ease-in;
-    background: transparent;
-    z-index: 500;
-  }
-  #target > div > div > div:nth-of-type(3) {
-    padding: 0;
-    max-width: 100%;
-  }
-  #target > div > div > div:nth-of-type(2) > div {
-    width: 100%;
-    padding: 0 20px;
-    max-width: none;
-  }
-  #target > div > div:hover > div:nth-of-type(2) {
-    visibility: visible;
-    opacity: 1;
-    height: 65px;
-  }
-  #target > div > div > div > div > div:nth-of-type(1) {
-    margin-bottom: 0;
-    margin-top: 0;
-    padding-top: 10px;
-  }
-
-  #target > div > div > div > div > div:nth-of-type(2) {
-    padding: 0 10px;
-  }
-  #target > div > div > div > div > div:nth-of-type(2) > div {
-    background-color: transparent;
-    padding: 0;
   }
 
   #target > div > div > div > div > div {
+    margin-bottom: 0;
+  }
+
+  #target > div > div > div:nth-of-type(2) {
     padding: 0;
-    margin-top: 0;
-    max-width: 100%;
+    max-width: 90vw;
   }
 
-  #target > div > div > div > div > div:nth-of-type(3) {
-    max-width: 90%;
-  }
-
-  @media only screen and (min-width: 300px) {
-    #timer-string {
-      font-size: 100px;
-    }
-    #target > div > div > div:nth-of-type(2) {
-      opacity: 0;
-    }
-    #target > div > div > div > div > div {
-      margin-top: 0;
-    }
-  }
-  @media only screen and (min-width: 400px) {
-    #timer-string {
-      font-size: 150px;
-    }
-  }
-
-  @media only screen and (min-width: 680px) {
-    #timer-string {
-      font-size: 250px;
-    }
-
-    #target > div > div > div:nth-of-type(2) {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
-
-  @media only screen and (min-width: 1200px) {
-    #timer-string {
-      font-size: 350px;
-    }
-
-    #target > div > div > div > div > div {
-      margin-top: 12px;
-    }
-
-    #target > div > div > div > div > div:nth-of-type(3) {
-      max-width: 75%;
-    }
-
-    #target > div > div > div > div > div:nth-of-type(2) > div > div:nth-of-type(1) {
-      padding: 0;
-      width: 55vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 auto;
-    }
+  #target > div > div > div:nth-of-type(2) > div > div:nth-of-type(3) {
+    padding: 0 12px;
   }
 
   @media only screen and (max-height: 300px) {
     body {
       height: 100% !important;
-      overflow: visible !important;
       overflow-y: visible !important;
+    }
+  }
+
+  @media only screen and (max-height: 300px), (max-width: 230px) {
+    #target > div > div > div > div > div {
+      position: relative;
+      margin-bottom: 0;
+    }
+  }
+
+  @media only screen and (min-width: 425px) {
+    #target > div > div:nth-of-type(1) > div:nth-of-type(1) {
+      height: 64px;
+      opacity: 1;
+    }
+
+    #target > div > div > div:nth-of-type(1) {
+      height: 100vh;
+      opacity: 1;
+      overflow: auto;
+    }
+
+    #target > div > div > div > div > div {
+      margin-bottom: 0;
+      max-width: 90vw;
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    #timer-string {
+      font-size: 20vw;
+    }
+
+    #target > div > div > div:nth-of-type(2) > div > div:nth-of-type(3) {
+      padding: 0 12px;
+      max-width: 50vw;
     }
   }
 }

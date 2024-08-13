@@ -1,6 +1,6 @@
-# Wikipedia Enhanced
+# Pomofocus Enhanced
 
-Wikipedia Enhanced
+Pomofocus Enhanced
 
 ## Requirements
 
