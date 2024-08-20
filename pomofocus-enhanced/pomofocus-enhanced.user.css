@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Pomofocus Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.10
+@version        1.0.11
 @description    Pomofocus Enhanced
 @author         Schalk Burger
 ==/UserStyle== */
@@ -32,6 +32,10 @@
 
   #target > div > div > div:nth-of-type(2) > div > div:nth-of-type(3) {
     padding: 0 12px;
+  }
+
+  #timer-string {
+    font-size: 25vw;
   }
 
   @media only screen and (max-height: 300px) {
