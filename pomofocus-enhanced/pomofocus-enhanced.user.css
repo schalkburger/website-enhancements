@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Pomofocus Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.12
+@version        1.0.14
 @description    Pomofocus Enhanced
 @author         Schalk Burger
 ==/UserStyle== */
@@ -14,15 +14,20 @@
   body {
     font-family: ui-rounded, "Hiragino Maru Gothic ProN", Quicksand, Comfortaa, Manjari, "Arial Rounded MT", "Arial Rounded MT Bold", Calibri, source-sans-pro, sans-serif;
     background: var(--background-transparent);
+    scroll-behavior: smooth;
+    min-height: 372px;
   }
 
-  #target > div > div > div:nth-of-type(1) {
-    height: 5px;
+  /* //*[@id="target"]/div/div[1]/div[1] */
+
+  #target > div > div:nth-of-type(1) > div:nth-of-type(1) {
+    transition: all 150ms linear;
+    height: 10px;
     opacity: 0;
   }
 
-  #target > div > div > div:nth-of-type(1) > div,
-  #target > div > div > div:nth-of-type(1) > div > div {
+  #target > div > div:nth-of-type(1) > div:nth-of-type(1) > div,
+  #target > div > div:nth-of-type(1) > div:nth-of-type(1) > div > div {
     height: 5px;
   }
 
@@ -39,18 +44,19 @@
 
   /* Task text */
 
-  #target > div > div > div > div > div > div:nth-of-type(2),
-  #target > div > div > div > div > div > div:nth-of-type(3) {
-    font-size: 6vw;
+  #target > div > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2),
+  #target > div > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) {
     display: inline-flex;
-    position: relative;
   }
 
-  #target > div > div > div > div > div > div:nth-of-type(3) {
+  #target > div > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) {
+    font-size: 1rem;
+  }
+
+  #target > div > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) {
+    font-size: 1.5rem;
+    position: relative;
     margin-left: 5px;
-    background: #4d7fa2;
-    border-radius: 4px;
-    padding: 2px 6px;
   }
 
   #target > div > div > div:nth-of-type(2) {
@@ -111,6 +117,17 @@
     #target > div > div > div:nth-of-type(2) > div > div:nth-of-type(3) {
       padding: 0 12px;
       max-width: 50vw;
+    }
+  }
+
+  @media only screen and (min-width: 1440px) {
+    #target > div > div:nth-of-type(1) > div:nth-of-type(1) {
+      height: 64px;
+      opacity: 1;
+    }
+    #target > div > div:nth-of-type(1) > div:nth-of-type(1) > div,
+    #target > div > div:nth-of-type(1) > div:nth-of-type(1) > div > div {
+      height: 64px;
     }
   }
 }
