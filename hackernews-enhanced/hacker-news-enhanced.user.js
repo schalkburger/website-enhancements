@@ -3,9 +3,9 @@
 // @namespace    https://github.com/schalkburger/website-enhancements
 // @include      https://news.ycombinator.com/*
 // @match        https://news.ycombinator.com/*
-// @version      1.0.0
+// @version      1.0.1
 // @author       Schalk Burger <schalkb@gmail.com>
-// @description  Hacker News Enhanced
+// @description  Hacker News Enhanced adds a [l+c] link that opens the link and comments page in new tabs for you in one click.
 // @license MIT
 // ==/UserScript==
 
