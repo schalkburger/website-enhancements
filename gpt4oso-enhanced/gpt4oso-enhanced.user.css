@@ -1,0 +1,102 @@
+/* ==UserStyle==
+@name           GPT-4o.so Enhanced
+@namespace      https://github.com/schalkburger/website-enhancements
+@version        1.0.1
+@description    GPT-4o.so Enhanced UserStyle
+@author         Schalk Burger
+==/UserStyle== */
+@-moz-document url-prefix("https://gpt4o.so/app")
+{
+  :root {
+    --background-transparent: transparent;
+    --color-codgray: #161616;
+    --color-eerieblack: #1d1d1d;
+  }
+  body {
+    scroll-behavior: smooth;
+    background-color: var(--color-codgray);
+    color: #ffffff;
+  }
+
+  .bg-white {
+    background-color: var(--color-eerieblack);
+  }
+
+  .text-slate-700,
+  .text-gray-800,
+  .text-gray-900 {
+    color: #ffffff;
+  }
+
+  .border-slate-100,
+  .border-gray-100 {
+    border-color: transparent;
+  }
+
+  /* Text elements */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #ffffff;
+  }
+
+  a {
+    color: #66d9ef;
+  }
+
+  a:hover {
+    color: #ffffff;
+  }
+
+  /* Background elements */
+  header,
+  footer,
+  nav,
+  aside,
+  section,
+  article {
+    background-color: #333333;
+  }
+
+  /* Form elements */
+  input,
+  textarea,
+  select {
+    background-color: #444444;
+    color: #ffffff;
+  }
+
+  /* Button elements */
+  button,
+  input[type="button"],
+  input[type="submit"] {
+    background-color: #555555;
+    color: #ffffff;
+  }
+
+  /* Table elements */
+  table {
+    background-color: #333333;
+  }
+
+  th,
+  td {
+    background-color: #444444;
+    color: #ffffff;
+  }
+
+  /* Other elements */
+  code,
+  pre {
+    background-color: #444444;
+    color: #ffffff;
+  }
+
+  /* Optional: invert images */
+  img {
+    filter: invert(100%);
+  }
+}
