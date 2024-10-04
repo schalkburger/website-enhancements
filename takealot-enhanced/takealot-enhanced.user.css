@@ -2,17 +2,17 @@
 @name           Takealot Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
 @version        1.0.0
-@description    Takealot Enhanced
+@description    Takealot Enhanced UserStyle
 @author         Schalk Burger
 ==/UserStyle== */
 @-moz-document domain("takealot.com") {
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-    }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-    .donation-section {
-        display: none;
-    }
+  .donation-section {
+    display: none;
+  }
 }
