@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Enhanced
 // @namespace    https://greasyfork.org/
-// @version      1.0.3
+// @version      1.0.8
 // @description  YouTube Enhanced UserScript
 // @author       Schalk Burger <schalkb@gmail.com>
 // @license      MIT
@@ -12,6 +12,9 @@
 
 (function () {
   "use strict";
+  let version = GM_info.script.version;
+  let name = GM_info.script.name;
+  console.log(`${name} ${version}`);
 
   /**
    * Adds two buttons to the YouTube video control bar. The buttons, when clicked, skip the video 5 seconds backward or forward.
@@ -83,23 +86,132 @@
     toggleCommentsSVG.setAttribute("width", "16");
     toggleCommentsSVG.setAttribute("height", "16");
     toggleCommentsSVG.setAttribute("fill", "currentColor");
-    toggleCommentsSVG.style.cssText = `width:36px; height: auto`;
+    toggleCommentsSVG.style.cssText = `width: 24px; height: auto`;
     const toggleCommentsPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    toggleCommentsPath.setAttribute("d", "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z");
+    toggleCommentsPath.setAttribute(
+      "d",
+      "M16.8 19L14 22.5L11.2 19H6C5.44772 19 5 18.5523 5 18V7.10256C5 6.55028 5.44772 6.10256 6 6.10256H22C22.5523 6.10256 23 6.55028 23 7.10256V18C23 18.5523 22.5523 19 22 19H16.8ZM2 2H19V4H3V15H1V3C1 2.44772 1.44772 2 2 2Z"
+    );
     toggleCommentsSVG.appendChild(toggleCommentsPath);
 
+    const moveComments = () => {
+      var comments = "#sections.ytd-comments:not([static-comments-header])";
+
+      waitForKeyElements(comments, () => {
+        comments = document.querySelector(comments);
+        var container = document.getElementById("primary-inner");
+
+        container.append(comments);
+
+        const styles = {
+          display: "block",
+          padding: "5px",
+          width: "100%",
+          height: "90vh",
+          overflowY: "scroll",
+          marginBottom: "20px",
+          position: "absolute",
+          top: "56px",
+          right: "0",
+          zIndex: "2015",
+          background: "rgb(0 0 0 / 75%)",
+          backdropFilter: "blur(5px)",
+          maxWidth: "24vw",
+          padding: "15px 0 0 15px",
+        };
+
+        Object.assign(comments.style, styles);
+
+        var header = "ytd-comments-header-renderer";
+
+        waitForKeyElements(header, () => {
+          document.querySelector(header).style.marginTop = "0px";
+        });
+
+        var loadCmt = "yt-next-continuation.ytd-item-section-renderer";
+
+        comments.addEventListener("scroll", () => {
+          if (comments.scrollHeight - comments.scrollTop === comments.clientHeight) {
+            document.querySelector(loadCmt).click();
+          }
+        });
+      });
+    };
+
     const toggleCommentsButton = createButton("toggle-comments", toggleCommentsSVG, "Toggle Comments", () => {
-      const commentsElement = document.querySelector("#comments");
+      const commentsElement = document.querySelector("#sections:nth-of-type(1)");
       if (commentsElement) {
-        if (commentsElement.style.position === "fixed") {
-          commentsElement.style.cssText = ""; // Reset styles
+        if (commentsElement.style.position === "absolute") {
+          commentsElement.style.cssText =
+            "position: relative;display: block;padding: 5px;width: 100%;height: 100%;overflow-y: scroll;margin-bottom: 20px;top: 0px;right: 0px;z-index: 400;background: transparent;max-width: max-content;"; // Reset styles
         } else {
-          commentsElement.style.cssText = `position: fixed; top: 0; right: 0; max-width: 20vw; max-height: 100vh; height: 100%;overflow: auto; top: 55px;background: rgb(0 0 0 / 75%); padding: 0 0 0 20px;backdrop-filter: blur(15px);`;
+          commentsElement.style.cssText = `position: absolute;display: block;padding: 5px;width: 100%;height: 90vh;overflow-y: scroll;margin-bottom: 20px;top: 56px;right: 0px;z-index: 2015;background: rgba(0, 0, 0, 0.75);backdrop-filter: blur(5px);max-width: 24vw;padding: 15px 0 0 15px`;
+          moveComments(); // Call the moveComments function when the button is clicked
         }
       }
+      // Select all elements with the ID #content-text
+      const commentsContentTextElements = document.querySelectorAll("#content-text");
+
+      // Iterate over each element and apply the style
+      commentsContentTextElements.forEach((element) => {
+        element.style.cssText = "padding-bottom: 20px;";
+      });
+
+      // Select all elements with the ID #expander
+      const commentsExpanderElements = document.querySelectorAll("#expander");
+
+      // Iterate over each element and apply the style
+      commentsExpanderElements.forEach((element) => {
+        element.style.setProperty("--ytd-expander-button-margin", "10px 0 0 0");
+      });
     });
 
     controlBar.prepend(backwardButton, forwardButton, toggleCommentsButton);
+
+    function waitForKeyElements(selectorTxt, actionFunction, bWaitOnce = true, iframeSelector) {
+      var targetNodes, btargetsFound;
+
+      if (typeof iframeSelector == "undefined") {
+        targetNodes = document.querySelectorAll(selectorTxt);
+      } else {
+        targetNodes = document.querySelector(iframeSelector).contentDocument.querySelectorAll(selectorTxt);
+      }
+
+      if (targetNodes && targetNodes.length > 0) {
+        btargetsFound = true;
+        targetNodes.forEach(function (node) {
+          var alreadyFound = node.dataset.alreadyFound || false;
+
+          if (!alreadyFound) {
+            var cancelFound = actionFunction(node);
+            if (cancelFound) {
+              btargetsFound = false;
+            } else {
+              node.dataset.alreadyFound = true;
+            }
+          }
+        });
+      } else {
+        btargetsFound = false;
+      }
+
+      var controlObj = waitForKeyElements.controlObj || {};
+      var controlKey = selectorTxt.replace(/[^\w]/g, "_");
+      var timeControl = controlObj[controlKey];
+
+      if (btargetsFound && bWaitOnce && timeControl) {
+        clearInterval(timeControl);
+        delete controlObj[controlKey];
+      } else {
+        if (!timeControl) {
+          timeControl = setInterval(function () {
+            waitForKeyElements(selectorTxt, actionFunction, bWaitOnce, iframeSelector);
+          }, 300);
+          controlObj[controlKey] = timeControl;
+        }
+      }
+      waitForKeyElements.controlObj = controlObj;
+    }
   }
 
   const observer = new MutationObserver(addSkipButtons);
