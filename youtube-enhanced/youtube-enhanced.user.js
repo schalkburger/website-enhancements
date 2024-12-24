@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Enhanced
 // @namespace    https://greasyfork.org/
-// @version      1.0.8
+// @version      1.0.9
 // @description  YouTube Enhanced UserScript
 // @author       Schalk Burger <schalkb@gmail.com>
 // @license      MIT
@@ -15,6 +15,28 @@
   let version = GM_info.script.version;
   let name = GM_info.script.name;
   console.log(`${name} ${version}`);
+
+  let css = `
+  .comments-float {
+    position: absolute;
+    // width: 10px !important;
+    // transition: 350ms all ease-in-out;
+  }
+   .comments-float:hover {
+    width: 100% !important;
+  }
+  `,
+    head = document.head || document.getElementsByTagName("head")[0],
+    style = document.createElement("style");
+
+  head.appendChild(style);
+  style.type = "text/css";
+  if (style.styleSheet) {
+    // This is required for IE8 and below.
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
 
   /**
    * Adds two buttons to the YouTube video control bar. The buttons, when clicked, skip the video 5 seconds backward or forward.
@@ -94,6 +116,24 @@
     );
     toggleCommentsSVG.appendChild(toggleCommentsPath);
 
+    const padComments = () => {
+      // Select all elements with the ID #content-text
+      const commentsContentTextElements = document.querySelectorAll("#content-text");
+
+      // Iterate over each element and apply the style
+      commentsContentTextElements.forEach((element) => {
+        element.style.cssText = "padding-bottom: 10px;";
+      });
+
+      // Select all elements with the ID #expander
+      const commentsExpanderElements = document.querySelectorAll("#expander");
+
+      // Iterate over each element and apply the style
+      commentsExpanderElements.forEach((element) => {
+        element.style.setProperty("--ytd-expander-button-margin", "5px 0 0 0");
+      });
+    };
+
     const moveComments = () => {
       var comments = "#sections.ytd-comments:not([static-comments-header])";
 
@@ -118,6 +158,8 @@
           backdropFilter: "blur(5px)",
           maxWidth: "24vw",
           padding: "15px 0 0 15px",
+          margin: "0 0 0 0",
+          borderRadius: "0",
         };
 
         Object.assign(comments.style, styles);
@@ -139,31 +181,19 @@
     };
 
     const toggleCommentsButton = createButton("toggle-comments", toggleCommentsSVG, "Toggle Comments", () => {
+      console.log("Toggle comments button clicked");
       const commentsElement = document.querySelector("#sections:nth-of-type(1)");
       if (commentsElement) {
-        if (commentsElement.style.position === "absolute") {
+        if (commentsElement.style.position == "absolute") {
           commentsElement.style.cssText =
             "position: relative;display: block;padding: 5px;width: 100%;height: 100%;overflow-y: scroll;margin-bottom: 20px;top: 0px;right: 0px;z-index: 400;background: transparent;max-width: max-content;"; // Reset styles
         } else {
-          commentsElement.style.cssText = `position: absolute;display: block;padding: 5px;width: 100%;height: 90vh;overflow-y: scroll;margin-bottom: 20px;top: 56px;right: 0px;z-index: 2015;background: rgba(0, 0, 0, 0.75);backdrop-filter: blur(5px);max-width: 24vw;padding: 15px 0 0 15px`;
+          commentsElement.classList.toggle("comments-float");
+          commentsElement.style.cssText = `position: absolute;display: block;padding: 5px;width: 100%;height: 90vh;overflow-y: scroll;margin-bottom: 20px;top: 56px;right: 0px;z-index: 2015;background: rgba(0, 0, 0, 0.75);backdrop-filter: blur(5px);max-width: 24vw;padding: 15px 0 0 15px;margin: 0 0 0 0;border-radius: 0`;
           moveComments(); // Call the moveComments function when the button is clicked
+          padComments(); // Call the padComments function when the button is clicked
         }
       }
-      // Select all elements with the ID #content-text
-      const commentsContentTextElements = document.querySelectorAll("#content-text");
-
-      // Iterate over each element and apply the style
-      commentsContentTextElements.forEach((element) => {
-        element.style.cssText = "padding-bottom: 20px;";
-      });
-
-      // Select all elements with the ID #expander
-      const commentsExpanderElements = document.querySelectorAll("#expander");
-
-      // Iterate over each element and apply the style
-      commentsExpanderElements.forEach((element) => {
-        element.style.setProperty("--ytd-expander-button-margin", "10px 0 0 0");
-      });
     });
 
     controlBar.prepend(backwardButton, forwardButton, toggleCommentsButton);
