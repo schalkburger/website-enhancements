@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Enhanced
 // @namespace    https://greasyfork.org/
-// @version      1.0.9
+// @version      1.0.10
 // @description  YouTube Enhanced UserScript
 // @author       Schalk Burger <schalkb@gmail.com>
 // @license      MIT
@@ -134,7 +134,7 @@
       });
     };
 
-    const moveComments = () => {
+    const floatComments = () => {
       var comments = "#sections.ytd-comments:not([static-comments-header])";
 
       waitForKeyElements(comments, () => {
@@ -183,16 +183,13 @@
     const toggleCommentsButton = createButton("toggle-comments", toggleCommentsSVG, "Toggle Comments", () => {
       console.log("Toggle comments button clicked");
       const commentsElement = document.querySelector("#sections:nth-of-type(1)");
-      if (commentsElement) {
-        if (commentsElement.style.position == "absolute") {
-          commentsElement.style.cssText =
-            "position: relative;display: block;padding: 5px;width: 100%;height: 100%;overflow-y: scroll;margin-bottom: 20px;top: 0px;right: 0px;z-index: 400;background: transparent;max-width: max-content;"; // Reset styles
-        } else {
-          commentsElement.classList.toggle("comments-float");
-          commentsElement.style.cssText = `position: absolute;display: block;padding: 5px;width: 100%;height: 90vh;overflow-y: scroll;margin-bottom: 20px;top: 56px;right: 0px;z-index: 2015;background: rgba(0, 0, 0, 0.75);backdrop-filter: blur(5px);max-width: 24vw;padding: 15px 0 0 15px;margin: 0 0 0 0;border-radius: 0`;
-          moveComments(); // Call the moveComments function when the button is clicked
-          padComments(); // Call the padComments function when the button is clicked
-        }
+      if (commentsElement.style.position == "fixed") {
+        commentsElement.style.cssText =
+          "position: relative;display: block;padding: 5px;width: 100%;height: 100%;overflow-y: scroll;margin-bottom: 20px;top: 0px;right: 0px;z-index: 400;background: transparent;max-width: max-content;"; // Reset styles
+      } else {
+        commentsElement.classList.toggle("comments-float");
+        commentsElement.style.cssText = `position: fixed;display: block;padding: 5px;width: 100%;height: 90vh;overflow-y: scroll;margin-bottom: 20px;top: 56px;right: 0px;z-index: 2015;background: rgba(0, 0, 0, 0.75);backdrop-filter: blur(5px);max-width: 24vw;padding: 15px 0 0 15px;margin: 0 0 0 0;border-radius: 0`;
+        padComments(); // Call the padComments function when the button is clicked
       }
     });
 
