@@ -16,6 +16,7 @@
     background: var(--background-transparent);
     scroll-behavior: smooth;
     min-height: 372px;
+    min-width: 205px;
   }
 
   .dJVrAI {
@@ -74,19 +75,20 @@
   }
 
   @media only screen and (min-width: 425px) {
+    #target > div > div.sc-gbzWSY.kNjNpp > div:nth-child(2) {
+      display: block;
+      visibility: visible;
+      height: 60px;
+      opacity: 100;
+      position: relative;
+    }
+
     #timer-string {
       font-size: 109.66px;
     }
   }
 
   @media only screen and (min-width: 768px) {
-    #target > div > div.sc-gbzWSY.kNjNpp > div:nth-child(2) {
-      display: block;
-      visibility: visible;
-      height: auto;
-      opacity: 100;
-    }
-
     .bHNjfx {
       margin: 20px 0 0 0;
       font-size: 22px;
