@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Pomofocus Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.15
+@version        1.0.16
 @description    Pomofocus Enhanced UserStyle
 @author         Schalk Burger
 ==/UserStyle== */
@@ -39,6 +39,10 @@
     height: 30px;
   }
 
+  .kaylkl {
+    padding: 0 20px;
+  }
+
   #target > div > div.sc-gbzWSY.kNjNpp > div:nth-child(2) {
     display: block;
     visibility: visible;
@@ -49,6 +53,7 @@
     top: 0;
     width: 100%;
     background-color: #ba4949;
+    margin: 0 auto;
   }
 
   #target > div > div.sc-gbzWSY.kNjNpp:hover > div:nth-child(2) {
@@ -57,8 +62,13 @@
     opacity: 100;
   }
 
+  .evBiSL {
+    width: 95%;
+    margin: 0 auto;
+  }
+
   #timer-string {
-    font-size: 67.77px;
+    font-size: 85.77px;
   }
 
   @media only screen and (max-height: 300px) {
