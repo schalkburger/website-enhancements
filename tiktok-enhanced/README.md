@@ -1,6 +1,6 @@
-# YouTube Enhanced
+# Tiktok Enhanced
 
-YouTube Enhanced
+Tiktok Enhanced
 
 ## Requirements
 
