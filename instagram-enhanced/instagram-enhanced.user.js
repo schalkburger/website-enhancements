@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Instagram Enhanced
 // @namespace    http://tampermonkey.net/
-// @version      1.6
+// @version      1.7.1
 // @description  Automatically clicks the next reel button, sets video volume to 50%, applies custom styles to scrollWrapper, and prevents videos from auto-playing
 // @author       You
 // @match        https://www.instagram.com/*
@@ -17,8 +17,8 @@
     style.type = "text/css";
     style.innerHTML = `
             #scrollWrapper {
-                bottom: 100px;
-                right: 50px;
+                bottom: 100px !important;
+                right: 50px !important;
             }
         `;
     document.head.appendChild(style);

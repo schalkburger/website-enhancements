@@ -3,7 +3,7 @@
 // @namespace    https://github.com/schalkburger/website-enhancements
 // @match        *://skribbl.io/*
 // @include      *://skribbl.io/*
-// @version      1.0.2
+// @version      1.0.3
 // @author       Schalk Burger <schalkb@gmail.com>
 // @description  Skribblio Enhanced
 // @license MIT

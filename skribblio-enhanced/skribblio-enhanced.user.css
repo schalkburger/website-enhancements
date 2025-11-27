@@ -1,0 +1,335 @@
+/* ==UserStyle==
+@name           Skribblio Enhanced
+@namespace      https://github.com/schalkburger/website-enhancements
+@author         Schalk Burger
+@description    Skribblio dark theme
+@version        1.0.4
+==/UserStyle== */
+@-moz-document url-prefix("https://skribbl.io/")
+{
+  :root {
+    --background-dark: #0c0c0c;
+    --global-text: #9a9a9a;
+    --COLOR_CHAT_TEXT_GUESSCHAT: red;
+    --COLOR_CHAT_TEXT_BASE: #9a9a9a;
+    --COLOR_CHAT_TEXT_JOIN: #c0c0c0;
+    --COLOR_CHAT_BG_ALT: #2e2e2e;
+    --COLOR_INPUT_BG: #2e2e2e;
+    --COLOR_INPUT_HOVER: #2e2e2e;
+    --COLOR_INPUT_TEXT: #c9c9c9;
+    --COLOR_INPUT_BORDER: #2e2e2e;
+    --chat-form: #1a1a1a;
+    --COLOR_CHAT_BG_GUESSED_BASE: #06441b;
+  }
+
+  body {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAQMAAABKLAcXAAAABlBMVEUBAQEAAADr5yS/AAAD70lEQVQ4yy3TzYrUQBDA8X/oJe0hm+TgYcRxIvgAtig6MuNk38Crx4igBxEHFA34Mb0Ijgc/8KYg6hOI3gRFe11wLn4dPYgbWVgv6vYgaHRjYjLatx9FdVFd1UA07kq7704wnsACo4kSKnGjJ6tgKNaUY8u0d+5ILeftWpzZfa96ve0hWlRHu4nd/SoSSQjuuTWSYVUG40yBbKTWf8hKJzD/9nOVcWyNEoMN3ix/NjTH0bwLPhqiGUWI9c5qukOItbBYfxXSoVNUhpB3UYk7srKqLHDrZ47MBsHK6HGt6RdataLqZxP79KXVco8Meg/qPINOvZZ7bG9c4Fyy6K4sjp7c2xSfhBjcYPX4oNGHpr9XYnG13ygdssAvRx9Ja4kEDOduapUJx5zKs1p79uuWiSbDlbtDNH1Hz+vu+V03ZFO/P2/ndcyWAojozOu22VdumVMQL25s0M268a/TXThgvFVGWUdMixR2GnkPkNXSnVfQM8EGs2NrPTPeDrJGThly27QOX5pJvIEVTSKzSOMsn4P3TU27kSFe9mA4k1G4xyrNSNPpTJ9PjZcITQbnB9OfG6alAANpfzrpmaEiRAfm0IFpsNvkrVo4VR4lgViqChREZdgxgTxs2k23o3uPAx34203HV3DyTxngt5RpUWsl/uHht1Uxu2VZ/QA/sl9mOsZLd8HfrNZzgAFrMieyVVrDwvmgqFWmwtLMd6YXuQy59U8t+yKd+6+RjrIqr7WSwcZJDSJ3Q5o1+X3w35sBYZS9FzMBnVAp425v03H6EKtEJX63bSpnAF9torpeGC1PxLrlhE5Uu6XiF8L5qokxyuvm1bLQIw215sgny4t6wEyQ66VFw0wJziN9eKmRo7PDufPQJMtNltDZ6lPn4cWkDFLwdTLxnYfSpHEBXbPrsjtteh7V+mkiV+YrtS6WMHnpu/LW4SXBhVJRTXwhvMERmcXFkGjsifWrwTG/7BVA0ObPB+d5e2+U/xM5VavTDExc8wC+9X2RgXx9tdFF5QkDl2uFNbvt5q+MX1+ZU56m33HGIS8r41nvFdEHPJj8Md6HTVcTmRMo1u+Zc/moXBApWxUnx3y3SWDFAq2QE2POYFDuQnurbWJz5j2ha9ItGa/HOFmZ1vrowVvNNlttWHehkpYtmgP50nPrJZ+BSJNmhnftZNaeJr9fEnaHVa1NOLZbFfVMT9XyhMiadSEpawU/xNJ1gMzEGXIgFy/PEVtbDhSuFyxelkbtsmuxRd6NnDeNHhdSI8sBRa3dt0wt92iHNDLx9/aZJuZ6sE3LsdevJa42ZTI5LpjlERR+Isd2pkoHXpBI7ZS15n95ftvNpBaTsf4LszLSgwwsiSwAAAAASUVORK5CYII=);
+    background-size: auto;
+    background-size: 256px;
+  }
+
+  .loginPanelContent,
+  #game-word,
+  #game-bar,
+  #game-players .player-background {
+    background-color: var(--background-dark);
+  }
+
+  #game-word *,
+  #game-round *,
+  #game-players *,
+  #game-word .description {
+    color: #fff;
+  }
+
+  .chat-content,
+  #game-canvas .room {
+    background: var(--background-dark);
+  }
+
+  #game-canvas .room input,
+  #game-canvas .room select {
+    background: var(--COLOR_CHAT_BG_ALT);
+    color: #fff;
+  }
+
+  input:hover:not(:disabled),
+  select:hover:not(:disabled),
+  textarea:hover:not(:disabled) {
+    border-color: #3d3d3d;
+    background: var(--COLOR_CHAT_BG_ALT);
+  }
+
+  input,
+  select,
+  textarea {
+    border-color: #202020;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #888888;
+    box-shadow: none;
+  }
+
+  .wordsleuth-footer div {
+    cursor: pointer;
+  }
+
+  .informationTabs a {
+    color: var(--global-text);
+  }
+
+  #game-chat {
+    background-color: var(--background-dark);
+    border-color: #000;
+  }
+
+  form.chat-form {
+    border-color: #000;
+  }
+
+  form.chat-form input {
+    background-color: var(--chat-form);
+    color: var(--global-text);
+    height: 3em;
+    padding-left: 1rem;
+  }
+
+  #button-start-game {
+    background-color: #294623;
+  }
+
+  #button-invite {
+    background-color: #232e46;
+  }
+
+  .panel-group,
+  .col-xs-12,
+  #modalIdle {
+    display: none;
+  }
+
+  #overlay .revealReason {
+    color: #a8a8a8;
+  }
+
+  .containerTools .toolActive {
+    border: 1px dashed #ffffffbd !important;
+  }
+
+  .containerTools .tool,
+  .containerBrushSizes .brushSize {
+    background-color: #00000069;
+  }
+  .containerTools .tool:hover,
+  .containerBrushSizes .brushSize:hover {
+    background-color: #00000087;
+  }
+  .containerBrushSizes .size {
+    background-color: #686868;
+  }
+  .containerBrushSizes .size:focus {
+    background-color: #a7a7a7 !important;
+  }
+  .containerTools {
+    background-color: transparent;
+  }
+  #overlay .content .wordContainer .word {
+    background-color: #b6b6b6;
+  }
+
+  .btn.disabled,
+  .btn[disabled],
+  fieldset[disabled] .btn {
+    cursor: not-allowed !important;
+  }
+
+  .updateInfo,
+  .lobbySettings .lobbyContent,
+  .lobbySettings .lobbyName {
+    background-color: #2d2d2d;
+    border-color: #1c1c1c;
+    color: var(--global-text);
+  }
+
+  .modal-content {
+    background-color: #2d2d2d;
+    border-color: #1c1c1c;
+    color: var(--global-text);
+  }
+  .modal-header {
+    background: #262626;
+    border-bottom: 1px solid #ffffff1c !important;
+  }
+  .modal-footer {
+    border-top: 0px solid !important;
+  }
+  button.close {
+    color: white;
+    text-shadow: none;
+    transition: 0.2s;
+  }
+
+  #containerChat,
+  #screenGame .gameHeader {
+    background-color: #2d2d2d;
+    border: 1px solid #1c1c1c;
+    color: var(--global-text);
+  }
+
+  #invite,
+  .invite-overlay {
+    background: #2d2d2d;
+    border-color: #1c1c1c;
+    color: var(--global-text);
+  }
+
+  #loginAvatarCustomizeContainer {
+    background-color: #252525;
+    border-color: #1c1c1c;
+  }
+
+  .form-control,
+  #loginLanguage,
+  #formChat {
+    color: #ffffff7d;
+    background-color: #252525;
+    border-color: #1c1c1c;
+    box-shadow: none !important;
+  }
+
+  .form-control:focus {
+    color: #c9c9c9;
+    border-color: #000000ab !important;
+  }
+
+  .btn-success,
+  .btn-warning,
+  #inviteCopyButton,
+  .btn-success:active,
+  .btn-warning:active,
+  #inviteCopyButton:active {
+    background-color: #1d1d1d !important;
+    border-color: #00000057 !important;
+    border-radius: 3px;
+    transition: 0.3s;
+  }
+
+  .btn-success:hover,
+  .btn-warning:hover,
+  #inviteCopyButton:hover {
+    background-color: #1c1c1cba !important;
+    border-color: #38c952 !important;
+    border-style: dashed;
+  }
+
+  .btn-info {
+    color: #f2f2f2;
+    background-color: #58585852;
+    border-color: #0000008c;
+    width: 50%;
+    margin: auto;
+    border-radius: 3px;
+    transition: 0.3s;
+  }
+
+  .btn-primary {
+    color: #f2f2f2;
+    background-color: #1e1e1edb;
+    border-color: #0000008c;
+    width: 50%;
+    margin: auto;
+    border-radius: 3px;
+    transition: 0.3s;
+  }
+
+  .btn-primary:hover {
+    background-color: #252525;
+    border-color: #35b8e7;
+    border-style: dashed;
+  }
+
+  .btn-info:hover {
+    background-color: #49494952;
+    border-color: #35b8e7;
+    border-style: dashed;
+  }
+
+  .avatarArrow {
+    filter: grayscale(100%);
+  }
+
+  .avatarArrow:active {
+    filter: brightness(50%) grayscale(100%);
+  }
+
+  a {
+    color: grey !important;
+  }
+
+  #boxMessages,
+  #containerGamePlayers .player:nth-child(2n + 1) {
+    background-color: #2d2d2d;
+  }
+  #boxMessages p:nth-child(2n),
+  #containerGamePlayers .player:nth-child(2n) {
+    background-color: #2a2a2a;
+  }
+
+  .timer-container {
+    filter: brightness(50%);
+  }
+  #timer {
+    color: #000 !important;
+  }
+
+  #containerGamePlayers .player .info .score {
+    padding-top: 1.2px;
+    color: #b4b4b4 !important;
+  }
+
+  .name[style*="color: rgb(0, 0, 255);"] {
+    color: grey;
+  }
+
+  #containerGamePlayers .player .rank {
+    color: #7f7f7f7a;
+  }
+
+  #containerGamePlayers .player .info .name {
+    color: #ffffffeb;
+  }
+
+  [style*="color: rgb(0, 0, 0);"] > b {
+    color: #6d6d6d !important;
+  }
+  [style*="color: rgb(0, 0, 0);"] > span {
+    color: #b4b4b4 !important;
+  }
+  [style*="color: rgb(86, 206, 39); font-weight: bold;"] > span,
+  div.guessedWord > div:nth-child(2) > div:nth-child(1) {
+    color: #33bc4b !important;
+  }
+  [style*="color: rgb(125, 173, 63);"] > b {
+    color: #619f6c !important;
+  }
+  [style*="color: rgb(125, 173, 63);"] > span {
+    color: #9fcaa7 !important;
+  }
+
+  [style*="color: rgb(0, 0, 255);"] {
+    color: var(--UsernameColour) !important;
+  }
+
+  [style*="color: rgb(57, 117, 206); font-weight: bold;"] > span {
+    color: #5b83d0 !important;
+  }
+  [style*="color: rgb(204, 204, 0); font-weight: bold;"] > span {
+    color: #c93838 !important;
+  }
+  [style*="color: rgb(206, 79, 10); font-weight: bold;"] {
+    color: #bfbfbf !important;
+  }
+}

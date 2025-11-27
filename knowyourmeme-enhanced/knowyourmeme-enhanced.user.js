@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Know Your Meme Enhanced
 // @namespace    https://github.com/schalkburger/website-enhancements
-// @include      https://knowyourmeme.com/memes/*
-// @match        https://knowyourmeme.com/memes/*
-// @version      1.3.0
+// @include      https://knowyourmeme.com/*
+// @match        https://knowyourmeme.com/*
+// @version      1.3.1
 // @author       Schalk Burger <schalkb@gmail.com>
 // @description  Know Your Meme Enhanced
 // @license MIT

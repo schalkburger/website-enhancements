@@ -3,7 +3,7 @@
 @namespace      https://github.com/schalkburger/website-enhancements
 @version        1.0.1
 @description    Hacker News Enhanced UserStyle
-@author         Schalk Burger
+@author           Schalk Burger
 ==/UserStyle== */
 @-moz-document domain("news.ycombinator.com") {
   *,

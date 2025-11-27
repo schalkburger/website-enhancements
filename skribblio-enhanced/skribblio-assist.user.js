@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Skribblio Assist
 // @namespace    https://github.com/schalkburger/website-enhancements
-// @version      1.0.1
+// @version      1.0.5
 // @description  A script that helps you guess words in skribblio
 // @author       fermion
 // @match        http*://www.skribbl.io/*
@@ -107,7 +107,6 @@
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
-
           return response.text();
         })
         .then((data) => data.split("\n").map((word) => word.trim()))
@@ -260,7 +259,6 @@
 
       function rot13(correspondance) {
         const charCode = correspondance.charCodeAt();
-
         return String.fromCharCode(charCode + 13 <= 90 ? charCode + 13 : ((charCode + 13) % 90) + 64);
       }
     }
@@ -299,7 +297,6 @@
                 messageNode.style.webkitBackgroundClip = "text";
                 messageNode.style.webkitTextFillColor = "transparent";
                 messageNode.style.fontWeight = "700";
-                messageNode.style.textShadow = "2px 2px 4px rgba(0, 0, 0, 0.3)";
                 break;
               }
             }
@@ -427,21 +424,19 @@
     }
 
     renderGuesses(possibleWords, inputElem) {
-      possibleWords.slice(0, 100).forEach((word, index) => {
+      possibleWords.slice(0, 100).forEach((word) => {
         const wordElem = document.createElement("div");
+        wordElem.classList.add("guess");
         wordElem.textContent = word;
-        wordElem.style = "font-weight: bold; font-size: 12px; display: inline-block; padding: 5px; margin-right: 2px; color: white; text-shadow: 2px 2px 2px black;";
-        const maxValue = possibleWords.length > 100 ? 100 : possibleWords.length;
-        let hueValue = possibleWords.length > 1 ? Math.floor((360 * index) / (maxValue - 1)) : 0;
-        wordElem.style.backgroundColor = `hsl(${hueValue}, 100%, 50%)`;
+        wordElem.style = "font-weight: bold; font-size: 12px; display: inline-block; padding: 5px; margin-right: 2px; color: white; background-color: #214e23;";
 
-        this.addHoverEffect(wordElem, hueValue);
-        this.addClickFunctionality(wordElem, word, inputElem, hueValue);
+        this.addHoverEffect(wordElem);
+        this.addClickFunctionality(wordElem, word, inputElem);
         this.guessElem.appendChild(wordElem);
       });
     }
 
-    addHoverEffect(wordElem, hueValue) {
+    addHoverEffect(wordElem) {
       wordElem.addEventListener("mouseenter", function () {
         if (!this.classList.contains("pressed")) {
           this.style.backgroundColor = "lightgray";
@@ -451,13 +446,13 @@
 
       wordElem.addEventListener("mouseleave", function () {
         if (!this.classList.contains("pressed")) {
-          this.style.backgroundColor = `hsl(${hueValue}, 100%, 50%)`;
+          this.style.backgroundColor = "#214e23";
         }
         this.classList.remove("hovered");
       });
     }
 
-    addClickFunctionality(wordElem, word, inputElem, colorValue) {
+    addClickFunctionality(wordElem, word, inputElem) {
       wordElem.addEventListener("mousedown", function () {
         wordElem.classList.add("pressed");
         wordElem.style.backgroundColor = "gray";
@@ -466,7 +461,7 @@
       wordElem.addEventListener("mouseup", function () {
         wordElem.classList.remove("pressed");
         if (!wordElem.classList.contains("hovered")) {
-          wordElem.style.backgroundColor = `rgb(${colorValue}, ${255 - colorValue}, 0)`;
+          wordElem.style.backgroundColor = "#214e23";
         } else {
           wordElem.style.backgroundColor = "lightgray";
         }
