@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.7.1
 // @description  Automatically clicks the next reel button, sets video volume to 50%, applies custom styles to scrollWrapper, and prevents videos from auto-playing
-// @author       You
+// @author       Schalk Burger <schalkb@gmail.com>
 // @match        https://www.instagram.com/*
 // @grant        none
 // ==/UserScript==
