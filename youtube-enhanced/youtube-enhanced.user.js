@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Enhanced
 // @namespace    https://greasyfork.org/
-// @version      1.0.10
+// @version      1.0.12
 // @description  YouTube Enhanced UserScript
 // @author       Schalk Burger <schalkb@gmail.com>
 // @license      MIT
@@ -18,13 +18,16 @@
 
   let css = `
   .comments-float {
-    position: absolute;
+      position: absolute;
     // width: 10px !important;
     // transition: 350ms all ease-in-out;
   }
    .comments-float:hover {
-    width: 100% !important;
+      width: 100% !important;
   }
+    .ytp-volume-area {
+      align-items: center !important;
+    }
   `,
     head = document.head || document.getElementsByTagName("head")[0],
     style = document.createElement("style");
@@ -72,11 +75,11 @@
     backwardSVG.setAttribute("width", "16");
     backwardSVG.setAttribute("height", "16");
     backwardSVG.setAttribute("fill", "currentColor");
-    backwardSVG.style.cssText = `width:36px; height: auto`;
+    backwardSVG.style.cssText = `width:36px; height: auto; padding: 0`;
     const backwardPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
     backwardPath.setAttribute(
       "d",
-      "M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"
+      "M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z",
     );
     backwardSVG.appendChild(backwardPath);
 
@@ -90,11 +93,11 @@
     forwardSVG.setAttribute("width", "16");
     forwardSVG.setAttribute("height", "16");
     forwardSVG.setAttribute("fill", "currentColor");
-    forwardSVG.style.cssText = `width:36px; height: auto`;
+    forwardSVG.style.cssText = `width:36px; height: auto; padding: 0`;
     const forwardPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
     forwardPath.setAttribute(
       "d",
-      "M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z"
+      "M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z",
     );
     forwardSVG.appendChild(forwardPath);
 
@@ -108,11 +111,11 @@
     toggleCommentsSVG.setAttribute("width", "16");
     toggleCommentsSVG.setAttribute("height", "16");
     toggleCommentsSVG.setAttribute("fill", "currentColor");
-    toggleCommentsSVG.style.cssText = `width: 24px; height: auto`;
+    toggleCommentsSVG.style.cssText = `width: 24px; height: auto; padding: 0`;
     const toggleCommentsPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
     toggleCommentsPath.setAttribute(
       "d",
-      "M16.8 19L14 22.5L11.2 19H6C5.44772 19 5 18.5523 5 18V7.10256C5 6.55028 5.44772 6.10256 6 6.10256H22C22.5523 6.10256 23 6.55028 23 7.10256V18C23 18.5523 22.5523 19 22 19H16.8ZM2 2H19V4H3V15H1V3C1 2.44772 1.44772 2 2 2Z"
+      "M16.8 19L14 22.5L11.2 19H6C5.44772 19 5 18.5523 5 18V7.10256C5 6.55028 5.44772 6.10256 6 6.10256H22C22.5523 6.10256 23 6.55028 23 7.10256V18C23 18.5523 22.5523 19 22 19H16.8ZM2 2H19V4H3V15H1V3C1 2.44772 1.44772 2 2 2Z",
     );
     toggleCommentsSVG.appendChild(toggleCommentsPath);
 
