@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Instagram Enhanced
 // @namespace    http://tampermonkey.net/
-// @version      1.7.1
+// @version      1.7.3
 // @description  Automatically clicks the next reel button, sets video volume to 50%, applies custom styles to scrollWrapper, and prevents videos from auto-playing
 // @author       Schalk Burger <schalkb@gmail.com>
 // @match        https://www.instagram.com/*
@@ -36,11 +36,11 @@
     }
   }
 
-  // // Function to set video volume to 50%
-  // function setVideoVolume(video) {
-  //   video.volume = 0.5; // Set volume to 50% (range is 0.0 to 1.0)
-  //   console.log("Set video volume to 50%");
-  // }
+  //Function to set video volume to 25%
+  function setVideoVolume(video) {
+    video.volume = 0.25; // Set volume to 25% (range is 0.0 to 1.0)
+    console.log("Set video volume to 25%");
+  }
 
   // Function to prevent video autoplay
   function preventVideoAutoplay(video) {
@@ -82,7 +82,7 @@
         () => {
           document.querySelector("body").dataset.lastEvent = eventType;
         },
-        { capture: true }
+        { capture: true },
       );
     });
   }
@@ -100,9 +100,9 @@
         clickNextReelButton();
       });
       // Handle video play start
-      // video.addEventListener("play", () => {
-      //   setVideoVolume(video);
-      // });
+      video.addEventListener("play", () => {
+        setVideoVolume(video);
+      });
     }
   }
 
@@ -113,6 +113,7 @@
         const videos = document.querySelectorAll("video");
         videos.forEach((video) => {
           handleVideoEvents(video);
+          setVideoVolume(video);
         });
       }
     });
@@ -127,6 +128,7 @@
   // Initial check for existing video elements
   document.querySelectorAll("video").forEach((video) => {
     handleVideoEvents(video);
+    setVideoVolume(video);
   });
 
   // Inject styles and override play method when the script loads
