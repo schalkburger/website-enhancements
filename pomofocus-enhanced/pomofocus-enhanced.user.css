@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Pomofocus Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.18
+@version        1.0.19
 @description    Pomofocus Enhanced UserStyle
 @author         Schalk Burger
 ==/UserStyle== */
@@ -9,7 +9,7 @@
   :root {
     --background-inherit: inherit;
     --background-transparent: transparent;
-    --background-red: #5a1210;
+    --background-red: --bg-color;
   }
   body {
     font-family: ui-rounded, "Hiragino Maru Gothic ProN", Quicksand, Comfortaa, Manjari, "Arial Rounded MT", "Arial Rounded MT Bold", Calibri, source-sans-pro, sans-serif;
@@ -17,6 +17,11 @@
     scroll-behavior: smooth;
     min-height: 372px;
     min-width: 205px;
+  }
+
+  .sc-cTjmhe.ghIaVu,
+  div#target div div div div div div:first-of-type {
+    background-color: transparent !important;
   }
 
   .dJVrAI {
@@ -128,7 +133,8 @@
 
   @media only screen and (min-width: 1280px) {
     .zsZxH,
-    .bBIPnZ {
+    .bBIPnZ,
+    .jhGoLn {
       max-width: 100vw;
     }
   }
