@@ -2,11 +2,10 @@
 // @name         Skribblio Enhanced
 // @namespace    https://github.com/schalkburger/website-enhancements
 // @match        *://skribbl.io/*
-// @include      *://skribbl.io/*
-// @version      1.0.3
+// @version      1.0.4
 // @author       Schalk Burger <schalkb@gmail.com>
 // @description  Skribblio Enhanced
-// @license MIT
+// @license      MIT
 // ==/UserScript==
 
 (function () {
