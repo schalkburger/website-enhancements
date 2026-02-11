@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Pomofocus Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.19
+@version        1.0.20
 @description    Pomofocus Enhanced UserStyle
 @author         Schalk Burger
 ==/UserStyle== */
@@ -19,8 +19,12 @@
     min-width: 205px;
   }
 
-  .sc-cTjmhe.ghIaVu,
+  /* .sc-cTjmhe.ghIaVu,
   div#target div div div div div div:first-of-type {
+    background-color: transparent !important;
+  }
+   */
+  .sc-cTjmhe.ghIaVu {
     background-color: transparent !important;
   }
 
@@ -99,7 +103,7 @@
     }
 
     #timer-string {
-      font-size: 109.66px;
+      font-size: 175.66px;
     }
   }
 
@@ -121,13 +125,37 @@
       padding: 0;
     }
 
-    .hGyQKb {
+    .hGyQKb,
+    .jhGoLn {
       max-width: none;
     }
 
     #timer-string {
       font-size: 287.07px;
       margin-top: 0;
+    }
+    .sc-jtggT.iIAGtm {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50%;
+    }
+    .ePMNEC {
+      font-size: 25px;
+    }
+    .sc-iYUSvU.ePMNEC {
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+
+      font-weight: 500;
+    }
+    .zsZxH,
+    .bBIPnZ,
+    .jhGoLn {
+      max-width: 100vw;
     }
   }
 
