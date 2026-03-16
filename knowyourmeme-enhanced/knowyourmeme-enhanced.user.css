@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Know Your Meme Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.0
+@version        1.0.1
 @description    Know Your Meme Enhanced UserStyle
 @author         Schalk Burger
 ==/UserStyle== */
@@ -43,10 +43,24 @@
     display: none;
   }
 
+  #photo_gallery .gallery-group {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 2fr 2fr 2fr 3fr;
+    grid-template-rows: auto;
+    grid-row-gap: 10px;
+  }
+
   #infinite-scroll-wrapper {
     column-count: 1;
     column-gap: 10px;
     overflow: hidden;
+  }
+
+  #infinite-scroll-wrapper .pagination {
+    overflow: visible;
+    text-align: center;
+    font-size: 1.5em;
   }
 
   #photo_gallery {

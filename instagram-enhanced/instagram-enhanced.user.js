@@ -1,137 +1,161 @@
 // ==UserScript==
 // @name         Instagram Enhanced
 // @namespace    http://tampermonkey.net/
-// @version      1.7.3
-// @description  Automatically clicks the next reel button, sets video volume to 50%, applies custom styles to scrollWrapper, and prevents videos from auto-playing
+// @version      2.1.1
+// @description  Volume persists across Reels, menu-adjustable, and RAM cleanup.
 // @author       Schalk Burger <schalkb@gmail.com>
 // @match        https://www.instagram.com/*
-// @grant        none
+// @grant        GM_setValue
+// @grant        GM_getValue
+// @grant        GM_registerMenuCommand
 // ==/UserScript==
 
 (function () {
   "use strict";
 
-  // Inject custom CSS styles
-  function injectStyles() {
-    const style = document.createElement("style");
-    style.type = "text/css";
-    style.innerHTML = `
-            #scrollWrapper {
-                bottom: 100px !important;
-                right: 50px !important;
-            }
-        `;
-    document.head.appendChild(style);
-    console.log("Custom styles injected for #scrollWrapper");
+  const SETTINGS = {
+    get volume() {
+      return GM_getValue("ig_volume", 0.5);
+    },
+    preventAutoplay: true,
+    autoNext: true,
+    ramSaverEnabled: true,
+    checkInterval: 1500,
+    distanceThreshold: 1000,
+  };
+
+  function registerMenu() {
+    GM_registerMenuCommand("🔊 Set Volume", () => {
+      const currentVol = Math.round(SETTINGS.volume * 100);
+      const input = prompt("Enter volume level (0 to 100):", currentVol);
+
+      if (input !== null) {
+        const newVol = parseFloat(input);
+        if (!isNaN(newVol) && newVol >= 0 && newVol <= 100) {
+          GM_setValue("ig_volume", newVol / 100);
+          // Apply immediately to all videos on screen
+          document.querySelectorAll("video").forEach(applyVideoSettings);
+        }
+      }
+    });
   }
 
-  // Function to find and click the button-down element
-  function clickNextReelButton() {
-    const buttonDown = document.querySelector("#scrollWrapper .button-down");
-    if (buttonDown) {
-      buttonDown.click();
-      console.log("Clicked button-down");
-    } else {
-      console.warn("button-down element not found");
+  /**
+   * Forces the volume to the saved setting.
+   * Uses a slight delay to ensure it overrides Instagram's internal React state.
+   */
+  function applyVideoSettings(video) {
+    if (!video || video.dataset.cleaned === "true") return;
+
+    const targetVol = SETTINGS.volume;
+
+    // Apply multiple times with slight delays to win the "race" against IG scripts
+    const forceVolume = () => {
+      if (video.volume !== targetVol) {
+        video.volume = targetVol;
+      }
+      if (targetVol > 0 && video.muted) {
+        video.muted = false;
+      }
+    };
+
+    forceVolume();
+    setTimeout(forceVolume, 100);
+    setTimeout(forceVolume, 500); // Final check after half a second
+  }
+
+  function handleVideoEvents(video) {
+    if (!video.dataset.enhancedProcessed) {
+      video.dataset.enhancedProcessed = "true";
+
+      // Apply volume immediately
+      applyVideoSettings(video);
+
+      // Re-apply whenever the video starts playing
+      video.addEventListener("play", () => applyVideoSettings(video));
+
+      // CRITICAL: Re-apply if Instagram tries to change the volume/mute automatically
+      video.addEventListener("volumechange", () => {
+        const target = SETTINGS.volume;
+        // Only force if it differs significantly to avoid infinite loops
+        if (Math.abs(video.volume - target) > 0.01 || (target > 0 && video.muted)) {
+          applyVideoSettings(video);
+        }
+      });
+
+      if (SETTINGS.autoNext) {
+        video.addEventListener("ended", () => {
+          const buttonDown = document.querySelector("#scrollWrapper .button-down");
+          if (buttonDown) buttonDown.click();
+        });
+      }
+
+      if (SETTINGS.preventAutoplay && !video.paused) {
+        video.pause();
+      }
+      video.dataset.autoplayPrevented = "true";
     }
   }
 
-  //Function to set video volume to 25%
-  function setVideoVolume(video) {
-    video.volume = 0.25; // Set volume to 25% (range is 0.0 to 1.0)
-    console.log("Set video volume to 25%");
+  // --- RAM SAVER LOGIC ---
+  function cleanUpReels() {
+    if (!SETTINGS.ramSaverEnabled || !window.location.href.includes("/reels/")) return;
+    document.querySelectorAll("video").forEach((video) => {
+      const rect = video.getBoundingClientRect();
+      if (rect.bottom < -SETTINGS.distanceThreshold && (video.src || video.querySelector("source"))) {
+        video.pause();
+        video.removeAttribute("src");
+        video.querySelectorAll("source").forEach((s) => s.remove());
+        video.load();
+        video.dataset.cleaned = "true";
+      }
+    });
   }
 
-  // Function to prevent video autoplay
-  function preventVideoAutoplay(video) {
-    // Ensure video is paused
-    if (!video.paused) {
-      video.pause();
-      console.log("Paused video to prevent autoplay");
-    }
-    // Mark video as processed to avoid redundant pausing
-    video.dataset.autoplayPrevented = "true";
-  }
-
-  // Override video play method to prevent programmatic autoplay
-  function overridePlayMethod() {
+  // --- INTERACTION TRACKING & OVERRIDE ---
+  function setupPlayOverride() {
     const originalPlay = HTMLVideoElement.prototype.play;
     HTMLVideoElement.prototype.play = function () {
-      // Only allow play if triggered by user interaction
-      if (this.dataset.autoplayPrevented && !isUserInteraction()) {
-        console.log("Blocked programmatic play attempt");
-        return Promise.resolve(); // Return resolved promise to avoid breaking code expecting a promise
+      const isUser = ["click", "touchstart", "mousedown"].includes(document.body.dataset.lastEvent);
+      if (SETTINGS.preventAutoplay && this.dataset.autoplayPrevented && !isUser) {
+        return Promise.resolve();
       }
       return originalPlay.apply(this);
     };
 
-    // Helper function to detect user interaction
-    function isUserInteraction() {
-      const userEvents = ["click", "touchstart", "mousedown"];
-      // Check if the last event was a user interaction
-      return userEvents.some((eventType) => {
-        const lastEvent = document.querySelector("body").dataset.lastEvent;
-        return lastEvent === eventType;
-      });
-    }
-
-    // Track user interaction events
-    ["click", "touchstart", "mousedown"].forEach((eventType) => {
+    ["click", "touchstart", "mousedown"].forEach((type) => {
       document.addEventListener(
-        eventType,
+        type,
         () => {
-          document.querySelector("body").dataset.lastEvent = eventType;
+          document.body.dataset.lastEvent = type;
         },
         { capture: true },
       );
     });
   }
 
-  // Function to handle video events
-  function handleVideoEvents(video) {
-    // Mark video to avoid duplicate processing
-    if (!video.dataset.autoNextListener) {
-      video.dataset.autoNextListener = "true";
-      // Prevent autoplay
-      preventVideoAutoplay(video);
-      // Handle reel end
-      video.addEventListener("ended", () => {
-        console.log("Reel ended, attempting to click next");
-        clickNextReelButton();
-      });
-      // Handle video play start
-      video.addEventListener("play", () => {
-        setVideoVolume(video);
-      });
-    }
+  // --- INITIALIZATION ---
+  function init() {
+    const style = document.createElement("style");
+    style.innerHTML = `#scrollWrapper { bottom: 100px !important; right: 50px !important; }`;
+    document.head.appendChild(style);
+
+    registerMenu();
+    setupPlayOverride();
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((m) =>
+        m.addedNodes.forEach((node) => {
+          if (node.tagName === "VIDEO") handleVideoEvents(node);
+          else if (node.querySelectorAll) node.querySelectorAll("video").forEach(handleVideoEvents);
+        }),
+      );
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+    document.querySelectorAll("video").forEach(handleVideoEvents);
+    setInterval(cleanUpReels, SETTINGS.checkInterval);
   }
 
-  // Observe DOM changes to detect video elements
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.addedNodes.length) {
-        const videos = document.querySelectorAll("video");
-        videos.forEach((video) => {
-          handleVideoEvents(video);
-          setVideoVolume(video);
-        });
-      }
-    });
-  });
-
-  // Start observing the document for video elements
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
-
-  // Initial check for existing video elements
-  document.querySelectorAll("video").forEach((video) => {
-    handleVideoEvents(video);
-    setVideoVolume(video);
-  });
-
-  // Inject styles and override play method when the script loads
-  injectStyles();
-  overridePlayMethod();
+  init();
 })();

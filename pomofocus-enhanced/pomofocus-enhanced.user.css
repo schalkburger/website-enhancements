@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Pomofocus Enhanced
 @namespace      https://github.com/schalkburger/website-enhancements
-@version        1.0.20
+@version        1.0.21
 @description    Pomofocus Enhanced UserStyle
 @author         Schalk Burger
 ==/UserStyle== */
@@ -156,6 +156,9 @@
     .bBIPnZ,
     .jhGoLn {
       max-width: 100vw;
+    }
+    .zsZxH button {
+      z-index: 50;
     }
   }
 
