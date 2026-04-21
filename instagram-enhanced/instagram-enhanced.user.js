@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Instagram Enhanced
 // @namespace    https://github.com/schalkburger/website-enhancements
-// @version      2.4.2
+// @version      2.4.4
 // @description  Volume persists across Reels, menu-adjustable, and RAM cleanup. Includes toggleable options for fixed volume, auto-next, prevent autoplay, native controls, and context menu UI hiding.
 // @author       Schalk Burger <schalkb@gmail.com>
 // @match        https://www.instagram.com/*
@@ -45,14 +45,10 @@
     GM_registerMenuCommand("🔊 Toggle Fixed Volume", () => {
       const newState = !SETTINGS.fixedVolumeEnabled;
       GM_setValue("ig_fixedVolumeEnabled", newState);
-      alert(`Fixed volume ${newState ? "enabled" : "disabled"}`);
+      alert(`Fixed volume ${newState ? "enabled (enforced)" : "disabled (persistent only)"}`);
     });
 
     GM_registerMenuCommand("🔊 Set Volume", () => {
-      if (!SETTINGS.fixedVolumeEnabled) {
-        alert("Fixed volume is disabled. Enable it first via 'Toggle Fixed Volume'.");
-        return;
-      }
       const currentVol = Math.round(SETTINGS.volume * 100);
       const input = prompt("Enter volume level (0 to 100):", currentVol);
       if (input !== null) {
@@ -91,30 +87,34 @@
   }
 
   function applyVideoSettings(video) {
-    if (!video || video.dataset.cleaned === "true" || !SETTINGS.fixedVolumeEnabled) return;
+    if (!video || video.dataset.cleaned === "true") return;
+
     const targetVol = SETTINGS.volume;
     const forceVolume = () => {
       if (video.volume !== targetVol) video.volume = targetVol;
       if (targetVol > 0 && video.muted) video.muted = false;
     };
-    forceVolume();
-    setTimeout(forceVolume, 100);
-    setTimeout(forceVolume, 500);
+
+    // If Fixed Volume is ON, we force it multiple times to win against IG's scripts
+    if (SETTINGS.fixedVolumeEnabled) {
+      forceVolume();
+      setTimeout(forceVolume, 100);
+      setTimeout(forceVolume, 500);
+    } else {
+      // If Fixed Volume is OFF, we only apply the "last known" volume ONCE at start
+      if (!video.dataset.initialVolumeApplied) {
+        forceVolume();
+        video.dataset.initialVolumeApplied = "true";
+      }
+    }
   }
 
-  /**
-   * Specifically targets the "Next Reel" button based on its ARIA label
-   */
   function autoAdvanceReel() {
     if (!SETTINGS.autoNext) return;
-
-    // Target by ARIA label - the most stable selector
     const nextButton = document.querySelector('div[aria-label="Navigate to next Reel"]');
-
     if (nextButton) {
       nextButton.click();
     } else {
-      // Fallback: Keyboard simulation
       const event = new KeyboardEvent("keydown", {
         key: "ArrowDown",
         code: "ArrowDown",
@@ -136,19 +136,15 @@
   }
 
   function findVideoUIElements(video) {
-    // Improved discovery using closest()
     const container = video.closest('div[style*="aspect-ratio"]')?.parentElement || video.parentElement;
     if (!container) return null;
-
     const bottomBar = container.querySelector('div[style*="order: 2"]') || container.nextElementSibling;
     const readMoreButton = container.querySelector('div[role="button"][class*="x1i10hfl"]');
-
     return { videoParent: container, bottomBar, readMoreButton };
   }
 
   function setupVideoContextMenu(video) {
     if (video.dataset.contextMenuSetup === "true" || !SETTINGS.hideUIWithControls) return;
-
     const uiElements = findVideoUIElements(video);
     if (!uiElements) return;
 
@@ -192,7 +188,6 @@
 
       video.addEventListener("play", () => {
         applyVideoSettings(video);
-        // Prevent autoplay check
         const isUserInitiated = ["click", "touchstart", "mousedown"].includes(document.body.dataset.lastEvent);
         if (SETTINGS.preventAutoplay && !isUserInitiated && !video.dataset.userPlayed) {
           video.pause();
@@ -200,30 +195,40 @@
       });
 
       video.addEventListener("volumechange", () => {
-        const target = SETTINGS.volume;
-        if (SETTINGS.fixedVolumeEnabled && (Math.abs(video.volume - target) > 0.01 || (target > 0 && video.muted))) {
-          applyVideoSettings(video);
-        }
-        if (video.dataset.volumeCompleted === "true") {
+        // ALWAYS save the volume if the user changes it, so it persists to the next Reel
+        if (video.volume !== SETTINGS.volume && video.volume > 0) {
           GM_setValue("ig_volume", video.volume);
         }
-        if (video.volume === SETTINGS.volume) {
-          video.dataset.volumeCompleted = "true";
+
+        // Only enforce/sync UI if Fixed Volume is specifically enabled
+        if (SETTINGS.fixedVolumeEnabled) {
+          const target = SETTINGS.volume;
+          if (Math.abs(video.volume - target) > 0.01 || (target > 0 && video.muted)) {
+            video.volume = target;
+            video.muted = false;
+          }
+
+          const ui = findVideoUIElements(video);
+          if (ui && ui.videoParent) {
+            const muteButton = ui.videoParent.parentElement?.querySelector('[role="button"][aria-label*="Mute"]');
+            if (muteButton) {
+              const buttonIsMuted = !muteButton.querySelector('svg path[d*="M16.636"]');
+              if (video.muted !== buttonIsMuted) {
+                muteButton.click();
+              }
+            }
+          }
         }
       });
 
-      // Mark video as user-interacted when clicked
       video.addEventListener("mousedown", () => {
         video.dataset.userPlayed = "true";
       });
 
       video.addEventListener("ended", () => {
-        if (SETTINGS.autoNext) {
-          autoAdvanceReel();
-        }
+        if (SETTINGS.autoNext) autoAdvanceReel();
       });
 
-      // Initial pause if preventAutoplay is on
       if (SETTINGS.preventAutoplay) {
         setTimeout(() => {
           if (!video.dataset.userPlayed) video.pause();
