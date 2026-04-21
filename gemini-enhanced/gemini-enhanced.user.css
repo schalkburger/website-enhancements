@@ -1,0 +1,16 @@
+/* ==UserStyle==
+@name           Gemini Enhanced
+@namespace      https://github.com/schalkburger/website-enhancements
+@version        1.0.0
+@description    Gemini Enhanced UserStyle
+@author         Schalk Burger
+==/UserStyle== */
+@-moz-document domain("gemini.google.com") {
+  :root {
+    --color-white: #fff;
+  }
+
+  .enterprise-ogb-wrapper.ng-star-inserted {
+    background: var(--color-white);
+  }
+}
