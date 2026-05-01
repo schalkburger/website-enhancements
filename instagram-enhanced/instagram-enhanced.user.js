@@ -1,245 +1,380 @@
 // ==UserScript==
-// @name         Instagram Enhanced
-// @namespace    https://github.com/schalkburger/website-enhancements
-// @version      2.5.2
-// @description  Volume persists across Reels, menu-adjustable, and RAM cleanup. Includes toggleable options for fixed volume, auto-next, prevent autoplay, native controls, and context menu UI hiding.
-// @author       Schalk Burger <schalkb@gmail.com>
-// @match        https://www.instagram.com/*
-// @grant        GM_setValue
-// @grant        GM_getValue
-// @grant        GM_registerMenuCommand
-// @grant        GM_info
+// @name                Instagram Enhanced
+// @namespace           https://github.com/schalkburger/website-enhancements
+// @version             3.0.1
+// @description         Instagram video controls: looping, HTML5 controller, volume control, and Reels scroll buttons
+// @author              Schalk Burger <schalkb@gmail.com>
+// @match               https://*.instagram.com/*
+// @grant               GM_info
+// @grant               GM_setValue
+// @grant               GM_getValue
+// @grant               GM_addStyle
+// @icon                https://www.google.com/s2/favicons?domain=www.instagram.com&sz=32
+// @compatible          firefox >= 100
+// @compatible          chrome >= 100
+// @compatible          edge >= 100
+// @license             GPL-3.0-only
+// @run-at              document-idle
 // ==/UserScript==
 
 (function () {
   "use strict";
 
   let version = GM_info.script.version;
-  console.log(`Instagram Enhanced ${version} - Active`);
+  let name = GM_info.script.name;
+  console.log(`${name} ${version} - Active`);
 
+  // ========== HARDCODED SETTINGS ==========
   const SETTINGS = {
-    get volume() {
-      return GM_getValue("ig_volume", 0.25);
-    },
-    get fixedVolumeEnabled() {
-      return GM_getValue("ig_fixedVolumeEnabled", true);
-    },
-    get preventAutoplay() {
-      return GM_getValue("ig_preventAutoplay", true);
-    },
-    get autoNext() {
-      return GM_getValue("ig_autoNext", true);
-    },
-    get showNativeControls() {
-      return GM_getValue("ig_showNativeControls", true);
-    },
-    get hideUIWithControls() {
-      return GM_getValue("ig_hideUIWithControls", true);
-    },
-    ramSaverEnabled: true,
-    checkInterval: 1500,
-    distanceThreshold: 1000,
+    DISABLE_VIDEO_LOOPING: true,
+    HTML5_VIDEO_CONTROL: true,
+    MODIFY_VIDEO_VOLUME: true,
+    SCROLL_BUTTON: true,
+    PREVENT_AUTOPLAY: true, // New Setting added
   };
 
-  // Helper to prevent recursive volume saving
-  let isInternalChange = false;
+  // ========== STATE MANAGEMENT ==========
+  const state = {
+    videoVolume: GM_getValue("IG_VIDEO_VOLUME") ?? 0.5,
+    currentPage: location.pathname,
+    processedVideos: new WeakSet(),
+  };
 
-  function registerMenu() {
-    GM_registerMenuCommand("🔊 Toggle Fixed Volume", () => {
-      const newState = !SETTINGS.fixedVolumeEnabled;
-      GM_setValue("ig_fixedVolumeEnabled", newState);
-      alert(`Fixed volume ${newState ? "enabled (enforced)" : "disabled (persistent only)"}`);
-    });
-
-    GM_registerMenuCommand("🔊 Set Volume", () => {
-      const currentVol = Math.round(SETTINGS.volume * 100);
-      const input = prompt("Enter volume level (0 to 100):", currentVol);
-      if (input !== null) {
-        const newVol = parseFloat(input);
-        if (!isNaN(newVol) && newVol >= 0 && newVol <= 100) {
-          isInternalChange = true;
-          GM_setValue("ig_volume", newVol / 100);
-          document.querySelectorAll("video").forEach((v) => forceVideoVolume(v, true));
-          isInternalChange = false;
-        }
-      }
-    });
-
-    GM_registerMenuCommand("⏭️ Toggle Auto-Next", () => {
-      const newState = !SETTINGS.autoNext;
-      GM_setValue("ig_autoNext", newState);
-      alert(`Auto-next ${newState ? "enabled" : "disabled"}`);
-    });
-
-    GM_registerMenuCommand("⏸️ Toggle Prevent Autoplay", () => {
-      const newState = !SETTINGS.preventAutoplay;
-      GM_setValue("ig_preventAutoplay", newState);
-      alert(`Prevent autoplay ${newState ? "enabled" : "disabled"}`);
-    });
-
-    GM_registerMenuCommand("🎮 Toggle Native Controls", () => {
-      const newState = !SETTINGS.showNativeControls;
-      GM_setValue("ig_showNativeControls", newState);
-      alert(`Native controls ${newState ? "enabled" : "disabled"}`);
-      document.querySelectorAll("video").forEach(applyVideoControls);
-    });
-
-    GM_registerMenuCommand("👁️ Toggle Hide UI With Controls", () => {
-      const newState = !SETTINGS.hideUIWithControls;
-      GM_setValue("ig_hideUIWithControls", newState);
-      alert(`Hide UI with controls ${newState ? "enabled" : "disabled"}`);
-    });
+  // ========== UTILITIES ==========
+  function logger(...args) {
+    console.log("[IG Helper]", ...args);
   }
 
-  function applyVideoSettings(video) {
-    if (!video || video.dataset.cleaned === "true") return;
+  function saveVolume(volume) {
+    state.videoVolume = volume;
+    GM_setValue("IG_VIDEO_VOLUME", volume);
+  }
 
-    const targetVol = SETTINGS.volume;
+  function getVolume() {
+    return state.videoVolume;
+  }
 
-    if (SETTINGS.fixedVolumeEnabled || userAction || !video.dataset.initialVolumeApplied) {
-      isInternalChange = true;
-      if (video.volume !== targetVol) video.volume = targetVol;
-      if (video.muted) video.muted = false;
-      video.dataset.initialVolumeApplied = "true";
-      isInternalChange = false;
+  function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
+
+  // ========== INLINE STYLES ==========
+  const styles = `
+    [aria-label="Video player"] {
+      display: none;
     }
-  }
 
-  function autoAdvanceReel() {
-    if (!SETTINGS.autoNext) return;
-    const nextButton = document.querySelector('div[aria-label="Navigate to next Reel"]');
-    if (nextButton) {
-      nextButton.click();
-    } else {
-      const event = new KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true });
-      document.dispatchEvent(event);
+    .ig-scroll-button {
+      position: fixed;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      transition: background 0.3s ease;
+      border: none;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      display: none;
     }
-  }
 
-  function findVideoUIElements(video) {
-    const container = video.closest('div[style*="aspect-ratio"]')?.parentElement || video.parentElement;
-    if (!container) return null;
-    const bottomBar = container.querySelector('div[style*="order: 2"]') || container.nextElementSibling;
-    return { videoParent: container, bottomBar };
-  }
+    .ig-scroll-button:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
 
-  function handleVideoEvents(video) {
-    if (!video.dataset.enhancedProcessed) {
-      video.dataset.enhancedProcessed = "true";
+    .ig-scroll-up {
+      top: 20px;
+    }
 
-      // Apply settings immediately
-      forceVideoVolume(video);
+    .ig-scroll-down {
+      bottom: 20px;
+    }
 
-      video.addEventListener("loadedmetadata", () => forceVideoVolume(video));
+    .ig-volume-slider {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 8px;
+      z-index: 999;
+      width: 50px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
 
-      video.addEventListener("play", () => {
-        forceVideoVolume(video);
-        // Secondary check to beat React's deferred volume reset
-        setTimeout(() => forceVideoVolume(video), 150);
+    .ig-volume-slider.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-        const isUser = ["click", "touchstart", "mousedown"].includes(document.body.dataset.lastEvent);
-        if (SETTINGS.preventAutoplay && !isUser && !video.dataset.userPlayed) {
+    .ig-volume-slider input {
+      width: 30px;
+      height: 100px;
+      writing-mode: vertical-lr;
+      direction: rtl;
+      cursor: pointer;
+    }
+
+    .ig-volume-label {
+      color: white;
+      font-size: 12px;
+      text-align: center;
+    }
+  `;
+
+  GM_addStyle(styles);
+  logger("Script loaded - Video controls enabled");
+
+  // ========== VIDEO VOLUME & PLAYBACK CONTROL ==========
+  function setupVideoEventListeners(video) {
+    if (state.processedVideos.has(video)) return;
+    state.processedVideos.add(video);
+
+    // Prevent Auto-play of the current reel
+    if (SETTINGS.PREVENT_AUTOPLAY) {
+      video.removeAttribute("autoplay");
+
+      const preventInitialPlay = () => {
+        if (!video.dataset.autoplayPrevented) {
           video.pause();
+          video.dataset.autoplayPrevented = "true";
+          logger("Initial auto-play prevented");
+        }
+      };
+      video.addEventListener("playing", preventInitialPlay);
+    }
+
+    // Enable HTML5 video controls
+    if (SETTINGS.HTML5_VIDEO_CONTROL) {
+      video.controls = true;
+      video.controlsList.add("nodownload");
+      logger("HTML5 video controls enabled");
+    }
+
+    // Disable video looping
+    if (SETTINGS.DISABLE_VIDEO_LOOPING) {
+      video.addEventListener("ended", (e) => {
+        if (!video.dataset.loopDisabled) {
+          video.dataset.loopDisabled = "true";
+          video.pause();
+          logger("Video loop disabled");
         }
       });
+    }
+
+    // Set initial volume and overrides
+    if (SETTINGS.MODIFY_VIDEO_VOLUME) {
+      const enforceVolumeAndMute = () => {
+        video.volume = getVolume();
+        video.muted = false;
+      };
+
+      enforceVolumeAndMute();
+
+      video.addEventListener("play", enforceVolumeAndMute);
+      video.addEventListener("playing", enforceVolumeAndMute);
 
       video.addEventListener("volumechange", () => {
-        if (isInternalChange) return;
+        if (!video.dataset.volumeSet && !video.muted) {
+          video.dataset.volumeSet = "true";
+          saveVolume(video.volume);
 
-        // If the change was significant, assume user interaction via native controls or IG UI
-        const currentVol = video.volume;
-        const savedVol = SETTINGS.volume;
-
-        if (SETTINGS.fixedVolumeEnabled) {
-          // In Fixed mode, if it's not our volume, force it back
-          if (Math.abs(currentVol - savedVol) > 0.01 || video.muted) {
-            forceVideoVolume(video);
-          }
-        } else {
-          // In Persistent mode, save the new volume as the future default
-          if (currentVol > 0 && Math.abs(currentVol - savedVol) > 0.01) {
-            GM_setValue("ig_volume", currentVol);
-          }
+          setTimeout(() => {
+            video.dataset.volumeSet = "";
+          }, 100);
         }
-      });
-
-      video.addEventListener("mousedown", () => {
-        video.dataset.userPlayed = "true";
-      });
-
-      video.addEventListener("ended", () => {
-        if (SETTINGS.autoNext) autoAdvanceReel();
       });
     }
   }
 
-  function setupPlayOverride() {
-    // 1. Play Override
-    const originalPlay = HTMLVideoElement.prototype.play;
-    HTMLVideoElement.prototype.play = function () {
-      const isUser = ["click", "touchstart", "mousedown"].includes(document.body.dataset.lastEvent);
-      if (SETTINGS.preventAutoplay && !isUser && !this.dataset.userPlayed) {
-        return Promise.resolve();
-      }
-      return originalPlay.apply(this);
-    };
-
-    // 2. Volume Setter Override - The most robust way to stop Instagram's reset
-    const descriptor = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, "volume");
-    Object.defineProperty(HTMLMediaElement.prototype, "volume", {
-      get() {
-        return descriptor.get.call(this);
-      },
-      set(v) {
-        if (SETTINGS.fixedVolumeEnabled && !isInternalChange) {
-          // Block Instagram from setting anything other than our saved volume
-          return descriptor.set.call(this, SETTINGS.volume);
-        }
-        return descriptor.set.call(this, v);
-      },
-    });
-
-    ["click", "touchstart", "mousedown"].forEach((type) => {
-      document.addEventListener(
-        type,
-        () => {
-          document.body.dataset.lastEvent = type;
-        },
-        { capture: true },
-      );
-    });
+  // ========== VIDEO OBSERVER ==========
+  function observeVideos() {
+    const videos = document.querySelectorAll("video");
+    videos.forEach(setupVideoEventListeners);
   }
 
-  function cleanUpReels() {
-    if (!SETTINGS.ramSaverEnabled || !window.location.href.includes("/reels/")) return;
-    document.querySelectorAll("video").forEach((video) => {
+  const debouncedObserveVideos = debounce(observeVideos, 150);
+
+  const videoObserver = new MutationObserver(() => {
+    debouncedObserveVideos();
+  });
+
+  videoObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+
+  observeVideos();
+
+  // ========== REELS RAM SAVER ==========
+  function cleanupOffscreenReels() {
+    if (!location.pathname.startsWith("/reels/")) return;
+
+    const videos = document.querySelectorAll("video");
+    const DISTANCE_THRESHOLD = 1000;
+
+    videos.forEach((video) => {
       const rect = video.getBoundingClientRect();
-      if (rect.bottom < -SETTINGS.distanceThreshold) {
-        video.pause();
-        video.src = "";
-        video.load();
-        video.remove();
+
+      if (rect.bottom < -DISTANCE_THRESHOLD) {
+        if (video.src || video.querySelector("source")) {
+          video.pause();
+          video.removeAttribute("src");
+          video.querySelectorAll("source").forEach((source) => source.remove());
+          video.load();
+          logger("Cleaned up off-screen Reel from memory");
+        }
       }
     });
   }
 
-  function init() {
-    registerMenu();
-    setupPlayOverride();
+  let reelsCleanupInterval = null;
 
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((m) =>
-        m.addedNodes.forEach((node) => {
-          if (node.tagName === "VIDEO") handleVideoEvents(node);
-          else if (node.querySelectorAll) node.querySelectorAll("video").forEach(handleVideoEvents);
-        }),
-      );
-    });
+  const checkReelsCleanup = debounce(() => {
+    if (location.pathname.startsWith("/reels/") && !reelsCleanupInterval) {
+      reelsCleanupInterval = setInterval(cleanupOffscreenReels, 2000);
+      logger("Started Reels RAM cleanup");
+    } else if (!location.pathname.startsWith("/reels/") && reelsCleanupInterval) {
+      clearInterval(reelsCleanupInterval);
+      reelsCleanupInterval = null;
+      logger("Stopped Reels RAM cleanup");
+    }
+  }, 200);
 
-    observer.observe(document.body, { childList: true, subtree: true });
-    document.querySelectorAll("video").forEach(handleVideoEvents);
-    setInterval(cleanUpReels, SETTINGS.checkInterval);
+  const reelsCleanupObserver = new MutationObserver(() => {
+    checkReelsCleanup();
+  });
+
+  reelsCleanupObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+
+  if (location.pathname.startsWith("/reels/")) {
+    reelsCleanupInterval = setInterval(cleanupOffscreenReels, 2000);
   }
 
-  init();
+  // ========== REELS SCROLL BUTTONS ==========
+  function setupReelsScrollButtons() {
+    if (!location.pathname.startsWith("/reels/")) return;
+
+    if (document.querySelector(".ig-scroll-up")) return;
+
+    logger("Setting up Reels scroll buttons");
+
+    const upButton = document.createElement("button");
+    upButton.className = "ig-scroll-button ig-scroll-up";
+    upButton.textContent = "⬆";
+    upButton.title = "Scroll up";
+
+    const downButton = document.createElement("button");
+    downButton.className = "ig-scroll-button ig-scroll-down";
+    downButton.textContent = "⬇";
+    downButton.title = "Scroll down";
+
+    const volumeSlider = document.createElement("div");
+    volumeSlider.className = "ig-volume-slider";
+
+    const volumeInput = document.createElement("input");
+    volumeInput.type = "range";
+    volumeInput.min = "0";
+    volumeInput.max = "1";
+    volumeInput.step = "0.1";
+    volumeInput.value = getVolume();
+    volumeInput.title = "Volume";
+
+    const volumeLabel = document.createElement("div");
+    volumeLabel.className = "ig-volume-label";
+    volumeLabel.textContent = Math.round(getVolume() * 100) + "%";
+
+    volumeSlider.appendChild(volumeInput);
+    volumeSlider.appendChild(volumeLabel);
+
+    upButton.addEventListener("click", () => {
+      window.scrollBy({ top: -window.innerHeight, behavior: "smooth" });
+    });
+
+    downButton.addEventListener("click", () => {
+      window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
+    });
+
+    volumeInput.addEventListener("mouseover", () => {
+      volumeSlider.classList.add("show");
+    });
+
+    volumeInput.addEventListener("input", (e) => {
+      const vol = parseFloat(e.target.value);
+      saveVolume(vol);
+      volumeLabel.textContent = Math.round(vol * 100) + "%";
+
+      document.querySelectorAll("video").forEach((video) => {
+        video.volume = vol;
+        video.muted = false;
+      });
+    });
+
+    volumeSlider.addEventListener("mouseleave", () => {
+      volumeSlider.classList.remove("show");
+    });
+
+    document.body.appendChild(upButton);
+    document.body.appendChild(downButton);
+    document.body.appendChild(volumeSlider);
+  }
+
+  // ========== NAVIGATION LOGIC ==========
+  function checkPageAndSetupReels() {
+    if (location.pathname !== state.currentPage) {
+      state.currentPage = location.pathname;
+
+      // FIX: WeakSet does not have a .clear() method.
+      // We reassign it to a new WeakSet to flush old video references.
+      state.processedVideos = new WeakSet();
+
+      if (SETTINGS.SCROLL_BUTTON) {
+        const oldButtons = document.querySelectorAll(".ig-scroll-button, .ig-volume-slider");
+        oldButtons.forEach((btn) => btn.remove());
+
+        if (location.pathname.startsWith("/reels/")) {
+          setupReelsScrollButtons();
+        }
+      }
+    }
+  }
+
+  window.addEventListener("popstate", checkPageAndSetupReels);
+
+  const debouncedCheckPage = debounce(checkPageAndSetupReels, 150);
+  const navigationObserver = new MutationObserver(() => {
+    if (location.pathname !== state.currentPage) {
+      debouncedCheckPage();
+    }
+  });
+
+  navigationObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+
+  if (SETTINGS.SCROLL_BUTTON) {
+    checkPageAndSetupReels();
+  }
+
+  logger("Script initialization complete");
 })();

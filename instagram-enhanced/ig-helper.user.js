@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name               IG Helper - Video Controls
 // @namespace          https://github.com/schalkburger/website-enhancements
-// @version            5.0.5
+// @version            5.0.7
 // @description        Instagram video controls: looping, HTML5 controller, volume control, and Reels scroll buttons
 // @author             SN-Koarashi (5026), refactored
 // @match              https://*.instagram.com/*
@@ -30,11 +30,11 @@
     HTML5_VIDEO_CONTROL: true,
     MODIFY_VIDEO_VOLUME: true,
     SCROLL_BUTTON: true,
+    PREVENT_AUTOPLAY: true, // New Setting added
   };
 
   // ========== STATE MANAGEMENT ==========
   const state = {
-    // FIX: Set default volume to 50% (0.5)
     videoVolume: GM_getValue("IG_VIDEO_VOLUME") ?? 0.5,
     currentPage: location.pathname,
     processedVideos: new WeakSet(),
@@ -54,7 +54,6 @@
     return state.videoVolume;
   }
 
-  // PERFORMANCE FIX: Debounce utility to prevent MutationObservers from freezing the browser
   function debounce(func, wait) {
     let timeout;
     return function (...args) {
@@ -65,7 +64,6 @@
 
   // ========== INLINE STYLES ==========
   const styles = `
-
     [aria-label="Video player"] {
       display: none;
     }
@@ -87,6 +85,7 @@
       color: white;
       font-size: 24px;
       font-weight: bold;
+      display: none;
     }
 
     .ig-scroll-button:hover {
@@ -142,10 +141,24 @@
   GM_addStyle(styles);
   logger("Script loaded - Video controls enabled");
 
-  // ========== VIDEO VOLUME CONTROL ==========
+  // ========== VIDEO VOLUME & PLAYBACK CONTROL ==========
   function setupVideoEventListeners(video) {
     if (state.processedVideos.has(video)) return;
     state.processedVideos.add(video);
+
+    // Prevent Auto-play of the current reel
+    if (SETTINGS.PREVENT_AUTOPLAY) {
+      video.removeAttribute("autoplay");
+
+      const preventInitialPlay = () => {
+        if (!video.dataset.autoplayPrevented) {
+          video.pause();
+          video.dataset.autoplayPrevented = "true";
+          logger("Initial auto-play prevented");
+        }
+      };
+      video.addEventListener("playing", preventInitialPlay);
+    }
 
     // Enable HTML5 video controls
     if (SETTINGS.HTML5_VIDEO_CONTROL) {
@@ -167,25 +180,21 @@
 
     // Set initial volume and overrides
     if (SETTINGS.MODIFY_VIDEO_VOLUME) {
-      // FIX: Force unmute and set volume on initialization
       const enforceVolumeAndMute = () => {
         video.volume = getVolume();
-        video.muted = false; // Prevents Instagram from muting on pause/resume
+        video.muted = false;
       };
 
       enforceVolumeAndMute();
 
-      // FIX: Apply the forced unmute whenever the video starts or resumes playing
       video.addEventListener("play", enforceVolumeAndMute);
       video.addEventListener("playing", enforceVolumeAndMute);
 
       video.addEventListener("volumechange", () => {
-        // Only save if the change was triggered by the user (not by our script enforcing it)
         if (!video.dataset.volumeSet && !video.muted) {
           video.dataset.volumeSet = "true";
           saveVolume(video.volume);
 
-          // Reset the flag shortly after to allow future user changes
           setTimeout(() => {
             video.dataset.volumeSet = "";
           }, 100);
@@ -200,10 +209,8 @@
     videos.forEach(setupVideoEventListeners);
   }
 
-  // PERFORMANCE: Debounce the observer to prevent CPU spikes on heavy DOM mutations
   const debouncedObserveVideos = debounce(observeVideos, 150);
 
-  // Watch for new videos added to DOM
   const videoObserver = new MutationObserver(() => {
     debouncedObserveVideos();
   });
@@ -213,37 +220,32 @@
     subtree: true,
   });
 
-  // Initial scan
   observeVideos();
 
   // ========== REELS RAM SAVER ==========
-  // Removes off-screen videos from memory to reduce RAM usage on Reels pages
   function cleanupOffscreenReels() {
     if (!location.pathname.startsWith("/reels/")) return;
 
     const videos = document.querySelectorAll("video");
-    const DISTANCE_THRESHOLD = 1000; // Distance in pixels above viewport to trigger cleanup
+    const DISTANCE_THRESHOLD = 1000;
 
     videos.forEach((video) => {
       const rect = video.getBoundingClientRect();
 
-      // If video is far above the viewport, remove its source to free memory
       if (rect.bottom < -DISTANCE_THRESHOLD) {
         if (video.src || video.querySelector("source")) {
           video.pause();
           video.removeAttribute("src");
           video.querySelectorAll("source").forEach((source) => source.remove());
-          video.load(); // Force browser to drop the buffer from RAM
+          video.load();
           logger("Cleaned up off-screen Reel from memory");
         }
       }
     });
   }
 
-  // Run cleanup every 2 seconds on Reels page
   let reelsCleanupInterval = null;
 
-  // PERFORMANCE: Debounce checking for navigation changes
   const checkReelsCleanup = debounce(() => {
     if (location.pathname.startsWith("/reels/") && !reelsCleanupInterval) {
       reelsCleanupInterval = setInterval(cleanupOffscreenReels, 2000);
@@ -264,7 +266,6 @@
     subtree: true,
   });
 
-  // Initial check for Reels page
   if (location.pathname.startsWith("/reels/")) {
     reelsCleanupInterval = setInterval(cleanupOffscreenReels, 2000);
   }
@@ -273,7 +274,6 @@
   function setupReelsScrollButtons() {
     if (!location.pathname.startsWith("/reels/")) return;
 
-    // Check if buttons already exist
     if (document.querySelector(".ig-scroll-up")) return;
 
     logger("Setting up Reels scroll buttons");
@@ -306,17 +306,14 @@
     volumeSlider.appendChild(volumeInput);
     volumeSlider.appendChild(volumeLabel);
 
-    // Scroll up handler
     upButton.addEventListener("click", () => {
       window.scrollBy({ top: -window.innerHeight, behavior: "smooth" });
     });
 
-    // Scroll down handler
     downButton.addEventListener("click", () => {
       window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
     });
 
-    // Volume slider handlers
     volumeInput.addEventListener("mouseover", () => {
       volumeSlider.classList.add("show");
     });
@@ -326,10 +323,9 @@
       saveVolume(vol);
       volumeLabel.textContent = Math.round(vol * 100) + "%";
 
-      // Update all videos
       document.querySelectorAll("video").forEach((video) => {
         video.volume = vol;
-        video.muted = false; // Ensure it unmutes if user changes slider
+        video.muted = false;
       });
     });
 
@@ -342,14 +338,16 @@
     document.body.appendChild(volumeSlider);
   }
 
-  // Setup Reels buttons on page load and navigation
+  // ========== NAVIGATION LOGIC ==========
   function checkPageAndSetupReels() {
     if (location.pathname !== state.currentPage) {
       state.currentPage = location.pathname;
-      state.processedVideos.clear(); // Clear processed videos on navigation
+
+      // FIX: WeakSet does not have a .clear() method.
+      // We reassign it to a new WeakSet to flush old video references.
+      state.processedVideos = new WeakSet();
 
       if (SETTINGS.SCROLL_BUTTON) {
-        // Remove old buttons if navigating away from reels
         const oldButtons = document.querySelectorAll(".ig-scroll-button, .ig-volume-slider");
         oldButtons.forEach((btn) => btn.remove());
 
@@ -360,10 +358,8 @@
     }
   }
 
-  // Monitor URL changes
   window.addEventListener("popstate", checkPageAndSetupReels);
 
-  // PERFORMANCE: Debounce navigation observer
   const debouncedCheckPage = debounce(checkPageAndSetupReels, 150);
   const navigationObserver = new MutationObserver(() => {
     if (location.pathname !== state.currentPage) {
@@ -376,7 +372,6 @@
     subtree: true,
   });
 
-  // Initial check
   if (SETTINGS.SCROLL_BUTTON) {
     checkPageAndSetupReels();
   }
