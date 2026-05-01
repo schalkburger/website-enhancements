@@ -76,9 +76,22 @@
       GM_setValue("ig_preventAutoplay", newState);
       alert(`Prevent autoplay ${newState ? "enabled" : "disabled"}`);
     });
+
+    GM_registerMenuCommand("🎮 Toggle Native Controls", () => {
+      const newState = !SETTINGS.showNativeControls;
+      GM_setValue("ig_showNativeControls", newState);
+      alert(`Native controls ${newState ? "enabled" : "disabled"}`);
+      document.querySelectorAll("video").forEach(applyVideoControls);
+    });
+
+    GM_registerMenuCommand("👁️ Toggle Hide UI With Controls", () => {
+      const newState = !SETTINGS.hideUIWithControls;
+      GM_setValue("ig_hideUIWithControls", newState);
+      alert(`Hide UI with controls ${newState ? "enabled" : "disabled"}`);
+    });
   }
 
-  function forceVideoVolume(video, userAction = false) {
+  function applyVideoSettings(video) {
     if (!video || video.dataset.cleaned === "true") return;
 
     const targetVol = SETTINGS.volume;
