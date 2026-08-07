@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bitbucket PR Enhancer
 // @namespace    https://github.com/schalkburger/website-enhancements
-// @version      1.1.0
+// @version      1.1.4
 // @author       Schalk Burger <schalkb@gmail.com>
 // @description  Auto-reload stale PRs, prefix tab title with PR number, copy branch name on click, sticky editor toolbar
 // @match        https://bitbucket.org/*/*/pull-requests/*
@@ -37,6 +37,7 @@
   function clickReloadIfPresent() {
     const btn = findReloadButton();
     if (btn) {
+      showToast("Automatically reloading stale PR");
       btn.click();
     }
   }
@@ -44,7 +45,7 @@
   const reloadObserver = new MutationObserver(() => clickReloadIfPresent());
   reloadObserver.observe(document.body, { childList: true, subtree: true });
   // Also check periodically in case the button appears without a DOM mutation we catch.
-  setInterval(clickReloadIfPresent, 3000);
+  setInterval(clickReloadIfPresent, 1500);
 
   // ---------- (2) Prepend PR number to tab title ----------
   function prefixTitle() {
@@ -152,9 +153,9 @@
       "bottom:24px",
       "left:50%",
       "transform:translateX(-50%)",
-      "background:#174d24",
+      "background:#1c3329",
       "color:#fff",
-      "padding:12px 20px",
+      "padding:15px 20px",
       "border-radius:4px",
       "font-size:14px",
       'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif',
