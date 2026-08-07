@@ -345,10 +345,10 @@
     }
     [data-testid="ak-editor-main-toolbar"] {
       position: sticky !important;
-      top: 60px;
-      z-index: 50;
+      top: 104px;
+      z-index: 185;
       border-bottom: 1px solid #696c72;
-      padding-bottom: 6px;
+      padding-bottom: 6px !important;
     }
     [data-branch-copy-chip="true"] {
       cursor: pointer;
