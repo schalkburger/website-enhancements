@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Bitbucket PR Enhancer
 // @namespace    https://github.com/schalkburger/website-enhancements
-// @version      1.1.4
+// @version      1.4.1
 // @author       Schalk Burger <schalkb@gmail.com>
-// @description  Auto-reload stale PRs, prefix tab title with PR number, copy branch name on click, sticky editor toolbar
+// @description  Auto-reload stale PRs, prefix tab title with PR number, copy branch name on click, sticky editor toolbar, copy comment permalink, copy PR link
 // @match        https://bitbucket.org/*/*/pull-requests/*
 // @match        https://bitbucket.org/*/*/branch/*
 // @run-at       document-idle
@@ -100,24 +100,10 @@
       event.preventDefault();
       event.stopPropagation();
 
-      copyToClipboard(branchName, codeMessage("Copied branch name: ", branchName));
+      copyToClipboard(branchName, "Branch copied to clipboard");
     },
     true,
   );
-
-  // Builds a toast message fragment: "<label><code>value</code>". Using
-  // real DOM nodes (rather than an HTML string) means the value is set via
-  // textContent, so it's rendered literally even if it contains characters
-  // that would otherwise be interpreted as markup.
-  function codeMessage(label, value) {
-    const fragment = document.createDocumentFragment();
-    fragment.appendChild(document.createTextNode(label));
-    const code = document.createElement("code");
-    code.textContent = value;
-    code.style.cssText = "background:rgba(255,255,255,0.15);padding:2px 5px;border-radius:3px;font-family:monospace;";
-    fragment.appendChild(code);
-    return fragment;
-  }
 
   function copyToClipboard(text, successMessage) {
     navigator.clipboard
@@ -149,20 +135,25 @@
       toast.textContent = message;
     }
     toast.style.cssText = [
-      "position:fixed",
-      "bottom:24px",
+      "align-items: center",
+      "background: #3F5224",
+      "border-radius: var(--ds-radius-large,8px)",
+      "border: 1px solid #ffffff1a",
+      "bottom:50px",
+      "box-shadow: var(--ds-shadow-overlay)",
+      "color: #fff",
+      "color:#fff",
+      "display: flex",
+      "font: var(--ds-font-heading-xsmall)",
+      "gap: 6px",
+      "justify-content: center",
       "left:50%",
       "transform:translateX(-50%)",
-      "background:#1c3329",
-      "color:#fff",
-      "padding:15px 20px",
-      "border-radius:4px",
-      "font-size:14px",
-      'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif',
-      "z-index:99999",
-      "box-shadow:0 4px 12px rgba(0,0,0,0.25)",
-      "opacity:0",
+      "padding: 16px",
+      "position:fixed",
+      "text-align: center",
       "transition:opacity 0.15s ease-in-out",
+      "z-index: 1000",
     ].join(";");
     document.body.appendChild(toast);
     requestAnimationFrame(() => {
@@ -171,7 +162,7 @@
     setTimeout(() => {
       toast.style.opacity = "0";
       setTimeout(() => toast.remove(), 200);
-    }, 5000);
+    }, 6000);
   }
 
   // ---------- (5) Copy comment button ----------
@@ -265,7 +256,7 @@
       separator.setAttribute("aria-hidden", "true");
 
       const copyBtn = document.createElement("span");
-      copyBtn.textContent = "Copy";
+      copyBtn.textContent = "Copy comment";
       copyBtn.setAttribute("role", "button");
       copyBtn.tabIndex = 0;
       copyBtn.style.cursor = "pointer";
@@ -282,7 +273,7 @@
         const commentUrl = findCommentUrl(actionRow);
         if (commentUrl) parts.push(commentUrl);
 
-        copyToClipboard(parts.join("\n\n"), "Copied comment");
+        copyToClipboard(parts.join("\n\n"), "Comment copied to clipboard");
       });
 
       actionRow.appendChild(separator);
@@ -293,6 +284,82 @@
   const commentObserver = new MutationObserver(injectCopyButtons);
   commentObserver.observe(document.body, { childList: true, subtree: true });
   injectCopyButtons();
+
+  // ---------- (7) Copy comment permalink on "commented on <file>" click ----------
+  // Each comment's header line ("<Author> commented on <file>.tsx <time>")
+  // has an <a href="/…/diff#comment-<id>"> around the filename that
+  // normally navigates to that comment. We intercept it and copy the
+  // absolute permalink instead.
+  function findCommentFileLink(target) {
+    const link = target.closest('a[href*="#comment-"]');
+    return link;
+  }
+
+  document.addEventListener(
+    "click",
+    (event) => {
+      const link = findCommentFileLink(event.target);
+      if (!link) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const commentUrl = new URL(link.getAttribute("href"), location.origin).href;
+      copyToClipboard(commentUrl, "Comment link copied to clipboard");
+    },
+    true,
+  );
+
+  // ---------- (8) Copy PR URL on "#<id>" click ----------
+  // The PR meta line ("#1917 • Created 5 days ago • Last updated ...") is a
+  // plain, non-interactive <span> with no click handler of its own — safe
+  // to hook. We wrap just the leading "#<id>" text in its own span so the
+  // click target (and cursor) don't cover the "Created/Last updated" text.
+  function findPrMetaSpan() {
+    const match = location.pathname.match(/\/pull-requests\/(\d+)/);
+    if (!match) return null;
+    const prefix = `#${match[1]}`;
+    return [...document.querySelectorAll("span")].find((el) => el.children.length === 0 && el.textContent.trim().startsWith(`${prefix} •`));
+  }
+
+  function tagPrIdChip() {
+    const span = findPrMetaSpan();
+    if (!span || span.querySelector('[data-pr-id-copy-chip="true"]')) return;
+
+    const text = span.textContent;
+    const sepIndex = text.indexOf("•");
+    if (sepIndex === -1) return;
+
+    const idPart = text.slice(0, sepIndex); // "#1917 "
+    const restPart = text.slice(sepIndex);
+
+    const idChip = document.createElement("span");
+    idChip.textContent = idPart;
+    idChip.dataset.prIdCopyChip = "true";
+    idChip.title = "Copy PR link";
+
+    span.textContent = "";
+    span.appendChild(idChip);
+    span.appendChild(document.createTextNode(restPart));
+  }
+
+  document.addEventListener(
+    "click",
+    (event) => {
+      const chip = event.target.closest('[data-pr-id-copy-chip="true"]');
+      if (!chip) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      copyToClipboard(location.href, "PR link copied to clipboard");
+    },
+    true,
+  );
+
+  const prIdChipObserver = new MutationObserver(tagPrIdChip);
+  prIdChipObserver.observe(document.body, { childList: true, subtree: true });
+  tagPrIdChip();
 
   // ---------- (6) Copy branch name on branch pages ----------
   // On /branch/<name> pages, the "Compare" section renders the source
@@ -321,7 +388,7 @@
       event.preventDefault();
       event.stopPropagation();
 
-      copyToClipboard(branchName, codeMessage("Copied branch: ", branchName));
+      copyToClipboard(branchName, "Branch copied to clipboard");
     },
     true,
   );
@@ -341,19 +408,36 @@
   // ---------- (4) Sticky editor toolbar ----------
   const style = document.createElement("style");
   style.textContent = `
-    .akEditor {
-      position: relative;
-    }
-    [data-testid="ak-editor-main-toolbar"] {
-      position: sticky !important;
-      top: 104px;
-      z-index: 185;
-      border-bottom: 1px solid #696c72;
-      padding-bottom: 6px !important;
-    }
-    [data-branch-copy-chip="true"] {
-      cursor: pointer;
-    }
+   .akEditor {
+     position: relative;
+   }
+
+   [data-testid="ak-editor-main-toolbar"] {
+     position: sticky !important;
+     top: 104px;
+     z-index: 185;
+     border-bottom: 1px solid #696c72;
+     padding-bottom: 6px !important;
+   }
+
+   [data-branch-copy-chip="true"],
+   [data-pr-id-copy-chip="true"] {
+     cursor: pointer;
+   }
+
+   [data-pr-id-copy-chip="true"] {
+     font-size: 12px;
+     background: #123263;
+     padding: 3px 8px;
+     border-radius: 4px;
+     display: inline-flex;
+     justify-content: center;
+     align-items: center;
+     margin-top: 5px;
+     margin-right: 5px;
+     color: white;
+     line-height: 1.45;
+   }
   `;
   document.head.appendChild(style);
 })();
