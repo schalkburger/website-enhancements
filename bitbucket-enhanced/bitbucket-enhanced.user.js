@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bitbucket PR Enhancer
 // @namespace    https://github.com/schalkburger/website-enhancements
-// @version      1.4.1
+// @version      1.6.0
 // @author       Schalk Burger <schalkb@gmail.com>
 // @description  Auto-reload stale PRs, prefix tab title with PR number, copy branch name on click, sticky editor toolbar, copy comment permalink, copy PR link
 // @match        https://bitbucket.org/*/*/pull-requests/*
