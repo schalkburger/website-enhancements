@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name        Bitbucket Enhanced 1.7.0
+// @name        Bitbucket Enhanced 1.7.2
 // @namespace   https://github.com/schalkburger/website-enhancements
-// @version     1.7.0
+// @version     1.7.2
 // @author      Schalk Burger <schalkb@gmail.com>
 // @description Auto-reload stale PRs, prefix tab title with PR number, Copy Branch/Copy PR buttons, sticky editor toolbar, copy comment permalink, pipeline finish notifications
 // @match       https://bitbucket.org/*/*/pull-requests/*
@@ -93,7 +93,9 @@
 
   function ensureNotifyToggle() {
     if (document.querySelector('[data-bb-enhanced-pipeline-notify-toggle="true"]')) return;
-    const header = [...document.querySelectorAll("button")].find((b) => PIPELINE_RUNNING_BUTTON_TEXT.test((b.textContent || "").trim()) || PIPELINE_TERMINAL_BUTTON_TEXT.test((b.textContent || "").trim()));
+    const header = [...document.querySelectorAll("button")].find(
+      (b) => PIPELINE_RUNNING_BUTTON_TEXT.test((b.textContent || "").trim()) || PIPELINE_TERMINAL_BUTTON_TEXT.test((b.textContent || "").trim()),
+    );
     if (!header || !header.parentElement) return;
 
     const toggle = document.createElement("button");
@@ -541,8 +543,8 @@
    [data-bb-enhanced-action-btn="true"] {
      font-size: 12px;
      font-weight: 500;
-     background: #123263;
-     border: none;
+     background: transparent;
+     border: 1px solid rgb(169, 171, 175);
      padding: 6px 12px;
      border-radius: var(--ds-radius-large, 8px);
      display: inline-flex;
@@ -555,7 +557,7 @@
    }
 
    [data-bb-enhanced-action-btn="true"]:hover {
-     background: #1b3f7a;
+     background: var(--ds-background-neutral-subtle-hovered,#0515240f);
    }
   `;
   document.head.appendChild(style);
