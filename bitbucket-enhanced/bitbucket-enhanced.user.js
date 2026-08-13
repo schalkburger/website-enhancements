@@ -1,14 +1,15 @@
 // ==UserScript==
-// @name         Bitbucket PR Enhancer
-// @namespace    https://github.com/schalkburger/website-enhancements
-// @version      1.6.0
-// @author       Schalk Burger <schalkb@gmail.com>
-// @description  Auto-reload stale PRs, prefix tab title with PR number, copy branch name on click, sticky editor toolbar, copy comment permalink, copy PR link
-// @match        https://bitbucket.org/*/*/pull-requests/*
-// @match        https://bitbucket.org/*/*/branch/*
-// @run-at       document-idle
-// @grant        none
-// @license MIT
+// @name        Bitbucket Enhanced 1.7.0
+// @namespace   https://github.com/schalkburger/website-enhancements
+// @version     1.7.0
+// @author      Schalk Burger <schalkb@gmail.com>
+// @description Auto-reload stale PRs, prefix tab title with PR number, Copy Branch/Copy PR buttons, sticky editor toolbar, copy comment permalink, pipeline finish notifications
+// @match       https://bitbucket.org/*/*/pull-requests/*
+// @match       https://bitbucket.org/*/*/branch/*
+// @match       https://bitbucket.org/*/*/pipelines/results/*
+// @run-at      document-idle
+// @grant       none
+// @license     MIT
 // ==/UserScript==
 
 (function () {
@@ -47,6 +48,117 @@
   // Also check periodically in case the button appears without a DOM mutation we catch.
   setInterval(clickReloadIfPresent, 1500);
 
+  // ---------- (9) Notify when pipeline finishes ----------
+  // On a pipeline results page, the header button reads "Stop" while the
+  // pipeline is running and switches to "Rerun" (or similar) once it
+  // reaches a terminal state — the same discriminator Bitbucket itself
+  // uses to decide whether the pipeline can still be cancelled. We watch
+  // for that transition rather than the status icon, since icon classes
+  // are build-hashed and unstable.
+  const PIPELINE_RUNNING_BUTTON_TEXT = /^stop$/i;
+  const PIPELINE_TERMINAL_BUTTON_TEXT = /^(rerun|run again)$/i;
+
+  // Pure classifier: given the set of header button labels on a pipeline
+  // results page, decide whether the pipeline is running, finished, or
+  // indeterminate (e.g. page still loading, no matching button yet).
+  // Exported on window for unit testing outside the userscript sandbox.
+  function classifyPipelineState(buttonLabels) {
+    const labels = buttonLabels.map((l) => (l || "").trim());
+    if (labels.some((l) => PIPELINE_RUNNING_BUTTON_TEXT.test(l))) return "running";
+    if (labels.some((l) => PIPELINE_TERMINAL_BUTTON_TEXT.test(l))) return "finished";
+    return "unknown";
+  }
+
+  function getPipelineResultId() {
+    const match = location.pathname.match(/\/pipelines\/results\/(\d+)/);
+    return match ? match[1] : null;
+  }
+
+  function notifyPipelineFinished(resultId) {
+    const body = `Pipeline #${resultId} finished`;
+    if (typeof Notification !== "undefined" && Notification.permission === "granted" && document.hidden) {
+      const notification = new Notification("Bitbucket pipeline finished", { body });
+      notification.onclick = () => {
+        window.focus();
+        notification.close();
+      };
+    } else {
+      showToast(body);
+    }
+  }
+
+  const pipelineNotifiedIds = new Set();
+  let pipelineTrackedId = null;
+  let pipelineWasRunning = false;
+
+  function ensureNotifyToggle() {
+    if (document.querySelector('[data-bb-enhanced-pipeline-notify-toggle="true"]')) return;
+    const header = [...document.querySelectorAll("button")].find((b) => PIPELINE_RUNNING_BUTTON_TEXT.test((b.textContent || "").trim()) || PIPELINE_TERMINAL_BUTTON_TEXT.test((b.textContent || "").trim()));
+    if (!header || !header.parentElement) return;
+
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.textContent = "🔔 Notify on finish";
+    toggle.title = "Show a browser notification when this pipeline finishes";
+    toggle.dataset.bbEnhancedPipelineNotifyToggle = "true";
+    toggle.dataset.bbEnhancedActionBtn = "true";
+    toggle.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (typeof Notification === "undefined") {
+        showToast("Notifications not supported in this browser");
+        return;
+      }
+      Notification.requestPermission().then((permission) => {
+        showToast(permission === "granted" ? "Will notify when this pipeline finishes" : "Notification permission denied — falling back to on-page toast");
+      });
+    });
+
+    header.parentElement.appendChild(toggle);
+  }
+
+  function checkPipelineFinished() {
+    const resultId = getPipelineResultId();
+    if (!resultId) return;
+
+    if (resultId !== pipelineTrackedId) {
+      // Navigated to a different pipeline result (SPA nav) — reset the
+      // running flag for the new id, but keep pipelineNotifiedIds so a
+      // pipeline that already notified once doesn't notify again if the
+      // user navigates back to it while it's still in the same terminal state.
+      pipelineTrackedId = resultId;
+      pipelineWasRunning = false;
+    }
+
+    const buttonLabels = [...document.querySelectorAll("button")].map((b) => b.textContent);
+    const state = classifyPipelineState(buttonLabels);
+
+    if (state === "running") {
+      pipelineWasRunning = true;
+      return;
+    }
+
+    if (state === "finished" && pipelineWasRunning && !pipelineNotifiedIds.has(resultId)) {
+      pipelineNotifiedIds.add(resultId);
+      notifyPipelineFinished(resultId);
+    }
+  }
+
+  if (location.pathname.includes("/pipelines/results/")) {
+    const pipelineObserver = new MutationObserver(() => {
+      ensureNotifyToggle();
+      checkPipelineFinished();
+    });
+    // The Stop->Rerun button swap may happen as a characterData mutation
+    // (React updating the text node in place) rather than a childList
+    // change, so watch both. Also poll on an interval as a backstop, same
+    // belt-and-braces approach as the reload-button watcher above.
+    pipelineObserver.observe(document.body, { childList: true, subtree: true, characterData: true });
+    setInterval(checkPipelineFinished, 2000);
+    ensureNotifyToggle();
+    checkPipelineFinished();
+  }
+
   // ---------- (2) Prepend PR number to tab title ----------
   function prefixTitle() {
     const match = location.pathname.match(/\/pull-requests\/(\d+)/);
@@ -67,43 +179,6 @@
   if (titleEl) {
     titleObserver.observe(titleEl, { childList: true });
   }
-
-  // ---------- (1) Copy branch name on click ----------
-  // Bitbucket renders the source branch as a div[role="button"] whose
-  // combined textContent repeats the branch name multiple times (visually
-  // hidden duplicates for truncation/tooltip) plus a "Branch: " prefix, e.g.
-  // "Branch: feat/FD-2532-...feat/FD-2532-...feat/FD-2532-...". Clicking it
-  // normally opens Bitbucket's own branch popup. We intercept in the
-  // capture phase, read the clean name from the first aria-hidden span
-  // inside it, and stop the click before Bitbucket's handler runs.
-  function findBranchButton(target) {
-    return target.closest('[role="button"]');
-  }
-
-  function getBranchName(branchButton) {
-    const span = branchButton.querySelector('span[aria-hidden="true"]');
-    const text = span ? span.textContent.trim() : "";
-    // Branch names look like git refs: no spaces, contains a slash.
-    if (text && !text.includes(" ") && text.includes("/")) return text;
-    return null;
-  }
-
-  document.addEventListener(
-    "click",
-    (event) => {
-      const branchButton = findBranchButton(event.target);
-      if (!branchButton) return;
-
-      const branchName = getBranchName(branchButton);
-      if (!branchName) return;
-
-      event.preventDefault();
-      event.stopPropagation();
-
-      copyToClipboard(branchName, "Branch copied to clipboard");
-    },
-    true,
-  );
 
   function copyToClipboard(text, successMessage) {
     navigator.clipboard
@@ -310,56 +385,95 @@
     true,
   );
 
-  // ---------- (8) Copy PR URL on "#<id>" click ----------
-  // The PR meta line ("#1917 • Created 5 days ago • Last updated ...") is a
-  // plain, non-interactive <span> with no click handler of its own — safe
-  // to hook. We wrap just the leading "#<id>" text in its own span so the
-  // click target (and cursor) don't cover the "Created/Last updated" text.
-  function findPrMetaSpan() {
-    const match = location.pathname.match(/\/pull-requests\/(\d+)/);
+  // ---------- (8) Copy Branch / Copy PR buttons ----------
+  // Injected next to the Approve / More-actions row on a PR page. Anchor on
+  // the Approve button (aria-label is stable; classNames are build-hashed)
+  // and walk up to the nearest role="group" ancestor that holds exactly the
+  // Approve + More-actions pair — that's the row shown in the reference
+  // screenshot. Bitbucket relabels Approve to "Unapprove"/"Approved" once
+  // clicked, so we key off "approve" appearing anywhere in the label, and
+  // re-run on every mutation since the row is torn down/rebuilt on
+  // approve/unapprove.
+  function canonicalPrUrl() {
+    const match = location.pathname.match(/^(.*\/pull-requests\/\d+)/);
     if (!match) return null;
-    const prefix = `#${match[1]}`;
-    return [...document.querySelectorAll("span")].find((el) => el.children.length === 0 && el.textContent.trim().startsWith(`${prefix} •`));
+    return `${location.origin}${match[1]}`;
   }
 
-  function tagPrIdChip() {
-    const span = findPrMetaSpan();
-    if (!span || span.querySelector('[data-pr-id-copy-chip="true"]')) return;
+  function findActionButtonRow() {
+    const approveBtn = [...document.querySelectorAll("button")].find((b) => /approv/i.test(b.getAttribute("aria-label") || ""));
+    if (!approveBtn) return null;
 
-    const text = span.textContent;
-    const sepIndex = text.indexOf("•");
-    if (sepIndex === -1) return;
-
-    const idPart = text.slice(0, sepIndex); // "#1917 "
-    const restPart = text.slice(sepIndex);
-
-    const idChip = document.createElement("span");
-    idChip.textContent = idPart;
-    idChip.dataset.prIdCopyChip = "true";
-    idChip.title = "Copy PR link";
-
-    span.textContent = "";
-    span.appendChild(idChip);
-    span.appendChild(document.createTextNode(restPart));
+    let el = approveBtn.parentElement;
+    for (let i = 0; i < 10 && el; i++) {
+      if (el.getAttribute && el.getAttribute("role") === "group" && el.querySelectorAll("button").length >= 2) {
+        return el;
+      }
+      el = el.parentElement;
+    }
+    return null;
   }
 
-  document.addEventListener(
-    "click",
-    (event) => {
-      const chip = event.target.closest('[data-pr-id-copy-chip="true"]');
-      if (!chip) return;
+  function findSourceBranchName() {
+    // The branch chip pair ("source -> destination") sits in the PR header,
+    // above the action row. Scope the search to the header (the action
+    // row's ancestor a few levels up) rather than the whole document, so
+    // we can't accidentally match some other role="button" element with an
+    // aria-hidden span elsewhere on the page. Source is the first chip in
+    // DOM order; its clean text lives in an aria-hidden span (visible text
+    // is duplicated for truncation/tooltip rendering).
+    const row = findActionButtonRow();
+    const header = row ? row.closest("header") || row.parentElement?.parentElement?.parentElement || document : document;
+    const chip = header.querySelector('[role="button"] span[aria-hidden="true"]');
+    if (!chip) return null;
+    const text = chip.textContent.trim();
+    if (text && !text.includes(" ") && text.includes("/")) return text;
+    return null;
+  }
 
+  function makeActionButton(label, title, onClick) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = label;
+    btn.title = title;
+    btn.dataset.bbEnhancedActionBtn = "true";
+    btn.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();
+      onClick();
+    });
+    return btn;
+  }
 
-      copyToClipboard(location.href, "PR link copied to clipboard");
-    },
-    true,
-  );
+  function injectActionButtons() {
+    const row = findActionButtonRow();
+    if (!row || row.dataset.bbEnhancedButtonsInjected) return;
+    row.dataset.bbEnhancedButtonsInjected = "true";
 
-  const prIdChipObserver = new MutationObserver(tagPrIdChip);
-  prIdChipObserver.observe(document.body, { childList: true, subtree: true });
-  tagPrIdChip();
+    const copyBranchBtn = makeActionButton("Copy Branch", "Copy source branch name", () => {
+      const branchName = findSourceBranchName();
+      if (!branchName) {
+        showToast("Could not find branch name");
+        return;
+      }
+      copyToClipboard(branchName, "Branch copied to clipboard");
+    });
+
+    const copyPrBtn = makeActionButton("Copy PR", "Copy PR link", () => {
+      const prUrl = canonicalPrUrl();
+      if (!prUrl) {
+        showToast("Could not find PR link");
+        return;
+      }
+      copyToClipboard(prUrl, "PR link copied to clipboard");
+    });
+
+    row.prepend(copyBranchBtn, copyPrBtn);
+  }
+
+  const actionButtonObserver = new MutationObserver(injectActionButtons);
+  actionButtonObserver.observe(document.body, { childList: true, subtree: true });
+  injectActionButtons();
 
   // ---------- (6) Copy branch name on branch pages ----------
   // On /branch/<name> pages, the "Compare" section renders the source
@@ -420,23 +534,28 @@
      padding-bottom: 6px !important;
    }
 
-   [data-branch-copy-chip="true"],
-   [data-pr-id-copy-chip="true"] {
+   [data-branch-copy-chip="true"] {
      cursor: pointer;
    }
 
-   [data-pr-id-copy-chip="true"] {
+   [data-bb-enhanced-action-btn="true"] {
      font-size: 12px;
+     font-weight: 500;
      background: #123263;
-     padding: 3px 8px;
-     border-radius: 4px;
+     border: none;
+     padding: 6px 12px;
+     border-radius: var(--ds-radius-large, 8px);
      display: inline-flex;
      justify-content: center;
      align-items: center;
-     margin-top: 5px;
-     margin-right: 5px;
+     margin-right: 8px;
      color: white;
+     cursor: pointer;
      line-height: 1.45;
+   }
+
+   [data-bb-enhanced-action-btn="true"]:hover {
+     background: #1b3f7a;
    }
   `;
   document.head.appendChild(style);
