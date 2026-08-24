@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name        Bitbucket Enhanced 1.7.2
+// @name        Bitbucket Enhanced 1.7.3
 // @namespace   https://github.com/schalkburger/website-enhancements
-// @version     1.7.2
+// @version     1.7.3
 // @author      Schalk Burger <schalkb@gmail.com>
 // @description Auto-reload stale PRs, prefix tab title with PR number, Copy Branch/Copy PR buttons, sticky editor toolbar, copy comment permalink, pipeline finish notifications
 // @match       https://bitbucket.org/*/*/pull-requests/*
@@ -417,19 +417,27 @@
   }
 
   function findSourceBranchName() {
-    // The branch chip pair ("source -> destination") sits in the PR header,
-    // above the action row. Scope the search to the header (the action
-    // row's ancestor a few levels up) rather than the whole document, so
-    // we can't accidentally match some other role="button" element with an
-    // aria-hidden span elsewhere on the page. Source is the first chip in
+    // The branch chip pair ("source -> destination") sits above the action
+    // row, but not inside a <header> tag (that's an unrelated page-level
+    // header) and not within a fixed number of parentElement hops either —
+    // Bitbucket's layout has shifted this before. Walk up from the action
+    // row until we hit an ancestor that actually contains a branch chip,
+    // capped so we can't runaway to document and false-match unrelated
+    // role="button" elements elsewhere on the page. role="button" also
+    // wraps things like avatar images (aria-hidden img, not span), so
+    // filter matches to branch-shaped text ("a/b", no spaces) rather than
+    // taking the first hit blindly. Source is the first matching chip in
     // DOM order; its clean text lives in an aria-hidden span (visible text
     // is duplicated for truncation/tooltip rendering).
     const row = findActionButtonRow();
-    const header = row ? row.closest("header") || row.parentElement?.parentElement?.parentElement || document : document;
-    const chip = header.querySelector('[role="button"] span[aria-hidden="true"]');
-    if (!chip) return null;
-    const text = chip.textContent.trim();
-    if (text && !text.includes(" ") && text.includes("/")) return text;
+    if (!row) return null;
+    const isBranchLike = (t) => t && !t.includes(" ") && t.includes("/");
+    let scope = row;
+    for (let i = 0; i < 15 && scope; i++) {
+      const chip = [...scope.querySelectorAll('[role="button"] span[aria-hidden="true"]')].find((s) => isBranchLike(s.textContent.trim()));
+      if (chip) return chip.textContent.trim();
+      scope = scope.parentElement;
+    }
     return null;
   }
 
