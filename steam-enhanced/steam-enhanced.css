@@ -1,0 +1,409 @@
+.steam-enhanced {
+  box-shadow: 1px 1px 0px 0px rgb(8 17 30 / 75%);
+  position: fixed;
+  z-index: 600;
+  top: 10px;
+  right: 20px;
+  opacity: 1;
+  width: 100%;
+  max-width: 150px;
+  margin-bottom: 10px;
+  padding: 6px 6px 6px 15px;
+  background: #171d25;
+  border-radius: 0;
+}
+.steam-enhanced:hover {
+  opacity: 1;
+}
+.steam-enhanced h4 {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 12px;
+  font-weight: 500;
+  color: #b8b6b4;
+}
+.steam-enhanced h4 span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAMAQMAAAC6HhTBAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAAxcPCp77KdQAAAAJ0Uk5TAP9bkSK1AAAAGklEQVR4nGNgQAPMfxgYGH8AGR+AOAFdlgEAUsADSd64CbwAAAAASUVORK5CYII=);
+  background-repeat: no-repeat;
+  background-position: right center;
+  cursor: pointer;
+}
+.steam-enhanced h4 span.toggle {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAMAQMAAAC6HhTBAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAAxcPCp77KdQAAAAJ0Uk5TAP9bkSK1AAAAGUlEQVR4nGNgQAcJQPyBgYHxBwMD8x8MWQBLKANJzkSRZQAAAABJRU5ErkJggg==);
+}
+.steam-enhanced a:hover {
+  text-decoration: underline;
+}
+.steam-enhanced-container {
+  padding: 10px 0 0 5px;
+}
+.steam-enhanced-container.hide {
+  display: none;
+}
+.upload-artwork-link,
+.change-profile-theme {
+  position: relative;
+}
+.upload-artwork-link:hover {
+  text-decoration: underline;
+}
+.change-profile-theme-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #7d7f7f;
+}
+.change-profile-theme {
+  z-index: 400;
+  overflow: visible;
+  min-width: 150px;
+  min-height: 20px;
+  margin-top: 5px;
+  cursor: pointer;
+  color: #fff;
+}
+.change-profile-theme details {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.change-profile-theme details summary {
+  user-select: none;
+}
+.preview-background {
+  z-index: 300;
+}
+.preview-avatar-frame {
+  z-index: 200;
+}
+.useful-links {
+  z-index: 500;
+}
+.change-profile-theme .color-themes,
+.change-profile-theme .useful-links {
+  box-shadow: 1px 2px 4px 2px rgb(0 0 0 / 50%);
+  display: flex;
+  flex-direction: column;
+  min-width: 130px;
+  margin-top: 10px;
+  margin-left: -5px;
+  padding: 15px;
+  padding-top: 5px;
+  padding-left: 25px;
+  background-color: #171d25;
+  border-top: 1px solid #202020;
+  border-radius: 8px;
+  color: #fff;
+}
+.change-profile-theme .useful-links span {
+  display: block;
+  margin: 6px 0 4px 0;
+}
+.change-profile-theme .color-themes span {
+  display: block;
+  margin: 6px 0 4px 0;
+}
+.change-profile-theme .color-themes span:hover {
+  text-decoration: underline;
+}
+#manage_friends .friends-comments-textarea {
+  width: 100%;
+}
+#manage_friends.manage_friends_panel.manage {
+  padding-bottom: 20px;
+}
+.friend_block_v2 .indicator {
+  background-color: #1c4057;
+}
+#showSymbols {
+  margin-left: 0;
+}
+#symbolsModal {
+  box-shadow: 0 0 12px #000000;
+  display: none;
+  position: fixed;
+  z-index: 700;
+  top: 10px;
+  right: 10px;
+  overflow: hidden;
+  overflow-y: scroll;
+  width: 340px;
+  height: calc(95vh);
+  padding: 15px;
+  padding-top: 0;
+  background-color: #171d25;
+  cursor: auto;
+  border: none;
+  color: #fff;
+}
+#symbolsModal.show {
+  display: block;
+}
+#symbolsModal.hide {
+  display: none;
+}
+#symbolsModal #close {
+  position: fixed;
+  top: 20px;
+  right: 34px;
+  font-size: 18px;
+  color: transparent;
+  text-shadow: 0 0 0 white;
+}
+#symbolsModal a {
+  display: block;
+  color: #1a9fff;
+}
+.symbol-picker {
+  position: relative;
+}
+.commentthread_entry_quotebox .commentthread_textarea {
+  resize: vertical;
+  min-height: 80px;
+  padding: 5px;
+}
+.symbolsDialog {
+  box-shadow: 0 0 12px #000000;
+  width: 500px;
+  height: calc(50vh);
+  padding: 15px;
+  padding-top: 0;
+  background-color: #3b3938;
+  border: none;
+  color: #fff;
+}
+.subSectionTitle {
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 0px;
+  font-size: 18px;
+  color: #fff;
+}
+.symbols-container {
+  position: relative;
+  top: 0;
+  overflow: auto;
+  max-width: 590px;
+  max-height: 500px;
+  background: none;
+}
+.symbols-container details {
+  padding: 15px;
+  transition: all 0.3s ease-out;
+}
+.symbols-container details[open] {
+  padding: 15px;
+  background: #171d25;
+}
+.symbols-container summary {
+  cursor: pointer;
+}
+.profileedit_ProfileBoxContent_3s6BB .symbols-container {
+  top: -32px;
+  left: 0;
+}
+.profileedit_ProfileBoxContent_3s6BB .symbols-container details[open] {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.customtext_showcase + .symbols-container {
+  top: 10px;
+  left: 0;
+}
+.customtext_showcase + .symbols-container details[open] {
+  background-color: transparent;
+}
+.profile_content.has_profile_background {
+  overflow: visible;
+}
+.profile_count_link {
+  min-height: 20px;
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+.active-theme span {
+  color: #2e83c9;
+}
+.profile-autoreload-market {
+  display: flex;
+  align-items: center;
+  line-height: normal;
+}
+.steamProfileArtworkContainer {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #17222f;
+}
+.steamProfileArtworkContainer > div {
+  padding-left: 20px;
+}
+.buttonsContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+}
+input[type="text"].fieldInputSuccess {
+  position: relative;
+}
+.alertBlankTitleSet,
+.alertCustomArtworkEnabled {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  width: auto;
+  height: 37px;
+  margin: 15px 0 0 0px;
+  background: transparent;
+  font-size: 16px;
+  line-height: 1;
+  color: #22830f;
+}
+.alertBlankTitleSet,
+.alertCustomArtworkEnabled.longWorkshopGuideEnabled {
+  margin-top: 0;
+}
+.modifyArtworkInstructions blockquote {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.modifyArtworkInstructions blockquote ol {
+  font-size: 16px;
+}
+.modifyArtworkInstructions blockquote ol li {
+  margin-bottom: 10px;
+}
+.modifyArtworkInstructions blockquote code {
+  padding: 2px 4px;
+  background: #1a1a1a;
+}
+.hexEditInstructionsVideo {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  padding-top: 10px;
+  background-image: url(https://store.akamai.steamstatic.com/public/images/v6/maincol_gradient_rule.png);
+  background-repeat: no-repeat;
+  background-position: top left;
+}
+.hexEditInstructionsVideo details {
+  margin-left: 5px;
+  cursor: pointer;
+}
+.hexEditInstructionsVideo {
+  font-size: 16px;
+}
+.embed-container {
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+}
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.customArtworkButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  min-height: 32px;
+  padding: 0 5px;
+  font-size: 15px;
+}
+.customArtworkButtons details {
+  font-size: 16px;
+}
+.customArtworkButtons details[open] {
+  position: relative;
+  top: 0;
+}
+.customArtworkButtons details[open] summary {
+  position: relative;
+  top: 0;
+}
+.customArtworkButtonsWrapper {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 400;
+  top: calc(100% + 2px);
+  left: 0;
+  width: 100%;
+  padding-bottom: 10px;
+  background: rgb(29 77 104);
+}
+.customArtworkButtonsWrapper a {
+  position: relative;
+  z-index: 400;
+  min-width: 140px;
+  padding: 2px 0;
+}
+.enable-custom-artwork-button {
+  padding: 0 15px;
+  line-height: 30px;
+}
+#mainContents .pageTitle {
+  margin-bottom: 10px;
+}
+.blank-title-added {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.switch {
+  display: block;
+  margin-left: 8px;
+}
+.switch input {
+  display: none;
+}
+.switch label {
+  display: block;
+  width: 20px;
+  height: 7px;
+  padding: 3px;
+  transition: 0.3s;
+  cursor: pointer;
+  border: 1px solid #ffffff;
+  border-radius: 15px;
+}
+.switch label::after {
+  content: "";
+  display: inherit;
+  width: 6px;
+  height: 6px;
+  transition: 0.3s;
+  background: #ffffff;
+  border-radius: 12px;
+}
+.switch input:checked ~ label {
+  background: #343434;
+  border-color: #ffffff;
+}
+.switch input:checked ~ label::after {
+  translate: 14px 0;
+  background: #ffffff;
+}
+.switch input:disabled ~ label {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.detailBox {
+  background: transparent;
+}

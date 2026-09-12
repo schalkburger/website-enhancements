@@ -1,0 +1,519 @@
+/* ==UserStyle==
+@name           Steam Enhanced Styles
+@namespace      https://greasyfork.org/en/users/961305-darkharden
+@version        1.0.0
+@description    A collection of styles to enhance Steam.
+@author         Schalk Burger <schalkb@gmail.com>
+==/UserStyle== */
+@-moz-document url-prefix("https://steamcommunity.com/") {
+    /* Insert code here... */
+    .profile_artwork {
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background: rgb(0 0 0 / 25%);
+        background: #141414;
+        opacity: 1;
+        width: 180px;
+    }
+    .profile_artwork:hover {
+        opacity: 1;
+    }
+    .profile_artwork h4 {
+        width: 100%;
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .profile_artwork h4 span {
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAMAQMAAAC6HhTBAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAAxcPCp77KdQAAAAJ0Uk5TAP9bkSK1AAAAGklEQVR4nGNgQAPMfxgYGH8AGR+AOAFdlgEAUsADSd64CbwAAAAASUVORK5CYII=);
+        background-position: right center;
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        cursor: pointer;
+    }
+    .profile_artwork h4 span.toggle {
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAMAQMAAAC6HhTBAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAAxcPCp77KdQAAAAJ0Uk5TAP9bkSK1AAAAGUlEQVR4nGNgQAcJQPyBgYHxBwMD8x8MWQBLKANJzkSRZQAAAABJRU5ErkJggg==);
+    }
+    .profile_artwork a:hover {
+        text-decoration: underline;
+    }
+    .steam-enhanced-container.hide {
+        display: none;
+    }
+    .upload-artwork-link,
+    .change-profile-theme {
+        position: relative;
+    }
+    .upload-artwork-link:hover {
+        text-decoration: underline;
+    }
+    .change-profile-theme-container {
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid #7d7f7f;
+        padding-top: 10px;
+        margin-top: 10px;
+    }
+    .change-profile-theme {
+        min-width: 150px;
+        min-height: 20px;
+        cursor: pointer;
+        overflow: visible;
+        z-index: 400;
+        color: #fff;
+        margin-top: 5px;
+    }
+    .change-profile-theme details {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #141414;
+    }
+    .change-profile-theme details[open] {
+        /* border-radius: 10px 0 10px 10px; */
+        /* box-shadow: 1px 4px 4px 0px #000; */
+    }
+    .change-profile-theme details summary {
+        user-select: none;
+    }
+    .preview-background {
+        z-index: 300;
+    }
+    .preview-avatar-frame {
+        z-index: 200;
+    }
+    .useful-links {
+        z-index: 500;
+    }
+    .change-profile-theme .color-themes,
+    .change-profile-theme .useful-links {
+        display: flex;
+        flex-direction: column;
+        background-color: #141414;
+        color: #fff;
+        padding: 15px;
+        padding-top: 5px;
+        padding-left: 25px;
+        margin-top: 10px;
+        min-width: 150px;
+        margin-left: -5px;
+        border-radius: 8px;
+        box-shadow: 1px 2px 4px 2px rgb(0 0 0 / 50%);
+        border-top: 1px solid #202020;
+    }
+    .change-profile-theme .useful-links span {
+        margin: 6px 0 4px 0;
+        display: block;
+    }
+    .change-profile-theme .color-themes span {
+        margin: 6px 0 4px 0;
+        display: block;
+    }
+    .change-profile-theme .color-themes span:hover {
+        text-decoration: underline;
+    }
+    #manage_friends .friends-comments-textarea {
+        width: 100%;
+    }
+    #manage_friends.manage_friends_panel.manage {
+        padding-bottom: 20px;
+    }
+    .friend_block_v2 .indicator {
+        background-color: #1c4057;
+    }
+    #showSymbols {
+        margin-left: 0;
+    }
+    #symbolsModal {
+        position: fixed;
+        top: 10px;
+        right: 0;
+        background-color: #141414;
+        color: #fff;
+        padding: 15px;
+        padding-top: 0;
+        box-shadow: 0 0 12px #000000;
+        width: 340px;
+        height: calc(95vh);
+        border: none;
+        overflow: hidden;
+        overflow-y: scroll;
+        display: none;
+        z-index: 500;
+        cursor: auto;
+    }
+    #symbolsModal.show {
+        display: block;
+    }
+    #symbolsModal.hide {
+        display: none;
+    }
+    #symbolsModal #close {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        font-size: 14px;
+        color: transparent;
+        text-shadow: 0 0 0 white;
+    }
+    #symbolsModal a {
+        color: #1a9fff;
+        display: block;
+    }
+    .profile_content.has_profile_background {
+        overflow: visible;
+    }
+    .profile_count_link {
+        font-size: 12px;
+        margin-bottom: 4px;
+        min-height: 20px;
+    }
+    .active-theme span {
+        color: #2e83c9;
+    }
+    .profile-autoreload-market {
+        line-height: auto;
+    }
+
+    @supports (-webkit-appearance: none) or (-moz-appearance: none) {
+        input[type="checkbox"],
+        input[type="radio"] {
+            --active: #51a0be;
+            --active-inner: #fff;
+            --focus: 2px rgba(39, 94, 254, 0.3);
+            --border: #c5c3c0;
+            --border-hover: #fff;
+            --background: #141414;
+            --disabled: #f6f8ff;
+            --disabled-inner: #e1e6f9;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            height: 14px;
+            outline: none;
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+            margin: 0;
+            cursor: pointer;
+            border: 1px solid var(--bc, var(--border));
+            background: var(--b, var(--background));
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+            margin-left: 2px;
+            margin-top: 1px;
+        }
+        input[type="checkbox"]:after,
+        input[type="radio"]:after {
+            content: "";
+            display: block;
+            left: 0;
+            top: 0;
+            position: absolute;
+            transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s);
+        }
+        input[type="checkbox"]:checked,
+        input[type="radio"]:checked {
+            --b: var(--active);
+            --bc: var(--active);
+            --d-o: 0.3s;
+            --d-t: 0.6s;
+            --d-t-e: cubic-bezier(0.2, 0.85, 0.32, 1.2);
+        }
+        input[type="checkbox"]:disabled,
+        input[type="radio"]:disabled {
+            --b: var(--disabled);
+            cursor: not-allowed;
+            opacity: 0.9;
+        }
+        input[type="checkbox"]:disabled:checked,
+        input[type="radio"]:disabled:checked {
+            --b: var(--disabled-inner);
+            --bc: var(--border);
+        }
+        input[type="checkbox"]:disabled + label,
+        input[type="radio"]:disabled + label {
+            cursor: not-allowed;
+        }
+        input[type="checkbox"]:hover:not(:checked):not(:disabled),
+        input[type="radio"]:hover:not(:checked):not(:disabled) {
+            --bc: var(--border-hover);
+        }
+        input[type="checkbox"]:focus,
+        input[type="radio"]:focus {
+            box-shadow: 0 0 0 var(--focus);
+        }
+        input[type="checkbox"]:not(.switch),
+        input[type="radio"]:not(.switch) {
+            width: 21px;
+        }
+        input[type="checkbox"]:not(.switch):after,
+        input[type="radio"]:not(.switch):after {
+            opacity: var(--o, 0);
+        }
+        input[type="checkbox"]:not(.switch):checked,
+        input[type="radio"]:not(.switch):checked {
+            --o: 1;
+        }
+        input[type="checkbox"] + label,
+        input[type="radio"] + label {
+            font-size: 14px;
+            line-height: 21px;
+            display: inline-block;
+            vertical-align: top;
+            cursor: pointer;
+            margin-left: 4px;
+        }
+
+        input[type="checkbox"]:not(.switch) {
+            border-radius: 7px;
+        }
+        input[type="checkbox"]:not(.switch):after {
+            width: 5px;
+            height: 9px;
+            border: 2px solid var(--active-inner);
+            border-top: 0;
+            border-left: 0;
+            left: 7px;
+            top: 4px;
+            transform: rotate(var(--r, 20deg));
+        }
+        input[type="checkbox"]:not(.switch):checked {
+            --r: 43deg;
+        }
+        input[type="checkbox"].switch {
+            width: 33px;
+            border-radius: 11px;
+        }
+        input[type="checkbox"].switch:after {
+            left: 2px;
+            top: 2px;
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+            background: var(--ab, var(--border));
+            transform: translateX(var(--x, 0));
+        }
+        input[type="checkbox"].switch:checked {
+            --ab: var(--active-inner);
+            --x: 17px;
+        }
+        input[type="checkbox"].switch:disabled:not(:checked):after {
+            opacity: 0.6;
+        }
+
+        input[type="radio"] {
+            border-radius: 50%;
+        }
+        input[type="radio"]:after {
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            background: var(--active-inner);
+            opacity: 0;
+            transform: scale(var(--s, 0.7));
+        }
+        input[type="radio"]:checked {
+            --s: 0.5;
+        }
+        .steamProfileArtworkContainer {
+            background: #17222f;
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .steamProfileArtworkContainer > div {
+            padding-left: 20px;
+        }
+        .buttonsContainer {
+            display: flex;
+            width: 100%;
+            height: 60px;
+            align-items: center;
+        }
+
+        input[type="text"].fieldInputSuccess {
+            position: relative;
+        }
+        .alertBlankTitleSet,
+        .alertCustomArtworkEnabled {
+            position: relative;
+            left: 0;
+            top: 0;
+            line-height: 1;
+            background: transparent;
+            width: auto;
+            height: 37px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            color: #22830f;
+            font-size: 16px;
+            margin: 15px 0 0 0px;
+            opacity: 1;
+        }
+        .alertBlankTitleSet,
+        .alertCustomArtworkEnabled.longWorkshopGuideEnabled {
+            margin-top: 0;
+        }
+        /* .alertCustomArtworkEnabled.longWorkshopEnabled, .alertCustomArtworkEnabled.longGuideEnabled {
+    display: none;
+  } */
+        .modifyArtworkInstructions blockquote {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .modifyArtworkInstructions blockquote ol {
+            font-size: 16px;
+        }
+        .modifyArtworkInstructions blockquote ol li {
+            margin-bottom: 10px;
+        }
+        .modifyArtworkInstructions blockquote code {
+            padding: 2px 4px;
+            background: #1a1a1a;
+        }
+        .hexEditInstructionsVideo {
+            background-image: url(https://store.akamai.steamstatic.com/public/images/v6/maincol_gradient_rule.png);
+            background-repeat: no-repeat;
+            background-position: top left;
+            padding-top: 10px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .hexEditInstructionsVideo details {
+            margin-left: 5px;
+            cursor: pointer;
+        }
+        .hexEditInstructionsVideo {
+            font-size: 16px;
+        }
+        .embed-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+        }
+        .embed-container iframe,
+        .embed-container object,
+        .embed-container embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .customArtworkButtons {
+            display: flex;
+            height: auto;
+            min-height: 32px;
+            justify-content: center;
+            align-items: center;
+            padding: 0 5px;
+            font-size: 15px;
+        }
+        .customArtworkButtons details {
+            font-size: 16px;
+        }
+        .customArtworkButtons details[open] {
+            position: relative;
+            top: 0;
+        }
+        .customArtworkButtons details[open] summary {
+            position: relative;
+            top: 0;
+        }
+        .customArtworkButtonsWrapper {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            left: 0;
+            top: calc(100% + 2px);
+            width: 100%;
+            background: rgb(29 77 104);
+            z-index: 400;
+            padding-bottom: 10px;
+        }
+        .customArtworkButtonsWrapper a {
+            min-width: 140px;
+            position: relative;
+            z-index: 400;
+            padding: 2px 0;
+        }
+        .enable-custom-artwork-button {
+            padding: 0 15px;
+            line-height: 30px;
+        }
+        #mainContents .pageTitle {
+            margin-bottom: 10px;
+        }
+        .blank-title-added {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .symbol-picker {
+            position: relative;
+        }
+        .commentthread_entry_quotebox .commentthread_textarea {
+            resize: vertical;
+            min-height: 80px;
+            padding: 5px;
+        }
+        .symbolsDialog {
+            background-color: #3b3938;
+            color: #fff;
+            padding: 15px;
+            padding-top: 0;
+            box-shadow: 0 0 12px #000000;
+            width: 500px;
+            height: calc(50vh);
+            border: none;
+        }
+        .subSectionTitle {
+            padding-top: 10px;
+            padding-bottom: 0px;
+            margin-bottom: 10px;
+            color: #fff;
+            font-size: 18px;
+        }
+        .symbols-container {
+            max-width: 590px;
+            max-height: 500px;
+            overflow: auto;
+            background: none;
+            position: relative;
+            top: 0;
+        }
+        .symbols-container details {
+            padding: 15px;
+            transition: all 0.3s ease-out;
+        }
+        .symbols-container details[open] {
+            padding: 15px;
+            background: #141414;
+        }
+        .symbols-container summary {
+            cursor: pointer;
+        }
+        .profileedit_ProfileBoxContent_3s6BB .symbols-container {
+            left: 0;
+            top: -32px;
+        }
+        .profileedit_ProfileBoxContent_3s6BB .symbols-container details[open] {
+            background-color: rgba(0, 0, 0, 0.25);
+        }
+        .customtext_showcase + .symbols-container {
+            left: 0;
+            top: 10px;
+        }
+        .customtext_showcase + .symbols-container details[open] {
+            background-color: transparent;
+        }
+    }
+}
