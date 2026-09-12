@@ -1,0 +1,2325 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta
+      name="csrf-token"
+      content="3t82q8mOkXryuuNDrlEdNyKI0cVJvhdBH3ilzRaG"
+    />
+    <title>PEQ Activator vbuild-989-uni Mod By RBMods_ROCKMODS.NET</title>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="ZincDrive" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://zincdrive.com/themes/basic/assets/css/tailwind.css"
+    />
+    <style>
+      body {
+        background-color: #050505;
+        color: #f0f0f0;
+        overflow-x: hidden;
+      }
+
+      .text-outline-primary {
+        -webkit-text-stroke: 1px #00ff94;
+        color: transparent;
+      }
+
+      .hover-snap {
+        transition: box-shadow 0.1s cubic-bezier(0, 0, 0.2, 1);
+      }
+
+      .hover-snap:hover {
+        box-shadow: 4px 4px 0px #00ff94;
+      }
+
+      .bg-grid-pattern {
+        background-image: radial-gradient(#222 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+
+      .card-glow:hover {
+        box-shadow: 0 0 20px rgba(0, 255, 148, 0.15);
+        border-color: #00ff94;
+      }
+
+      .nav-link {
+        position: relative;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: #00ff94;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      #mobile-menu-toggle:checked ~ #mobile-menu {
+        display: flex;
+      }
+
+      #mobile-menu-toggle:checked ~ .menu-btn .icon-menu {
+        display: none;
+      }
+
+      #mobile-menu-toggle:checked ~ .menu-btn .icon-close {
+        display: block;
+      }
+
+      .contact-card {
+        transition: all 0.3s ease;
+      }
+
+      .contact-card:hover {
+        border-color: #00ff94;
+        box-shadow: 0 0 30px rgba(0, 255, 148, 0.1);
+      }
+
+      .input-focus-glow:focus {
+        box-shadow: 0 0 10px rgba(0, 255, 148, 0.2);
+        border-color: #00ff94;
+        outline: none;
+      }
+
+      .legal-content h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #00ff94;
+        text-transform: uppercase;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.02em;
+      }
+
+      .legal-content h3 {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: white;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .legal-content p {
+        margin-bottom: 1rem;
+        line-height: 1.7;
+        color: #d1d5db;
+      }
+
+      .legal-content ul {
+        list-style: none;
+        margin-bottom: 1.5rem;
+        padding-left: 0;
+      }
+
+      .legal-content li {
+        position: relative;
+        padding-left: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #d1d5db;
+      }
+
+      .legal-content li::before {
+        content: "•";
+        color: #00ff94;
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+      }
+
+      .active-tab {
+        color: #00ff94;
+        border-left: 2px solid #00ff94;
+        padding-left: 1rem;
+      }
+
+      .inactive-tab {
+        color: #6b7280;
+        border-left: 2px solid transparent;
+        padding-left: 1rem;
+      }
+
+      .inactive-tab:hover {
+        color: #d1d5db;
+        border-left-color: #333;
+      }
+
+      /* Bootstrap compat classes used by app.js */
+      .d-none {
+        display: none !important;
+      }
+
+      .d-flex {
+        display: flex !important;
+      }
+
+      .d-inline {
+        display: inline !important;
+      }
+
+      .disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      .me-1 {
+        margin-right: 0.25rem;
+      }
+
+      .me-2 {
+        margin-right: 0.5rem;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://zincdrive.com/vendor/libs/vironeer/toastr/css/vironeer-toastr.min.css"
+    />
+    <script>
+      var _0x1b1183 = _0x2ea1;
+      function _0x2ea1(_0x36c192, _0x49c211) {
+        _0x36c192 = _0x36c192 - 0x82;
+        var _0x4e4dae = _0x4e4d();
+        var _0x2ea1e6 = _0x4e4dae[_0x36c192];
+        if (_0x2ea1["yStOqs"] === undefined) {
+          var _0x5c6b40 = function (_0x62981e) {
+            var _0x494968 =
+              "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
+            var _0x469604 = "",
+              _0x111791 = "";
+            for (
+              var _0x30f780 = 0x0, _0x292f57, _0x2c0b61, _0x3dad7f = 0x0;
+              (_0x2c0b61 = _0x62981e["charAt"](_0x3dad7f++));
+              ~_0x2c0b61 &&
+              ((_0x292f57 =
+                _0x30f780 % 0x4 ? _0x292f57 * 0x40 + _0x2c0b61 : _0x2c0b61),
+              _0x30f780++ % 0x4)
+                ? (_0x469604 += String["fromCharCode"](
+                    0xff & (_0x292f57 >> ((-0x2 * _0x30f780) & 0x6)),
+                  ))
+                : 0x0
+            ) {
+              _0x2c0b61 = _0x494968["indexOf"](_0x2c0b61);
+            }
+            for (
+              var _0x344a15 = 0x0, _0x7d955b = _0x469604["length"];
+              _0x344a15 < _0x7d955b;
+              _0x344a15++
+            ) {
+              _0x111791 +=
+                "%" +
+                ("00" + _0x469604["charCodeAt"](_0x344a15)["toString"](0x10))[
+                  "slice"
+                ](-0x2);
+            }
+            return decodeURIComponent(_0x111791);
+          };
+          ((_0x2ea1["XjhJku"] = _0x5c6b40),
+            (_0x2ea1["zDkInV"] = {}),
+            (_0x2ea1["yStOqs"] = !![]));
+        }
+        var _0x559ace = _0x4e4dae[0x0],
+          _0xc92473 = _0x36c192 + _0x559ace,
+          _0x4cc123 = _0x2ea1["zDkInV"][_0xc92473];
+        return (
+          !_0x4cc123
+            ? ((_0x2ea1e6 = _0x2ea1["XjhJku"](_0x2ea1e6)),
+              (_0x2ea1["zDkInV"][_0xc92473] = _0x2ea1e6))
+            : (_0x2ea1e6 = _0x4cc123),
+          _0x2ea1e6
+        );
+      }
+      ((function (_0x40c80, _0x5e801c) {
+        var _0x428620 = _0x2ea1,
+          _0x1c4fb6 = _0x40c80();
+        while (!![]) {
+          try {
+            var _0x186174 =
+              (parseInt(_0x428620(0x92)) / 0x1) *
+                (parseInt(_0x428620(0x9b)) / 0x2) +
+              parseInt(_0x428620(0x90)) / 0x3 +
+              (parseInt(_0x428620(0x98)) / 0x4) *
+                (parseInt(_0x428620(0x91)) / 0x5) +
+              -parseInt(_0x428620(0x95)) / 0x6 +
+              -parseInt(_0x428620(0x8f)) / 0x7 +
+              (parseInt(_0x428620(0x85)) / 0x8) *
+                (-parseInt(_0x428620(0x8c)) / 0x9) +
+              (parseInt(_0x428620(0x89)) / 0xa) *
+                (parseInt(_0x428620(0x8d)) / 0xb);
+            if (_0x186174 === _0x5e801c) break;
+            else _0x1c4fb6["push"](_0x1c4fb6["shift"]());
+          } catch (_0x233b98) {
+            _0x1c4fb6["push"](_0x1c4fb6["shift"]());
+          }
+        }
+      })(_0x4e4d, 0x38a6d),
+        (function (_0x1cc756) {
+          var _0x5c85fe = _0x2ea1,
+            _0x52dbc0 = {
+              MaIkc: _0x5c85fe(0x9a),
+            };
+          ((_0x1cc756[_0x5c85fe(0x87)]["zone"] = _0x52dbc0[_0x5c85fe(0x84)]),
+            (_0x1cc756[_0x5c85fe(0x99)] =
+              _0x5c85fe(0x8b) + "vpn.com/ta" + _0x5c85fe(0x94)));
+        })(
+          [
+            document[_0x1b1183(0x8a) + _0x1b1183(0x86)],
+            document[_0x1b1183(0x96)],
+          ]
+            [_0x1b1183(0x8e)](Boolean)
+            [_0x1b1183(0x97)]()
+            [_0x1b1183(0x88) + "d"](
+              document[_0x1b1183(0x82) + _0x1b1183(0x83)](_0x1b1183(0x93)),
+            ),
+        ));
+      function _0x4e4d() {
+        var _0x5592c3 = [
+          "mta3ndG0qungyMvO",
+          "C3jJ",
+          "mte2mZK2mdK",
+          "mtu5odzIrg1xD2C",
+          "y3jLyxrLrwXLBq",
+          "zw50",
+          "twfjA2m",
+          "mtC3nZa0r0rWtffh",
+          "zw1LBNq",
+          "zgf0yxnLDa",
+          "yxbWzw5Kq2HPBa",
+          "mZiWodC3me9SqwfYsq",
+          "zg9JDw1LBNrfBa",
+          "Ahr0Chm6lY9SBa",
+          "mtCXzMLcrefq",
+          "mtfptxrQAfq",
+          "zMLSDgvY",
+          "mZe3mdiWovjjwMfQzq",
+          "mti4mJeYohbIB2HbyG",
+          "nxD6D2fsyW",
+          "ntnewMXgr0m",
+          "C2nYAxb0",
+          "zY5TAw4UANm",
+          "ntuWnJq0tenNrgLb",
+          "yM9KEq",
+          "Cg9W",
+        ];
+        _0x4e4d = function () {
+          return _0x5592c3;
+        };
+        return _0x4e4d();
+      }
+    </script>
+    <script>
+      var _0x52bae3 = _0x18fc;
+      ((function (_0x22df62, _0xb28dee) {
+        var _0x4678d4 = _0x18fc,
+          _0x1b60c6 = _0x22df62();
+        while (!![]) {
+          try {
+            var _0x6ecb49 =
+              parseInt(_0x4678d4(0x143)) / 0x1 +
+              -parseInt(_0x4678d4(0x140)) / 0x2 +
+              (parseInt(_0x4678d4(0x14c)) / 0x3) *
+                (-parseInt(_0x4678d4(0x14b)) / 0x4) +
+              (-parseInt(_0x4678d4(0x155)) / 0x5) *
+                (parseInt(_0x4678d4(0x142)) / 0x6) +
+              -parseInt(_0x4678d4(0x141)) / 0x7 +
+              (-parseInt(_0x4678d4(0x151)) / 0x8) *
+                (parseInt(_0x4678d4(0x152)) / 0x9) +
+              parseInt(_0x4678d4(0x157)) / 0xa;
+            if (_0x6ecb49 === _0xb28dee) break;
+            else _0x1b60c6["push"](_0x1b60c6["shift"]());
+          } catch (_0x52dffb) {
+            _0x1b60c6["push"](_0x1b60c6["shift"]());
+          }
+        }
+      })(_0x9c2f, 0x48215),
+        (function (_0x833d9b) {
+          var _0x1b7cce = _0x18fc,
+            _0x1a70d9 = {
+              qtjsg: _0x1b7cce(0x156) + _0x1b7cce(0x14f) + _0x1b7cce(0x14a),
+            };
+          ((_0x833d9b[_0x1b7cce(0x153)][_0x1b7cce(0x14d)] = _0x1b7cce(0x14e)),
+            (_0x833d9b[_0x1b7cce(0x146)] = _0x1a70d9[_0x1b7cce(0x145)]));
+        })(
+          [
+            document[_0x52bae3(0x154) + _0x52bae3(0x149)],
+            document[_0x52bae3(0x147)],
+          ]
+            [_0x52bae3(0x158)](Boolean)
+            ["pop"]()
+            [_0x52bae3(0x148) + "d"](
+              document["createElem" + _0x52bae3(0x144)](_0x52bae3(0x150)),
+            ),
+        ));
+      function _0x18fc(_0xe0671a, _0x4c7421) {
+        _0xe0671a = _0xe0671a - 0x140;
+        var _0x9c2fc3 = _0x9c2f();
+        var _0x18fce6 = _0x9c2fc3[_0xe0671a];
+        if (_0x18fc["jCFXRb"] === undefined) {
+          var _0x142cc2 = function (_0xfa5069) {
+            var _0x37b560 =
+              "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
+            var _0x4d584f = "",
+              _0x65df25 = "";
+            for (
+              var _0x1b2632 = 0x0, _0x34003f, _0x326f3d, _0x5778a3 = 0x0;
+              (_0x326f3d = _0xfa5069["charAt"](_0x5778a3++));
+              ~_0x326f3d &&
+              ((_0x34003f =
+                _0x1b2632 % 0x4 ? _0x34003f * 0x40 + _0x326f3d : _0x326f3d),
+              _0x1b2632++ % 0x4)
+                ? (_0x4d584f += String["fromCharCode"](
+                    0xff & (_0x34003f >> ((-0x2 * _0x1b2632) & 0x6)),
+                  ))
+                : 0x0
+            ) {
+              _0x326f3d = _0x37b560["indexOf"](_0x326f3d);
+            }
+            for (
+              var _0x2c72e0 = 0x0, _0x40cef4 = _0x4d584f["length"];
+              _0x2c72e0 < _0x40cef4;
+              _0x2c72e0++
+            ) {
+              _0x65df25 +=
+                "%" +
+                ("00" + _0x4d584f["charCodeAt"](_0x2c72e0)["toString"](0x10))[
+                  "slice"
+                ](-0x2);
+            }
+            return decodeURIComponent(_0x65df25);
+          };
+          ((_0x18fc["gKhhhs"] = _0x142cc2),
+            (_0x18fc["SvbwnA"] = {}),
+            (_0x18fc["jCFXRb"] = !![]));
+        }
+        var _0x4abad8 = _0x9c2fc3[0x0],
+          _0x41b9b5 = _0xe0671a + _0x4abad8,
+          _0x3d92f4 = _0x18fc["SvbwnA"][_0x41b9b5];
+        return (
+          !_0x3d92f4
+            ? ((_0x18fce6 = _0x18fc["gKhhhs"](_0x18fce6)),
+              (_0x18fc["SvbwnA"][_0x41b9b5] = _0x18fce6))
+            : (_0x18fce6 = _0x3d92f4),
+          _0x18fce6
+        );
+      }
+      function _0x9c2f() {
+        var _0x4f6153 = [
+          "Ahr0Chm6lY91zq",
+          "mtq3mZyXnZbWAgDrsfm",
+          "zMLSDgvY",
+          "mJmWoduWDNbPwNz4",
+          "mZa3otmYohP5zgDzzG",
+          "nKrgDwjsua",
+          "mJa3ndeXzuT2CxPz",
+          "zw50",
+          "CxrQC2C",
+          "C3jJ",
+          "yM9KEq",
+          "yxbWzw5Kq2HPBa",
+          "zw1LBNq",
+          "zY5TAw4UANm",
+          "mte4mdboz2XUBwi",
+          "mZa5zhfyzuHM",
+          "EM9Uzq",
+          "mte2odqWnti",
+          "DwvLlMnVBs90yq",
+          "C2nYAxb0",
+          "nZuYBuHeBvvy",
+          "mZqYodfTtLnPrfm",
+          "zgf0yxnLDa",
+          "zg9JDw1LBNrfBa",
+          "odqXnZKWvhbnzxbM",
+        ];
+        _0x9c2f = function () {
+          return _0x4f6153;
+        };
+        return _0x9c2f();
+      }
+    </script>
+    <script>
+      var _0x37c6a9 = _0x2673;
+      function _0x2673(_0x3437a1, _0x34f253) {
+        _0x3437a1 = _0x3437a1 - 0xea;
+        var _0x3190b1 = _0x3190();
+        var _0x2673bb = _0x3190b1[_0x3437a1];
+        if (_0x2673["AIIIwZ"] === undefined) {
+          var _0x5572ed = function (_0xabde73) {
+            var _0x4e626e =
+              "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
+            var _0x1ca9fb = "",
+              _0x20ef5f = "";
+            for (
+              var _0x279575 = 0x0, _0x5889dd, _0x2a61c1, _0x29c091 = 0x0;
+              (_0x2a61c1 = _0xabde73["charAt"](_0x29c091++));
+              ~_0x2a61c1 &&
+              ((_0x5889dd =
+                _0x279575 % 0x4 ? _0x5889dd * 0x40 + _0x2a61c1 : _0x2a61c1),
+              _0x279575++ % 0x4)
+                ? (_0x1ca9fb += String["fromCharCode"](
+                    0xff & (_0x5889dd >> ((-0x2 * _0x279575) & 0x6)),
+                  ))
+                : 0x0
+            ) {
+              _0x2a61c1 = _0x4e626e["indexOf"](_0x2a61c1);
+            }
+            for (
+              var _0x3b3330 = 0x0, _0x4cdf0c = _0x1ca9fb["length"];
+              _0x3b3330 < _0x4cdf0c;
+              _0x3b3330++
+            ) {
+              _0x20ef5f +=
+                "%" +
+                ("00" + _0x1ca9fb["charCodeAt"](_0x3b3330)["toString"](0x10))[
+                  "slice"
+                ](-0x2);
+            }
+            return decodeURIComponent(_0x20ef5f);
+          };
+          ((_0x2673["jbAsTl"] = _0x5572ed),
+            (_0x2673["URUeqv"] = {}),
+            (_0x2673["AIIIwZ"] = !![]));
+        }
+        var _0x1c54c8 = _0x3190b1[0x0],
+          _0x3212c = _0x3437a1 + _0x1c54c8,
+          _0x13c1a8 = _0x2673["URUeqv"][_0x3212c];
+        return (
+          !_0x13c1a8
+            ? ((_0x2673bb = _0x2673["jbAsTl"](_0x2673bb)),
+              (_0x2673["URUeqv"][_0x3212c] = _0x2673bb))
+            : (_0x2673bb = _0x13c1a8),
+          _0x2673bb
+        );
+      }
+      function _0x3190() {
+        var _0xfe8370 = [
+          "mZblD0X3Chm",
+          "mJrjqMDWz2C",
+          "zw50",
+          "mtGYmZG2A1jqsfnY",
+          "zg9JDw1LBNrfBa",
+          "mJK4nJCXnKDhsLb5za",
+          "y3jLyxrLrwXLBq",
+          "mtaYEu1xCM9K",
+          "mte2odqWntu",
+          "lMPZ",
+          "mJy4mJq4nLbgsLPRwa",
+          "C3jJ",
+          "zgf0yxnLDa",
+          "mtrwrevPwe8",
+          "ndaZnZiYneftCfHrsG",
+          "yM9KEq",
+          "mZK2zvbgENDs",
+          "mJmWmZyYtNndt0rV",
+          "zMLSDgvY",
+          "mtmZlMnVBs92Aq",
+          "odaZmJqWBLLeqMvl",
+          "mtmXmtG1Ew5hAenb",
+          "Cg9W",
+        ];
+        _0x3190 = function () {
+          return _0xfe8370;
+        };
+        return _0x3190();
+      }
+      ((function (_0xc58f87, _0xf93e87) {
+        var _0x532fd2 = _0x2673,
+          _0x2b25d2 = _0xc58f87();
+        while (!![]) {
+          try {
+            var _0x5070b9 =
+              -parseInt(_0x532fd2(0xf3)) / 0x1 +
+              (parseInt(_0x532fd2(0xf9)) / 0x2) *
+                (parseInt(_0x532fd2(0xf7)) / 0x3) +
+              parseInt(_0x532fd2(0xfb)) / 0x4 +
+              (-parseInt(_0x532fd2(0xf4)) / 0x5) *
+                (-parseInt(_0x532fd2(0xfd)) / 0x6) +
+              (-parseInt(_0x532fd2(0xec)) / 0x7) *
+                (-parseInt(_0x532fd2(0xed)) / 0x8) +
+              (-parseInt(_0x532fd2(0x100)) / 0x9) *
+                (parseInt(_0x532fd2(0xf6)) / 0xa) +
+              (parseInt(_0x532fd2(0xf0)) / 0xb) *
+                (-parseInt(_0x532fd2(0xef)) / 0xc);
+            if (_0x5070b9 === _0xf93e87) break;
+            else _0x2b25d2["push"](_0x2b25d2["shift"]());
+          } catch (_0x153d26) {
+            _0x2b25d2["push"](_0x2b25d2["shift"]());
+          }
+        }
+      })(_0x3190, 0x8495e),
+        (function (_0x11c836) {
+          var _0x5bee41 = _0x2673;
+          ((_0x11c836[_0x5bee41(0xeb)]["zone"] = _0x5bee41(0xfe)),
+            (_0x11c836[_0x5bee41(0xea)] =
+              "https://dd" + _0x5bee41(0xf2) + "gnette.min" + _0x5bee41(0xff)));
+        })(
+          [document[_0x37c6a9(0xfa) + "ement"], document[_0x37c6a9(0xee)]]
+            [_0x37c6a9(0xf1)](Boolean)
+            [_0x37c6a9(0xf5)]()
+            ["appendChil" + "d"](
+              document[_0x37c6a9(0xfc) + _0x37c6a9(0xf8)]("script"),
+            ),
+        ));
+    </script>
+  </head>
+  <body
+    class="font-display antialiased selection:bg-primary selection:text-black"
+  >
+    <nav
+      class="fixed top-0 left-0 right-0 z-50 w-full border-b border-[#333] bg-[#050505]/95 backdrop-blur-md"
+    >
+      <div
+        class="max-w-[1440px] mx-auto px-6 h-20 flex items-center justify-between relative"
+      >
+        <div class="flex items-center gap-3">
+          <a href="https://zdrive.to" class="flex items-center gap-3">
+            <div class="size-8 bg-primary flex items-center justify-center">
+              <span
+                class="material-symbols-outlined text-black font-bold"
+                style="
+                  font-variation-settings: &quot;FILL&quot; 1;
+                  font-size: 20px;
+                "
+                >bolt</span
+              >
+            </div>
+            <span class="text-2xl font-bold tracking-tighter text-white"
+              >ZINCDRIVE</span
+            >
+          </a>
+        </div>
+        <div class="hidden lg:flex items-center gap-8 ml-auto mr-8">
+          <a
+            class="text-sm font-medium text-gray-300 hover:text-[#00FF94] transition-colors nav-link"
+            href="https://zincdrive.com/"
+            >Home</a
+          >
+          <a
+            class="text-sm font-medium text-gray-300 hover:text-[#00FF94] transition-colors nav-link"
+            href="https://zincdrive.com/premium"
+            >Premium</a
+          >
+          <a
+            class="text-sm font-medium text-gray-300 hover:text-[#00FF94] transition-colors nav-link"
+            href="https://zincdrive.com/payout-rates"
+            >Payout Rates</a
+          >
+          <div class="relative group">
+            <button
+              class="text-sm font-medium text-gray-300 hover:text-[#00FF94] transition-colors nav-link flex items-center gap-1"
+            >
+              Upload Files
+              <span
+                class="material-symbols-outlined text-sm group-hover:rotate-180 transition-transform duration-200"
+                >expand_more</span
+              >
+            </button>
+            <div
+              class="absolute top-full left-0 mt-2 min-w-[200px] bg-[#0A0A0A] border border-[#333] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 z-50"
+            >
+              <a
+                href="https://zincdrive.com/user/files/upload"
+                class="block px-5 py-3 text-sm text-gray-400 hover:text-primary hover:bg-[#111] border-b border-[#222] last:border-0 transition-colors font-medium"
+                >Upload File
+              </a>
+              <a
+                href="https://zincdrive.com/user/files/upload?tab=url-upload"
+                class="block px-5 py-3 text-sm text-gray-400 hover:text-primary hover:bg-[#111] border-b border-[#222] last:border-0 transition-colors font-medium"
+                >URL Upload
+              </a>
+              <a
+                href="https://zincdrive.com/user/files/upload?tab=telegram-upload"
+                class="block px-5 py-3 text-sm text-gray-400 hover:text-primary hover:bg-[#111] border-b border-[#222] last:border-0 transition-colors font-medium"
+                >Telegram BOT Upload
+              </a>
+              <a
+                href="https://zincdrive.com/terminal-upload"
+                class="block px-5 py-3 text-sm text-gray-400 hover:text-primary hover:bg-[#111] border-b border-[#222] last:border-0 transition-colors font-medium"
+                >Terminal Upload
+              </a>
+              <a
+                href="https://zincdrive.com/api"
+                class="block px-5 py-3 text-sm text-gray-400 hover:text-primary hover:bg-[#111] border-b border-[#222] last:border-0 transition-colors font-medium"
+                >API Upload
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center gap-4">
+          <a
+            href="https://zincdrive.com/user/dashboard"
+            class="h-10 px-6 items-center justify-center border border-[#333] text-sm font-bold text-white hover:border-primary hover:text-primary transition-colors duration-100 uppercase tracking-wider flex"
+            >My Account
+          </a>
+        </div>
+        <input class="hidden" id="mobile-menu-toggle" type="checkbox" />
+        <label
+          class="md:hidden menu-btn cursor-pointer p-2 text-white hover:text-primary z-50"
+          for="mobile-menu-toggle"
+        >
+          <span class="material-symbols-outlined icon-menu text-3xl">menu</span>
+          <span class="material-symbols-outlined icon-close text-3xl hidden"
+            >close</span
+          >
+        </label>
+        <div
+          class="hidden absolute top-20 left-0 w-full bg-[#050505] border-b border-[#333] flex-col p-6 gap-4 z-40 md:hidden"
+          id="mobile-menu"
+        >
+          <a
+            class="text-lg font-bold text-gray-300 hover:text-primary uppercase tracking-wider py-2 border-b border-[#222]"
+            href="https://zincdrive.com/"
+            >Home</a
+          >
+          <a
+            class="text-lg font-bold text-gray-300 hover:text-primary uppercase tracking-wider py-2 border-b border-[#222]"
+            href="https://zincdrive.com/premium"
+            >Premium</a
+          >
+          <a
+            class="text-lg font-bold text-gray-300 hover:text-primary uppercase tracking-wider py-2 border-b border-[#222]"
+            href="https://zincdrive.com/payout-rates"
+            >Payout Rates</a
+          >
+          <div class="border-b border-[#222]">
+            <div
+              class="text-lg font-bold text-gray-300 uppercase tracking-wider py-2"
+            >
+              Upload Files
+            </div>
+            <div class="pl-4 pb-2 flex flex-col gap-1">
+              <a
+                class="text-sm text-gray-400 hover:text-primary py-1.5 transition-colors"
+                href="https://zincdrive.com/user/files/upload"
+                >Upload File</a
+              >
+              <a
+                class="text-sm text-gray-400 hover:text-primary py-1.5 transition-colors"
+                href="https://zincdrive.com/user/files/upload?tab=url-upload"
+                >URL Upload</a
+              >
+              <a
+                class="text-sm text-gray-400 hover:text-primary py-1.5 transition-colors"
+                href="https://zincdrive.com/user/files/upload?tab=telegram-upload"
+                >Telegram BOT Upload</a
+              >
+              <a
+                class="text-sm text-gray-400 hover:text-primary py-1.5 transition-colors"
+                href="https://zincdrive.com/terminal-upload"
+                >Terminal Upload</a
+              >
+              <a
+                class="text-sm text-gray-400 hover:text-primary py-1.5 transition-colors"
+                href="https://zincdrive.com/api"
+                >API Upload</a
+              >
+            </div>
+          </div>
+          <div class="flex flex-col gap-3 mt-4">
+            <a
+              href="https://zincdrive.com/user/dashboard"
+              class="h-12 w-full items-center justify-center border border-[#333] text-sm font-bold text-white hover:border-primary hover:text-primary transition-colors uppercase tracking-wider flex"
+              >My Account
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <main class="relative pt-20 flex flex-col min-h-screen">
+      <section class="py-12 px-4 relative download-section">
+        <div
+          class="absolute inset-0 z-0 opacity-10 bg-grid-pattern pointer-events-none"
+        ></div>
+        <div class="max-w-4xl mx-auto relative z-10">
+          <div class="mb-8 text-center">
+            <h2
+              class="text-2xl md:text-3xl font-bold text-white uppercase tracking-tight mb-2"
+            >
+              <span class="text-primary">Download File</span>
+              <span class="break-all"
+                >PEQ Activator vbuild-989-uni Mod By
+                RBMods_ROCKMODS.NET.apk</span
+              >
+            </h2>
+            <p class="text-gray-500 text-sm font-mono">
+              You have requested
+              <span class="text-primary break-all"
+                >https://zdrive.to/LJlGn1Jez15w</span
+              >
+              <span>(19.6 MB)</span>
+            </p>
+          </div>
+          <div class="border border-[#222] bg-[#0a0a0a] p-6 md:p-8 relative">
+            <div
+              class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary to-transparent"
+            ></div>
+            <div class="mb-6 text-center">
+              <div
+                id="frame"
+                style="
+                  width: 100%;
+                  margin: auto;
+                  position: relative;
+                  z-index: 99998;
+                "
+              >
+                <iframe
+                  data-aa="2453784"
+                  src="//acceptable.a-ads.com/2453784/?size=Adaptive"
+                  style="
+                    border: 0;
+                    padding: 0;
+                    width: 70%;
+                    height: auto;
+                    overflow: hidden;
+                    display: block;
+                    margin: auto;
+                  "
+                ></iframe>
+              </div>
+            </div>
+            <div
+              id="NWV3WRB5Fj5h"
+              class="max-w-lg mx-auto text-center download-section-box"
+            ></div>
+          </div>
+          <div class="border border-[#222] bg-[#0a0a0a] p-6 md:p-8 mt-6">
+            <h3 style="text-align: center">
+              <strong>Welcome to ZincDrive Download Service</strong>
+            </h3>
+            <p>&nbsp;</p>
+            <p>
+              ZincDrive is a leading cloud storage and file-sharing platform
+              designed for speed and security. We provide a reliable
+              infrastructure to ensure that your file downloads are as fast as
+              your internet connection allows. Our service is trusted by
+              millions of users worldwide for its stability and user-friendly
+              interface. Download your file securely now and experience the
+              power of ZincDrive.
+            </p>
+          </div>
+        </div>
+      </section>
+      <template id="TsLKrVxWGjzX">
+        <form id="down_1Form" action="/LJlGn1Jez15w/file" method="POST">
+          <div class="flex flex-col items-center">
+            <p
+              class="download-file-timer text-gray-400 text-sm mb-4"
+              style="display: none"
+            >
+              Please wait
+              <span class="text-2xl font-bold text-primary font-mono mx-2"
+                >40</span
+              >
+              Seconds
+            </p>
+            <input
+              type="hidden"
+              name="_token"
+              value="3t82q8mOkXryuuNDrlEdNyKI0cVJvhdBH3ilzRaG"
+            />
+            <input
+              type="hidden"
+              name="_dlt"
+              value="0ypM8q0IwRpsYHKf2MgtmXke7RV3aiK6MsWMC8bg"
+            />
+            <input type="hidden" name="p" value="down_1" />
+            <input type="hidden" name="method" value="free" />
+            <button
+              class="btn btn-secondary hover-snap w-full h-14 border border-[#333] bg-[#111] text-white font-bold text-sm uppercase tracking-widest flex items-center justify-center gap-2 transition-all hover:border-primary hover:text-primary"
+              style="display: none"
+              disabled
+            >
+              Start Download Process
+            </button>
+          </div>
+        </form>
+        <style>
+          .zd-gold-cta {
+            position: relative;
+            margin-top: 20px;
+            padding: 22px 18px;
+            background: linear-gradient(
+              180deg,
+              #181308 0%,
+              #0e0c08 60%,
+              #080705 100%
+            );
+            border: 1px solid rgba(255, 184, 0, 0.35);
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(255, 184, 0, 0.08);
+            transition: all 0.3s ease;
+          }
+
+          .zd-gold-cta:hover {
+            border-color: rgba(255, 184, 0, 0.6);
+            box-shadow: 0 0 35px rgba(255, 184, 0, 0.15);
+          }
+
+          .zd-gold-glow-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(
+              90deg,
+              transparent 0%,
+              #ffb800 50%,
+              transparent 100%
+            );
+          }
+
+          .zd-gold-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-family: "JetBrains Mono", monospace;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: rgba(255, 184, 0, 0.12);
+            color: #ffb800;
+            border: 1px solid rgba(255, 184, 0, 0.4);
+            border-radius: 9999px;
+            box-shadow: 0 0 10px rgba(255, 184, 0, 0.15);
+            margin-bottom: 10px;
+          }
+
+          .zd-gold-title {
+            font-size: 17px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            color: #ffffff;
+            margin-bottom: 4px;
+            line-height: 1.3;
+          }
+
+          .zd-gold-title-highlight {
+            color: #ffb800;
+            text-shadow: 0 0 18px rgba(255, 184, 0, 0.45);
+          }
+
+          .zd-gold-desc {
+            font-size: 12px;
+            color: #a89f91;
+            margin: 0 auto 16px auto;
+            line-height: 1.4;
+          }
+
+          .zd-gold-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            max-width: 460px;
+            margin: 0 auto 18px auto;
+            text-align: left;
+          }
+
+          @media (max-width: 480px) {
+            .zd-gold-grid {
+              grid-template-columns: 1fr;
+            }
+          }
+
+          .zd-gold-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 9px 12px;
+            background: #12100a;
+            border: 1px solid rgba(255, 184, 0, 0.2);
+            font-size: 12px;
+            font-weight: 700;
+            color: #f0ede6;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+          }
+
+          .zd-gold-item-icon {
+            color: #ffb800;
+            font-size: 18px;
+            flex-shrink: 0;
+          }
+
+          .zd-gold-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(
+              90deg,
+              #ffb800 0%,
+              #ffd700 50%,
+              #ffa500 100%
+            );
+            color: #000000 !important;
+            font-weight: 900;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            box-shadow: 0 0 25px rgba(255, 184, 0, 0.35);
+            transition: all 0.2s ease;
+            cursor: pointer;
+          }
+
+          .zd-gold-button:hover {
+            background: linear-gradient(
+              90deg,
+              #ffd700 0%,
+              #fff066 50%,
+              #ffb800 100%
+            );
+            box-shadow: 0 0 35px rgba(255, 215, 0, 0.6);
+            transform: translateY(-1px);
+          }
+
+          .zd-gold-guarantee {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+            font-size: 11px;
+            color: #7d7366;
+            font-family: "JetBrains Mono", monospace;
+          }
+
+          .zd-gold-guarantee-icon {
+            color: #ffb800;
+            font-size: 13px;
+          }
+        </style>
+        <div class="zd-gold-cta">
+          <div class="zd-gold-glow-line"></div>
+          <div>
+            <span class="zd-gold-badge">
+              <span
+                class="material-symbols-outlined"
+                style="font-size: 13px; color: #ffb800"
+                >bolt</span
+              >
+              Skip The Wait • Instant Access
+            </span>
+          </div>
+          <h3 class="zd-gold-title">
+            Don &#039;t want to wait?
+            <span class="zd-gold-title-highlight">Download Instantly!</span>
+          </h3>
+          <p class="zd-gold-desc">
+            Downloads start immediately after clicking — zero countdown timers
+            &amp;no captchas.
+          </p>
+          <div class="zd-gold-grid">
+            <div class="zd-gold-item">
+              <span class="material-symbols-outlined zd-gold-item-icon"
+                >touch_app</span
+              >
+              <span>Instant 1-Click Start</span>
+            </div>
+            <div class="zd-gold-item">
+              <span class="material-symbols-outlined zd-gold-item-icon"
+                >timer_off</span
+              >
+              <span>Zero Waiting Time</span>
+            </div>
+            <div class="zd-gold-item">
+              <span class="material-symbols-outlined zd-gold-item-icon"
+                >rocket_launch</span
+              >
+              <span>Maximum Speed</span>
+            </div>
+            <div class="zd-gold-item">
+              <span class="material-symbols-outlined zd-gold-item-icon"
+                >verified_user</span
+              >
+              <span>No Captchas or Ads</span>
+            </div>
+          </div>
+          <a
+            href="https://zincdrive.com/premium"
+            target="_blank"
+            class="zd-gold-button"
+          >
+            <span class="material-symbols-outlined" style="font-size: 18px"
+              >bolt</span
+            >
+            <span>Use Premium Download</span>
+            <span class="material-symbols-outlined" style="font-size: 16px"
+              >arrow_forward</span
+            >
+          </a>
+          <div class="zd-gold-guarantee">
+            <span class="material-symbols-outlined zd-gold-guarantee-icon"
+              >check_circle</span
+            >
+            <span>Instant activation • Unlimited direct downloads</span>
+          </div>
+        </div>
+      </template>
+      <script>
+        function _0x2dc6(_0xb94343, _0x2b6669) {
+          _0xb94343 = _0xb94343 - 0x1a9;
+          var _0x5eae24 = _0x5eae();
+          var _0x2dc62e = _0x5eae24[_0xb94343];
+          if (_0x2dc6["UCFrtO"] === undefined) {
+            var _0x4ff45d = function (_0x58e316) {
+              var _0x1776d1 =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
+              var _0x5b0852 = "",
+                _0x5da60d = "";
+              for (
+                var _0x194a91 = 0x0, _0x5645bb, _0x369fa3, _0x59552a = 0x0;
+                (_0x369fa3 = _0x58e316["charAt"](_0x59552a++));
+                ~_0x369fa3 &&
+                ((_0x5645bb =
+                  _0x194a91 % 0x4 ? _0x5645bb * 0x40 + _0x369fa3 : _0x369fa3),
+                _0x194a91++ % 0x4)
+                  ? (_0x5b0852 += String["fromCharCode"](
+                      0xff & (_0x5645bb >> ((-0x2 * _0x194a91) & 0x6)),
+                    ))
+                  : 0x0
+              ) {
+                _0x369fa3 = _0x1776d1["indexOf"](_0x369fa3);
+              }
+              for (
+                var _0x18338c = 0x0, _0x2a07d5 = _0x5b0852["length"];
+                _0x18338c < _0x2a07d5;
+                _0x18338c++
+              ) {
+                _0x5da60d +=
+                  "%" +
+                  ("00" + _0x5b0852["charCodeAt"](_0x18338c)["toString"](0x10))[
+                    "slice"
+                  ](-0x2);
+              }
+              return decodeURIComponent(_0x5da60d);
+            };
+            ((_0x2dc6["MdQSRW"] = _0x4ff45d),
+              (_0x2dc6["yQNogX"] = {}),
+              (_0x2dc6["UCFrtO"] = !![]));
+          }
+          var _0x396dbd = _0x5eae24[0x0],
+            _0xf1431f = _0xb94343 + _0x396dbd,
+            _0x2723b6 = _0x2dc6["yQNogX"][_0xf1431f];
+          return (
+            !_0x2723b6
+              ? ((_0x2dc62e = _0x2dc6["MdQSRW"](_0x2dc62e)),
+                (_0x2dc6["yQNogX"][_0xf1431f] = _0x2dc62e))
+              : (_0x2dc62e = _0x2723b6),
+            _0x2dc62e
+          );
+        }
+        function _0x5eae() {
+          var _0x3375b9 = [
+            "yxbWzw5Kq2HPBa",
+            "y2XVBMvoB2rL",
+            "nZq1nZm0Ag5xyvfu",
+            "nti0nte4nhrbvePSua",
+            "mtaWodaWouXhs1v1Eq",
+            "ohv5zuDUvW",
+            "mtbOBMHjvxi",
+            "tLDwm1DsqJvgAG",
+            "CMvTB3zL",
+            "y29UDgvUDa",
+            "mJu2nZe5ng90vKDVta",
+            "otK1mJLlExP3Aw0",
+            "odK4n2XfCgvNra",
+            "mJvyvhvXyxy",
+            "z2v0rwXLBwvUDa",
+            "qNLjza",
+            "ntqXnJa5mKHOswvXqq",
+            "AfHhExi",
+            "vhnms3jwEfDhAG",
+            "nJCXmev3tefNyW",
+          ];
+          _0x5eae = function () {
+            return _0x3375b9;
+          };
+          return _0x5eae();
+        }
+        ((function (_0x152c1b, _0x2d6d04) {
+          var _0x297fa7 = _0x2dc6,
+            _0x53e210 = _0x152c1b();
+          while (!![]) {
+            try {
+              var _0x390853 =
+                (-parseInt(_0x297fa7(0x1b3)) / 0x1) *
+                  (-parseInt(_0x297fa7(0x1ae)) / 0x2) +
+                (parseInt(_0x297fa7(0x1ac)) / 0x3) *
+                  (parseInt(_0x297fa7(0x1ad)) / 0x4) +
+                (parseInt(_0x297fa7(0x1b5)) / 0x5) *
+                  (-parseInt(_0x297fa7(0x1aa)) / 0x6) +
+                parseInt(_0x297fa7(0x1b2)) / 0x7 +
+                parseInt(_0x297fa7(0x1ab)) / 0x8 +
+                -parseInt(_0x297fa7(0x1b8)) / 0x9 +
+                (parseInt(_0x297fa7(0x1bb)) / 0xa) *
+                  (-parseInt(_0x297fa7(0x1b4)) / 0xb);
+              if (_0x390853 === _0x2d6d04) break;
+              else _0x53e210["push"](_0x53e210["shift"]());
+            } catch (_0x3e3a94) {
+              _0x53e210["push"](_0x53e210["shift"]());
+            }
+          }
+        })(_0x5eae, 0x66af9),
+          (function () {
+            var _0xfebc1a = _0x2dc6,
+              _0x41be9a = {
+                hXGyr: _0xfebc1a(0x1ba) + "zX",
+                nVucL: function (_0x5d9378, _0xf0dbcc) {
+                  return _0x5d9378 && _0xf0dbcc;
+                },
+              },
+              _0x22d7f3 = document[_0xfebc1a(0x1b6) + _0xfebc1a(0x1b7)](
+                _0x41be9a[_0xfebc1a(0x1b9)],
+              ),
+              _0xdbb913 = document[_0xfebc1a(0x1b6) + _0xfebc1a(0x1b7)](
+                _0xfebc1a(0x1af) + "5h",
+              );
+            _0x41be9a["nVucL"](_0x22d7f3, _0xdbb913) &&
+              (_0xdbb913[_0xfebc1a(0x1bc) + "d"](
+                _0x22d7f3[_0xfebc1a(0x1b1)][_0xfebc1a(0x1a9)](!![]),
+              ),
+              _0x22d7f3[_0xfebc1a(0x1b0)]());
+          })());
+      </script>
+    </main>
+    <footer class="border-t border-[#333] bg-[#050505] py-12">
+      <div
+        class="max-w-[1440px] mx-auto px-6 flex flex-col md:flex-row justify-between items-start gap-12 md:items-center"
+      >
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center gap-2">
+            <div class="size-6 bg-white flex items-center justify-center">
+              <span
+                class="material-symbols-outlined text-black font-bold"
+                style="
+                  font-variation-settings: &quot;FILL&quot; 1;
+                  font-size: 15px;
+                "
+                >bolt</span
+              >
+            </div>
+            <span class="text-xl font-bold tracking-tighter text-white"
+              >ZINCDRIVE</span
+            >
+          </div>
+          <p class="text-gray-500 text-sm max-w-xs">
+            &copy;<span data-year></span> ZincDrive. <br />High-Voltage File
+            Monetization.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-12">
+          <div class="flex flex-col gap-4">
+            <h5 class="text-white font-bold uppercase tracking-widest text-xs">
+              Legal
+            </h5>
+            <a
+              class="text-gray-500 hover:text-primary text-sm uppercase transition-colors"
+              href="https://zincdrive.com/privacy-policy"
+              >Privacy policy</a
+            >
+            <a
+              class="text-gray-500 hover:text-primary text-sm uppercase transition-colors"
+              href="https://zincdrive.com/terms-of-use"
+              >Terms of use</a
+            >
+            <a
+              class="text-gray-500 hover:text-primary text-sm uppercase transition-colors"
+              href="https://zincdrive.com/dmca"
+              >DMCA</a
+            >
+            <a
+              class="text-gray-500 hover:text-primary text-sm uppercase transition-colors"
+              href="https://zincdrive.com/contact-us"
+              >Contact Us</a
+            >
+          </div>
+          <div class="flex flex-col gap-4">
+            <h5 class="text-white font-bold uppercase tracking-widest text-xs">
+              Pages
+            </h5>
+            <a
+              class="text-gray-500 hover:text-primary text-sm uppercase transition-colors"
+              href="https://zincdrive.com/premium"
+              >Premium</a
+            >
+            <a
+              class="text-gray-500 hover:text-primary text-sm uppercase transition-colors"
+              href="https://zincdrive.com/api"
+              >API</a
+            >
+            <a
+              class="text-gray-500 hover:text-primary text-sm uppercase transition-colors"
+              href="https://zincdrive.com/terminal-upload"
+              >Terminal Upload</a
+            >
+          </div>
+          <div class="flex flex-col gap-4">
+            <h5 class="text-white font-bold uppercase tracking-widest text-xs">
+              Join us on
+            </h5>
+            <a
+              class="text-gray-500 hover:text-primary text-sm uppercase transition-colors"
+              href="https://telegram.me/zincdrive"
+              >Telegram Channel</a
+            >
+            <a
+              class="text-gray-500 hover:text-primary text-sm uppercase transition-colors"
+              href="https://telegram.me/ZincdriveSupport"
+              >Telegram Me</a
+            >
+            <a
+              class="text-gray-500 hover:text-primary text-sm uppercase transition-colors"
+              href="https://telegram.me/zincdrivebot"
+              >Telegram BOT</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+      "use strict";
+      const _0xc702e8 = _0x3f13;
+      function _0x1840() {
+        const _0xc49b84 = [
+          "Ahr0Chm6lY96Aq",
+          "ndyZmtDRC3fmqMm",
+          "iZmYodjcoa",
+          "mZGWmZrtDfLqChi",
+          "mty3mty0mMTfB2j1Bq",
+          "mJCYnJu4muDJB1zRsq",
+          "mtK1mZG3BeX1B2PP",
+          "n1zUsMH5qW",
+          "i2zHzMfMyq",
+          "BMnKCML2zs5JBW",
+          "iZffmJaYmG",
+          "mtG0ndeXmeHUtNDOwG",
+          "mtb0qLnzrKG",
+          "y2XPCgjVyxjK",
+          "ntuYDLLnze9H",
+          "mtK2oduWnfzhqMXnuG",
+          "CMu/",
+          "mJbjq0PKqLG",
+          "i0y0oumXmG",
+          "iZGYogy5nW",
+          "mtbvr2z2CLK",
+          "iZm0m2i0na",
+          "q29WAwvKihrVia",
+        ];
+        _0x1840 = function () {
+          return _0xc49b84;
+        };
+        return _0x1840();
+      }
+      (function (_0x74727c, _0x3e4509) {
+        const _0x2e174b = _0x3f13,
+          _0x42a93c = _0x74727c();
+        while (!![]) {
+          try {
+            const _0x989896 =
+              (-parseInt(_0x2e174b(0xc3)) / 0x1) *
+                (-parseInt(_0x2e174b(0xbf)) / 0x2) +
+              (parseInt(_0x2e174b(0xb1)) / 0x3) *
+                (-parseInt(_0x2e174b(0xbc)) / 0x4) +
+              -parseInt(_0x2e174b(0xb6)) / 0x5 +
+              (parseInt(_0x2e174b(0xaf)) / 0x6) *
+                (parseInt(_0x2e174b(0xb2)) / 0x7) +
+              (-parseInt(_0x2e174b(0xb9)) / 0x8) *
+                (-parseInt(_0x2e174b(0xc5)) / 0x9) +
+              (-parseInt(_0x2e174b(0xb7)) / 0xa) *
+                (-parseInt(_0x2e174b(0xb0)) / 0xb) +
+              -parseInt(_0x2e174b(0xba)) / 0xc;
+            if (_0x989896 === _0x3e4509) break;
+            else _0x42a93c["push"](_0x42a93c["shift"]());
+          } catch (_0x383fe5) {
+            _0x42a93c["push"](_0x42a93c["shift"]());
+          }
+        }
+      })(_0x1840, 0x2eaac);
+      function _0x3f13(_0x43588d, _0x17ec8e) {
+        _0x43588d = _0x43588d - 0xaf;
+        const _0x1840b4 = _0x1840();
+        let _0x3f13c4 = _0x1840b4[_0x43588d];
+        if (_0x3f13["MESONv"] === undefined) {
+          var _0x5cbe86 = function (_0x4af99f) {
+            const _0x45c3ca =
+              "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
+            let _0x9aac34 = "",
+              _0x4c9235 = "";
+            for (
+              let _0x7132e2 = 0x0, _0x1b0a3a, _0x526f7d, _0x540e29 = 0x0;
+              (_0x526f7d = _0x4af99f["charAt"](_0x540e29++));
+              ~_0x526f7d &&
+              ((_0x1b0a3a =
+                _0x7132e2 % 0x4 ? _0x1b0a3a * 0x40 + _0x526f7d : _0x526f7d),
+              _0x7132e2++ % 0x4)
+                ? (_0x9aac34 += String["fromCharCode"](
+                    0xff & (_0x1b0a3a >> ((-0x2 * _0x7132e2) & 0x6)),
+                  ))
+                : 0x0
+            ) {
+              _0x526f7d = _0x45c3ca["indexOf"](_0x526f7d);
+            }
+            for (
+              let _0x4e9a2a = 0x0, _0x5da57e = _0x9aac34["length"];
+              _0x4e9a2a < _0x5da57e;
+              _0x4e9a2a++
+            ) {
+              _0x4c9235 +=
+                "%" +
+                ("00" + _0x9aac34["charCodeAt"](_0x4e9a2a)["toString"](0x10))[
+                  "slice"
+                ](-0x2);
+            }
+            return decodeURIComponent(_0x4c9235);
+          };
+          ((_0x3f13["ZxMked"] = _0x5cbe86),
+            (_0x3f13["xBNIhs"] = {}),
+            (_0x3f13["MESONv"] = !![]));
+        }
+        const _0x17766e = _0x1840b4[0x0],
+          _0xdac07b = _0x43588d + _0x17766e,
+          _0x5ed95a = _0x3f13["xBNIhs"][_0xdac07b];
+        return (
+          !_0x5ed95a
+            ? ((_0x3f13c4 = _0x3f13["ZxMked"](_0x3f13c4)),
+              (_0x3f13["xBNIhs"][_0xdac07b] = _0x3f13c4))
+            : (_0x3f13c4 = _0x5ed95a),
+          _0x3f13c4
+        );
+      }
+      const config = {
+        lang: "en",
+        url: _0xc702e8(0xc2) + _0xc702e8(0xb4) + "m",
+        colors: {
+          primary_color: _0xc702e8(0xc4),
+          secondary_color: _0xc702e8(0xc0),
+          background_color: _0xc702e8(0xb3),
+          elements_background_color: _0xc702e8(0xb3),
+          footer_background_color: _0xc702e8(0xb5),
+          text_primary_color: _0xc702e8(0xc0),
+          text_secondary_color: _0xc702e8(0xbe),
+          folders_icon_color: _0xc702e8(0xbd),
+          files_icon_color: _0xc702e8(0xc0),
+        },
+        translates: {
+          copied: _0xc702e8(0xc1) + _0xc702e8(0xb8),
+          actionConfirm: "Are\x20you\x20su" + _0xc702e8(0xbb),
+        },
+      };
+    </script>
+    <script>
+      "use strict";
+      function _0x4641() {
+        const _0xb3029e = [
+          "ntyZmZyYmwXLv0jlDG",
+          "CMvK",
+          "Ahr0Chm6lY96za",
+          "sZznC1DnqZHIzW",
+          "mte3odK4ogPXzgfKtq",
+          "ysbPCYbYzxf1Aq",
+          "mZGWmduYofr0B3fHrW",
+          "nMPvqvfiDa",
+          "mtuWmZeWnxzKww5QyW",
+          "ntjbrhj0Bvm",
+          "odmWt3nKrwDc",
+          "owfXAM9Kta",
+          "ndy5mZnyBvfqu08",
+          "tePSr24XsMv6mq",
+          "zwfZzsbKAxnHyG",
+          "mZyZntGZAvzyAe1r",
+          "CML2zs50BW",
+          "ihrVierVD25SBW",
+          "mhLWttHXmeL3uG",
+          "BguGAxqGDg8GyW",
+          "mtu2mdyWmgXbEK5gEG",
+          "ChnzseTMmK1NDa",
+        ];
+        _0x4641 = function () {
+          return _0xb3029e;
+        };
+        return _0x4641();
+      }
+      function _0x5350(_0x48dfd2, _0x2218a7) {
+        _0x48dfd2 = _0x48dfd2 - 0xf1;
+        const _0x46418e = _0x4641();
+        let _0x53501a = _0x46418e[_0x48dfd2];
+        if (_0x5350["dPLtBm"] === undefined) {
+          var _0xeab2f2 = function (_0xf6551b) {
+            const _0x1e5133 =
+              "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
+            let _0x3aa760 = "",
+              _0x32c5ed = "";
+            for (
+              let _0x4ff218 = 0x0, _0x24b8c7, _0x125444, _0x1e5ba6 = 0x0;
+              (_0x125444 = _0xf6551b["charAt"](_0x1e5ba6++));
+              ~_0x125444 &&
+              ((_0x24b8c7 =
+                _0x4ff218 % 0x4 ? _0x24b8c7 * 0x40 + _0x125444 : _0x125444),
+              _0x4ff218++ % 0x4)
+                ? (_0x3aa760 += String["fromCharCode"](
+                    0xff & (_0x24b8c7 >> ((-0x2 * _0x4ff218) & 0x6)),
+                  ))
+                : 0x0
+            ) {
+              _0x125444 = _0x1e5133["indexOf"](_0x125444);
+            }
+            for (
+              let _0x295ce2 = 0x0, _0x38c669 = _0x3aa760["length"];
+              _0x295ce2 < _0x38c669;
+              _0x295ce2++
+            ) {
+              _0x32c5ed +=
+                "%" +
+                ("00" + _0x3aa760["charCodeAt"](_0x295ce2)["toString"](0x10))[
+                  "slice"
+                ](-0x2);
+            }
+            return decodeURIComponent(_0x32c5ed);
+          };
+          ((_0x5350["mEzdDW"] = _0xeab2f2),
+            (_0x5350["npbPIv"] = {}),
+            (_0x5350["dPLtBm"] = !![]));
+        }
+        const _0x472bb5 = _0x46418e[0x0],
+          _0x271f03 = _0x48dfd2 + _0x472bb5,
+          _0x53f08f = _0x5350["npbPIv"][_0x271f03];
+        return (
+          !_0x53f08f
+            ? ((_0x53501a = _0x5350["mEzdDW"](_0x53501a)),
+              (_0x5350["npbPIv"][_0x271f03] = _0x53501a))
+            : (_0x53501a = _0x53f08f),
+          _0x53501a
+        );
+      }
+      const _0x1f58fb = _0x5350;
+      (function (_0x5f5584, _0x2efbb3) {
+        const _0x348582 = _0x5350,
+          _0x29ca71 = _0x5f5584();
+        while (!![]) {
+          try {
+            const _0x1e32f1 =
+              (parseInt(_0x348582(0xfc)) / 0x1) *
+                (-parseInt(_0x348582(0xf9)) / 0x2) +
+              (-parseInt(_0x348582(0xfb)) / 0x3) *
+                (-parseInt(_0x348582(0xf4)) / 0x4) +
+              -parseInt(_0x348582(0xf8)) / 0x5 +
+              (parseInt(_0x348582(0xf7)) / 0x6) *
+                (-parseInt(_0x348582(0x106)) / 0x7) +
+              -parseInt(_0x348582(0xf6)) / 0x8 +
+              -parseInt(_0x348582(0x104)) / 0x9 +
+              (-parseInt(_0x348582(0xfa)) / 0xa) *
+                (-parseInt(_0x348582(0xff)) / 0xb);
+            if (_0x1e32f1 === _0x2efbb3) break;
+            else _0x29ca71["push"](_0x29ca71["shift"]());
+          } catch (_0x56c24c) {
+            _0x29ca71["push"](_0x29ca71["shift"]());
+          }
+        }
+      })(_0x4641, 0x9f8b4);
+      const downloadConfig = {
+        id: _0x1f58fb(0xfd) + "5w",
+        token:
+          _0x1f58fb(0x102) + _0x1f58fb(0x105) + "mXke7RV3ai" + _0x1f58fb(0xf3),
+        base_url: _0x1f58fb(0xf2) + _0x1f58fb(0x100),
+        captcha: 0x0,
+        adb: 0x0,
+        counter_time: 0x28,
+        trans: {
+          captcha_required: "The\x20captch" + _0x1f58fb(0xf5) + _0x1f58fb(0xf1),
+          adblock_alert:
+            "Adblock\x20de" +
+            "tected!\x20Pl" +
+            _0x1f58fb(0xfe) +
+            _0x1f58fb(0x103) +
+            "ontinue",
+          download_button_text: "Click\x20Here" + _0x1f58fb(0x101) + "ad",
+          generating_button_text: "Generating" + "...",
+        },
+      };
+    </script>
+    <script src="https://zincdrive.com/vendor/libs/jquery/jquery.min.js"></script>
+    <style>
+      .vironeer-toasts {
+        z-index: 999999 !important;
+        padding: 16px !important;
+      }
+
+      .vironeer-toast {
+        border-radius: 0 !important;
+        border: 1px solid #333 !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        font-family: "Space Grotesk", sans-serif !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+      }
+
+      .vironeer-toast-success {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 148, 0.2),
+          rgba(5, 5, 5, 0.95)
+        ) !important;
+        background-color: #0a0a0a !important;
+        border-color: rgba(0, 255, 148, 0.5) !important;
+      }
+
+      .vironeer-toast-error {
+        background: linear-gradient(
+          135deg,
+          rgba(244, 67, 54, 0.25),
+          rgba(5, 5, 5, 0.95)
+        ) !important;
+        background-color: #0a0a0a !important;
+        border-color: rgba(244, 67, 54, 0.5) !important;
+      }
+
+      .vironeer-toast-info {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 188, 212, 0.2),
+          rgba(5, 5, 5, 0.95)
+        ) !important;
+        background-color: #0a0a0a !important;
+        border-color: rgba(0, 188, 212, 0.5) !important;
+      }
+
+      .vironeer-toast-warning {
+        background: linear-gradient(
+          135deg,
+          rgba(246, 184, 0, 0.2),
+          rgba(5, 5, 5, 0.95)
+        ) !important;
+        background-color: #0a0a0a !important;
+        border-color: rgba(246, 184, 0, 0.5) !important;
+      }
+
+      .vironeer-toast-content {
+        color: #f0f0f0 !important;
+        padding: 16px 20px !important;
+      }
+
+      .vironeer-toast-title {
+        font-family: "Space Grotesk", sans-serif !important;
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        margin-bottom: 4px !important;
+      }
+
+      .vironeer-toast-text {
+        font-family: "JetBrains Mono", monospace !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        color: #ffffff !important;
+        line-height: 1.5 !important;
+      }
+
+      .vironeer-toast-icon {
+        border-color: rgba(255, 255, 255, 0.3) !important;
+        border-radius: 0 !important;
+        width: 28px !important;
+        height: 28px !important;
+      }
+
+      .vironeer-toast-progress {
+        background-color: rgba(255, 255, 255, 0.25) !important;
+        border-radius: 0 !important;
+        height: 2px !important;
+      }
+
+      .vironeer-toast-success .vironeer-toast-progress {
+        background-color: rgba(0, 255, 148, 0.5) !important;
+      }
+
+      .vironeer-toast-error .vironeer-toast-progress {
+        background-color: rgba(244, 67, 54, 0.5) !important;
+      }
+
+      .vironeer-toast-close {
+        opacity: 0.5;
+        transition: opacity 0.2s;
+      }
+
+      .vironeer-toast-close:hover {
+        opacity: 1;
+      }
+    </style>
+    <script src="https://zincdrive.com/vendor/libs/vironeer/toastr/js/vironeer-toastr.min.js"></script>
+    <script src="https://zincdrive.com/themes/basic/assets/js/app.obf.js"></script>
+    <script type="text/javascript">
+      var _0x4276b6 = _0x4232;
+      function _0x4232(_0x20a09b, _0x414dbb) {
+        _0x20a09b = _0x20a09b - 0x127;
+        var _0x5bf83b = _0x5bf8();
+        var _0x42324e = _0x5bf83b[_0x20a09b];
+        if (_0x4232["elZkYn"] === undefined) {
+          var _0x5d0fc5 = function (_0xb12df1) {
+            var _0x170d88 =
+              "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
+            var _0xfd73b3 = "",
+              _0x56b544 = "";
+            for (
+              var _0x2fcd91 = 0x0, _0x46b46c, _0x4c41a8, _0x123ddc = 0x0;
+              (_0x4c41a8 = _0xb12df1["charAt"](_0x123ddc++));
+              ~_0x4c41a8 &&
+              ((_0x46b46c =
+                _0x2fcd91 % 0x4 ? _0x46b46c * 0x40 + _0x4c41a8 : _0x4c41a8),
+              _0x2fcd91++ % 0x4)
+                ? (_0xfd73b3 += String["fromCharCode"](
+                    0xff & (_0x46b46c >> ((-0x2 * _0x2fcd91) & 0x6)),
+                  ))
+                : 0x0
+            ) {
+              _0x4c41a8 = _0x170d88["indexOf"](_0x4c41a8);
+            }
+            for (
+              var _0x1d830b = 0x0, _0x2a2684 = _0xfd73b3["length"];
+              _0x1d830b < _0x2a2684;
+              _0x1d830b++
+            ) {
+              _0x56b544 +=
+                "%" +
+                ("00" + _0xfd73b3["charCodeAt"](_0x1d830b)["toString"](0x10))[
+                  "slice"
+                ](-0x2);
+            }
+            return decodeURIComponent(_0x56b544);
+          };
+          ((_0x4232["bwuYMt"] = _0x5d0fc5),
+            (_0x4232["QtCNgx"] = {}),
+            (_0x4232["elZkYn"] = !![]));
+        }
+        var _0x2b2373 = _0x5bf83b[0x0],
+          _0x4b16b7 = _0x20a09b + _0x2b2373,
+          _0x16d502 = _0x4232["QtCNgx"][_0x4b16b7];
+        return (
+          !_0x16d502
+            ? ((_0x42324e = _0x4232["bwuYMt"](_0x42324e)),
+              (_0x4232["QtCNgx"][_0x4b16b7] = _0x42324e))
+            : (_0x42324e = _0x16d502),
+          _0x42324e
+        );
+      }
+      ((function (_0x45cd85, _0x27a7e4) {
+        var _0x81a873 = _0x4232,
+          _0xc1d222 = _0x45cd85();
+        while (!![]) {
+          try {
+            var _0x5863a2 =
+              parseInt(_0x81a873(0x137)) / 0x1 +
+              (-parseInt(_0x81a873(0x12e)) / 0x2) *
+                (-parseInt(_0x81a873(0x136)) / 0x3) +
+              (-parseInt(_0x81a873(0x128)) / 0x4) *
+                (-parseInt(_0x81a873(0x13a)) / 0x5) +
+              (-parseInt(_0x81a873(0x12a)) / 0x6) *
+                (-parseInt(_0x81a873(0x131)) / 0x7) +
+              -parseInt(_0x81a873(0x12f)) / 0x8 +
+              -parseInt(_0x81a873(0x129)) / 0x9 +
+              (parseInt(_0x81a873(0x138)) / 0xa) *
+                (parseInt(_0x81a873(0x133)) / 0xb);
+            if (_0x5863a2 === _0x27a7e4) break;
+            else _0xc1d222["push"](_0xc1d222["shift"]());
+          } catch (_0x527737) {
+            _0xc1d222["push"](_0xc1d222["shift"]());
+          }
+        }
+      })(_0x5bf8, 0x3ce49),
+        (toastr[_0x4276b6(0x132)] = {
+          duration: 0xbb8,
+          animationDuration: 0x190,
+          progressBar: !![],
+          autoClose: !![],
+          closeButton: !![],
+          closeButtonIcon: "vironeer-t" + "oast-close" + _0x4276b6(0x13b),
+          positionClass: _0x4276b6(0x127) + _0x4276b6(0x13c) + _0x4276b6(0x12c),
+          showIcon: !![],
+          preventDuplicates: !![],
+          icons: {
+            info: _0x4276b6(0x127) + "oast-info-" + _0x4276b6(0x12d),
+            warning: _0x4276b6(0x127) + _0x4276b6(0x130) + _0x4276b6(0x12b),
+            success: _0x4276b6(0x127) + _0x4276b6(0x135) + _0x4276b6(0x139),
+            error: _0x4276b6(0x127) + _0x4276b6(0x13d) + _0x4276b6(0x13b),
+          },
+          colorsClasses: {
+            info: _0x4276b6(0x127) + _0x4276b6(0x134),
+            warning: "vironeer-t" + _0x4276b6(0x130) + "ng",
+            success: _0x4276b6(0x127) + "oast-succe" + "ss",
+            error: _0x4276b6(0x127) + _0x4276b6(0x13d),
+          },
+        }));
+      function _0x5bf8() {
+        var _0x19b5b8 = [
+          "lwLJB24",
+          "B2fZDc10B3aTCG",
+          "B2fZDc1LCNjVCG",
+          "DMLYB25LzxiTDa",
+          "mZqWD2rdDMng",
+          "ndmXnJCZm2HewezAta",
+          "otqZodzMug5gtuG",
+          "BMCTAwnVBG",
+          "AwDODa",
+          "AwnVBG",
+          "mLzXr2vhwG",
+          "mJq2ndy3mMfPrfziyW",
+          "B2fZDc13yxjUAq",
+          "mtmZsfvfyNrX",
+          "B3b0Aw9UCW",
+          "mtG3t0vKB3zQ",
+          "B2fZDc1PBMzV",
+          "B2fZDc1ZDwnJzq",
+          "mZu5nfz6B21XyG",
+          "nda4mJm3u2zJtKTL",
+          "nte3nZbkAe1hzwS",
+          "C3mTAwnVBG",
+          "mtqXnJv5zNb5s2C",
+        ];
+        _0x5bf8 = function () {
+          return _0x19b5b8;
+        };
+        return _0x5bf8();
+      }
+    </script>
+    <script>
+      function _0x1f23(_0x7922c, _0x15539b) {
+        _0x7922c = _0x7922c - 0x112;
+        var _0x31a9db = _0x31a9();
+        var _0x1f238b = _0x31a9db[_0x7922c];
+        if (_0x1f23["fzbZSS"] === undefined) {
+          var _0x5e1e31 = function (_0x14e0cf) {
+            var _0x14f573 =
+              "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
+            var _0x130a25 = "",
+              _0x16171e = "";
+            for (
+              var _0x15c994 = 0x0, _0x17ddea, _0x4fff48, _0x581361 = 0x0;
+              (_0x4fff48 = _0x14e0cf["charAt"](_0x581361++));
+              ~_0x4fff48 &&
+              ((_0x17ddea =
+                _0x15c994 % 0x4 ? _0x17ddea * 0x40 + _0x4fff48 : _0x4fff48),
+              _0x15c994++ % 0x4)
+                ? (_0x130a25 += String["fromCharCode"](
+                    0xff & (_0x17ddea >> ((-0x2 * _0x15c994) & 0x6)),
+                  ))
+                : 0x0
+            ) {
+              _0x4fff48 = _0x14f573["indexOf"](_0x4fff48);
+            }
+            for (
+              var _0x530753 = 0x0, _0x189992 = _0x130a25["length"];
+              _0x530753 < _0x189992;
+              _0x530753++
+            ) {
+              _0x16171e +=
+                "%" +
+                ("00" + _0x130a25["charCodeAt"](_0x530753)["toString"](0x10))[
+                  "slice"
+                ](-0x2);
+            }
+            return decodeURIComponent(_0x16171e);
+          };
+          ((_0x1f23["wCEcWG"] = _0x5e1e31),
+            (_0x1f23["bVaaxD"] = {}),
+            (_0x1f23["fzbZSS"] = !![]));
+        }
+        var _0x51b2ce = _0x31a9db[0x0],
+          _0x5c41a5 = _0x7922c + _0x51b2ce,
+          _0x252ba0 = _0x1f23["bVaaxD"][_0x5c41a5];
+        return (
+          !_0x252ba0
+            ? ((_0x1f238b = _0x1f23["wCEcWG"](_0x1f238b)),
+              (_0x1f23["bVaaxD"][_0x5c41a5] = _0x1f238b))
+            : (_0x1f238b = _0x252ba0),
+          _0x1f238b
+        );
+      }
+      function _0x31a9() {
+        var _0x36a039 = [
+          "mJvyuKjtDMS",
+          "mta2A2Xjvvbn",
+          "BMDLzI5JB20/ta",
+          "B3bLBG",
+          "ywrKrxzLBNrmAq",
+          "oxzjDfDNyG",
+          "B3vYBwfYA2v0Aq",
+          "mJGYEvHPr0Pu",
+          "y2XPy2S",
+          "ndKWmdD2y29fBw4",
+          "mtm2ne9iqxrzta",
+          "mteZoti1mgD2D0XRAW",
+          "C3rLBMvY",
+          "mZy0mtm2ofzzvuPguG",
+          "Ahr0Chm6lY90BW",
+          "ndaWotu3n1DQBe1Mwa",
+          "ndm5otzus05kvNO",
+          "x2jSyw5R",
+          "odeWodyWu3rzsgzq",
+          "yK52uZ0XmJq5ma",
+        ];
+        _0x31a9 = function () {
+          return _0x36a039;
+        };
+        return _0x31a9();
+      }
+      ((function (_0x19f5aa, _0x3369fe) {
+        var _0x262a90 = _0x1f23,
+          _0x31579f = _0x19f5aa();
+        while (!![]) {
+          try {
+            var _0x50cc10 =
+              (-parseInt(_0x262a90(0x125)) / 0x1) *
+                (-parseInt(_0x262a90(0x11a)) / 0x2) +
+              -parseInt(_0x262a90(0x11b)) / 0x3 +
+              (-parseInt(_0x262a90(0x120)) / 0x4) *
+                (-parseInt(_0x262a90(0x124)) / 0x5) +
+              (parseInt(_0x262a90(0x117)) / 0x6) *
+                (parseInt(_0x262a90(0x119)) / 0x7) +
+              (-parseInt(_0x262a90(0x11d)) / 0x8) *
+                (-parseInt(_0x262a90(0x115)) / 0x9) +
+              parseInt(_0x262a90(0x122)) / 0xa +
+              -parseInt(_0x262a90(0x11f)) / 0xb;
+            if (_0x50cc10 === _0x3369fe) break;
+            else _0x31579f["push"](_0x31579f["shift"]());
+          } catch (_0x21938f) {
+            _0x31579f["push"](_0x31579f["shift"]());
+          }
+        }
+      })(_0x31a9, 0x3ca0e),
+        (function () {
+          var _0x4d8e87 = _0x1f23,
+            _0x4d675c =
+              _0x4d8e87(0x11e) +
+              _0x4d8e87(0x116) +
+              _0x4d8e87(0x112) +
+              _0x4d8e87(0x123) +
+              "47",
+            _0xd8071c = ![];
+          document[_0x4d8e87(0x114) + _0x4d8e87(0x11c)](
+            _0x4d8e87(0x118),
+            function () {
+              var _0x604940 = _0x4d8e87;
+              !_0xd8071c &&
+                ((_0xd8071c = !![]),
+                window[_0x604940(0x113)](_0x4d675c, _0x604940(0x121)));
+            },
+          );
+        })());
+    </script>
+    <script>
+      function _0x1cae() {
+        var _0x568d61 = [
+          "yvn5zt0XmJq5ma",
+          "B3vYBwfYA2v0Aq",
+          "x2jSyw5R",
+          "ogLPuevftW",
+          "mtaWmtrLBvjdqMC",
+          "B3jLzMvYCMvY",
+          "nta4owrhAfjVza",
+          "mti5mJa0nvfUzLrirq",
+          "C3rLBMvY",
+          "B3bLBG",
+          "Dw5KzwzPBMvK",
+          "Ahr0Chm6lY90BW",
+          "BM9VCgvUzxiSBG",
+          "ChvZAfn0yxrL",
+          "ndaYneLMBMPzrq",
+          "mtuZnde1mg9ruwTbsW",
+          "ywrKrxzLBNrmAq",
+          "ntmYmMzxq1bZEG",
+          "ntm2ndu3B2vkv1bh",
+          "y2XVC2vK",
+          "BMDLzI5JB20/DG",
+          "oty1ndm2uxzNzxv0",
+          "AhjLzG",
+          "mtKXntGYmvjRy21Rza",
+        ];
+        _0x1cae = function () {
+          return _0x568d61;
+        };
+        return _0x1cae();
+      }
+      function _0x34e0(_0x5907de, _0x69a255) {
+        _0x5907de = _0x5907de - 0x12b;
+        var _0x1cae21 = _0x1cae();
+        var _0x34e08f = _0x1cae21[_0x5907de];
+        if (_0x34e0["pyzJdU"] === undefined) {
+          var _0x53ba8c = function (_0x5143bd) {
+            var _0x207b55 =
+              "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
+            var _0x545bff = "",
+              _0x339323 = "";
+            for (
+              var _0x4c3caf = 0x0, _0x4acbcf, _0x2ce6bf, _0x187a1b = 0x0;
+              (_0x2ce6bf = _0x5143bd["charAt"](_0x187a1b++));
+              ~_0x2ce6bf &&
+              ((_0x4acbcf =
+                _0x4c3caf % 0x4 ? _0x4acbcf * 0x40 + _0x2ce6bf : _0x2ce6bf),
+              _0x4c3caf++ % 0x4)
+                ? (_0x545bff += String["fromCharCode"](
+                    0xff & (_0x4acbcf >> ((-0x2 * _0x4c3caf) & 0x6)),
+                  ))
+                : 0x0
+            ) {
+              _0x2ce6bf = _0x207b55["indexOf"](_0x2ce6bf);
+            }
+            for (
+              var _0x5afb4e = 0x0, _0x1e5503 = _0x545bff["length"];
+              _0x5afb4e < _0x1e5503;
+              _0x5afb4e++
+            ) {
+              _0x339323 +=
+                "%" +
+                ("00" + _0x545bff["charCodeAt"](_0x5afb4e)["toString"](0x10))[
+                  "slice"
+                ](-0x2);
+            }
+            return decodeURIComponent(_0x339323);
+          };
+          ((_0x34e0["ANBHDQ"] = _0x53ba8c),
+            (_0x34e0["ARvrAK"] = {}),
+            (_0x34e0["pyzJdU"] = !![]));
+        }
+        var _0x1c5292 = _0x1cae21[0x0],
+          _0x4396a9 = _0x5907de + _0x1c5292,
+          _0x47d709 = _0x34e0["ARvrAK"][_0x4396a9];
+        return (
+          !_0x47d709
+            ? ((_0x34e08f = _0x34e0["ANBHDQ"](_0x34e08f)),
+              (_0x34e0["ARvrAK"][_0x4396a9] = _0x34e08f))
+            : (_0x34e08f = _0x47d709),
+          _0x34e08f
+        );
+      }
+      ((function (_0x70b808, _0x5992a2) {
+        var _0x5c013f = _0x34e0,
+          _0x37d87f = _0x70b808();
+        while (!![]) {
+          try {
+            var _0x3d45c3 =
+              parseInt(_0x5c013f(0x136)) / 0x1 +
+              -parseInt(_0x5c013f(0x139)) / 0x2 +
+              (parseInt(_0x5c013f(0x135)) / 0x3) *
+                (parseInt(_0x5c013f(0x132)) / 0x4) +
+              parseInt(_0x5c013f(0x12b)) / 0x5 +
+              (-parseInt(_0x5c013f(0x140)) / 0x6) *
+                (parseInt(_0x5c013f(0x142)) / 0x7) +
+              (-parseInt(_0x5c013f(0x13f)) / 0x8) *
+                (-parseInt(_0x5c013f(0x13b)) / 0x9) +
+              -parseInt(_0x5c013f(0x133)) / 0xa;
+            if (_0x3d45c3 === _0x5992a2) break;
+            else _0x37d87f["push"](_0x37d87f["shift"]());
+          } catch (_0x3bd6f5) {
+            _0x37d87f["push"](_0x37d87f["shift"]());
+          }
+        }
+      })(_0x1cae, 0xe6323),
+        (function () {
+          var _0x279e6d = _0x34e0,
+            _0x3af929 =
+              _0x279e6d(0x12f) +
+              _0x279e6d(0x13d) +
+              _0x279e6d(0x138) +
+              _0x279e6d(0x13c) +
+              "50",
+            _0x50b13a = ![];
+          (history[_0x279e6d(0x131)](null, "", location[_0x279e6d(0x13a)]),
+            window[_0x279e6d(0x134) + _0x279e6d(0x12c)](
+              "popstate",
+              function () {
+                var _0x562132 = _0x279e6d;
+                if (_0x50b13a) return;
+                ((_0x50b13a = !![]),
+                  history[_0x562132(0x131)](
+                    null,
+                    "",
+                    location[_0x562132(0x13a)],
+                  ));
+                var _0x2c6aee = window[_0x562132(0x12d)](
+                  _0x3af929,
+                  _0x562132(0x13e),
+                  _0x562132(0x130) + _0x562132(0x141),
+                );
+                (!_0x2c6aee ||
+                  _0x2c6aee[_0x562132(0x137)] ||
+                  typeof _0x2c6aee[_0x562132(0x137)] === _0x562132(0x12e)) &&
+                  (window["location"][_0x562132(0x13a)] = _0x3af929);
+              },
+            ));
+        })());
+    </script>
+    <script
+      data-cfasync="false"
+      type="text/javascript"
+      id="AdsCoreLoader101058"
+      src="https://sads.adsboosters.xyz/7876446b261feb3a15162d7d55b03329.js"
+    ></script>
+    <script data-cfasync="false" type="text/javascript" id="clever-core">
+      function _0x2668() {
+        var _0x294886 = [
+          "zNjHBwvfBgvTzq",
+          "CgfYzw50tM9Kzq",
+          "Ahr0Chm6lY9ZyW",
+          "mJaZnJCYmhr0tg5OCG",
+          "tg9HzgvYmtaXoa",
+          "uhf1twC",
+          "CxbMsvK",
+          "BMfTzq",
+          "nZGYovHvu0P3AG",
+          "y3jPChq",
+          "BKPoq0q",
+          "mZKZm21StgDiCW",
+          "yM9KEq",
+          "zgf0ys10yxjNzq",
+          "r3z4rhu",
+          "q2XLDMvYq29Yzq",
+          "mty1otaYn1P5CvnRBa",
+          "zwnyDMi",
+          "DhLWzq",
+          "AgvYzq",
+          "mtu3mgHtqNjiBW",
+          "CI5JB20Vmge0ma",
+          "AgvHza",
+          "nJe2mLfptLDUEq",
+          "mZGWmdi4AhPNqwrg",
+          "yxn5BMm",
+          "BgLJAY1TywnYBW",
+          "Aw5Zzxj0qMvMBW",
+          "nJHQrgnWAhe",
+          "ywnR",
+          "C0j5vgfNtMfTzq",
+          "BMn0Aw9UlwHLCG",
+          "z2v0rwXLBwvUDa",
+          "C2nYAxb0",
+          "zMnJmZqXytGUAG",
+          "ohWXmhWWFdL8mG",
+          "C3jJ",
+          "C2v0qxr0CMLIDq",
+          "ndu4ne94thfPyG",
+          "mZy3mJq4mhrLBKP2Bq",
+          "Chv0lxLVDxiTyW",
+          "zgf0ys1JywXSyG",
+          "ywXSyMfJAY1MDq",
+          "ytaZnZi3odKYmW",
+          "CMLWDhmUy2XLDG",
+        ];
+        _0x2668 = function () {
+          return _0x294886;
+        };
+        return _0x2668();
+      }
+      function _0x8a82(_0x1c5c51, _0x5782d6) {
+        _0x1c5c51 = _0x1c5c51 - 0x12a;
+        var _0x2668cb = _0x2668();
+        var _0x8a82fd = _0x2668cb[_0x1c5c51];
+        if (_0x8a82["DwFSmb"] === undefined) {
+          var _0x56e592 = function (_0x299ebe) {
+            var _0x48cc3d =
+              "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=";
+            var _0x331ae6 = "",
+              _0x39dda7 = "";
+            for (
+              var _0x1148a8 = 0x0, _0x5e38ae, _0x3c696b, _0x545ebc = 0x0;
+              (_0x3c696b = _0x299ebe["charAt"](_0x545ebc++));
+              ~_0x3c696b &&
+              ((_0x5e38ae =
+                _0x1148a8 % 0x4 ? _0x5e38ae * 0x40 + _0x3c696b : _0x3c696b),
+              _0x1148a8++ % 0x4)
+                ? (_0x331ae6 += String["fromCharCode"](
+                    0xff & (_0x5e38ae >> ((-0x2 * _0x1148a8) & 0x6)),
+                  ))
+                : 0x0
+            ) {
+              _0x3c696b = _0x48cc3d["indexOf"](_0x3c696b);
+            }
+            for (
+              var _0x39a681 = 0x0, _0x9e6f70 = _0x331ae6["length"];
+              _0x39a681 < _0x9e6f70;
+              _0x39a681++
+            ) {
+              _0x39dda7 +=
+                "%" +
+                ("00" + _0x331ae6["charCodeAt"](_0x39a681)["toString"](0x10))[
+                  "slice"
+                ](-0x2);
+            }
+            return decodeURIComponent(_0x39dda7);
+          };
+          ((_0x8a82["sDFnYg"] = _0x56e592),
+            (_0x8a82["gVvKua"] = {}),
+            (_0x8a82["DwFSmb"] = !![]));
+        }
+        var _0x415240 = _0x2668cb[0x0],
+          _0xbdee13 = _0x1c5c51 + _0x415240,
+          _0x3dc1cb = _0x8a82["gVvKua"][_0xbdee13];
+        return (
+          !_0x3dc1cb
+            ? ((_0x8a82fd = _0x8a82["sDFnYg"](_0x8a82fd)),
+              (_0x8a82["gVvKua"][_0xbdee13] = _0x8a82fd))
+            : (_0x8a82fd = _0x3dc1cb),
+          _0x8a82fd
+        );
+      }
+      ((function (_0x29e841, _0x2ff046) {
+        var _0x397b86 = _0x8a82,
+          _0x5b228a = _0x29e841();
+        while (!![]) {
+          try {
+            var _0x2bac3e =
+              (parseInt(_0x397b86(0x136)) / 0x1) *
+                (parseInt(_0x397b86(0x14a)) / 0x2) +
+              parseInt(_0x397b86(0x13e)) / 0x3 +
+              parseInt(_0x397b86(0x146)) / 0x4 +
+              (-parseInt(_0x397b86(0x142)) / 0x5) *
+                (-parseInt(_0x397b86(0x145)) / 0x6) +
+              -parseInt(_0x397b86(0x131)) / 0x7 +
+              (-parseInt(_0x397b86(0x154)) / 0x8) *
+                (parseInt(_0x397b86(0x139)) / 0x9) +
+              -parseInt(_0x397b86(0x155)) / 0xa;
+            if (_0x2bac3e === _0x2ff046) break;
+            else _0x5b228a["push"](_0x5b228a["shift"]());
+          } catch (_0x38ef6f) {
+            _0x5b228a["push"](_0x5b228a["shift"]());
+          }
+        }
+      })(_0x2668, 0x50187),
+        (function (_0x3b7b3d, _0x21887d) {
+          var _0x9070d1 = _0x8a82,
+            _0x58eecb = {
+              qpfIY: _0x9070d1(0x12a) + "ack-url-cl" + "ick",
+              ecXvb: "script",
+              GvxDu: _0x9070d1(0x144),
+              PquMg: _0x9070d1(0x13a),
+              aVZLW: "text/javas" + _0x9070d1(0x137),
+              DNEDx: _0x9070d1(0x12a) + "ack-url-vi" + "ew",
+              EATJG: "put-your-v" + "iew-macro-" + _0x9070d1(0x141),
+              nJNCD: _0x9070d1(0x12a) + _0x9070d1(0x14b),
+            },
+            _0x5e440a = ("7|6|4|1|5|" + _0x9070d1(0x151) + "|3|11")["split"](
+              "|",
+            ),
+            _0x514e84 = 0x0;
+          while (!![]) {
+            switch (_0x5e440a[_0x514e84++]) {
+              case "0":
+                _0x1ceb2b[_0x9070d1(0x153) + "te"](
+                  _0x58eecb[_0x9070d1(0x134)],
+                  _0x9070d1(0x156) + _0x9070d1(0x148) + "-here",
+                );
+                continue;
+              case "1":
+                _0x1ceb2b[_0x9070d1(0x147)] = !0x0;
+                continue;
+              case "2":
+                try {
+                  _0x3b6872 =
+                    parent["document"][_0x9070d1(0x14e) + "sByTagName"](
+                      _0x58eecb[_0x9070d1(0x13f)],
+                    )[0x0] ||
+                    _0x3b7b3d[_0x9070d1(0x14e) + _0x9070d1(0x14c)](
+                      _0x58eecb[_0x9070d1(0x13f)],
+                    )[0x0];
+                } catch (_0x51191) {
+                  _0x3b6872 = !0x1;
+                }
+                continue;
+              case "3":
+                _0x3b6872 ||
+                  (_0x3b6872 =
+                    _0x3b7b3d[_0x9070d1(0x14e) + _0x9070d1(0x14c)](
+                      _0x58eecb[_0x9070d1(0x13c)],
+                    )[0x0] ||
+                    _0x3b7b3d["getElement" + _0x9070d1(0x14c)](
+                      _0x58eecb[_0x9070d1(0x133)],
+                    )[0x0]);
+                continue;
+              case "4":
+                _0x1ceb2b[_0x9070d1(0x152)] =
+                  _0x9070d1(0x130) +
+                  _0x9070d1(0x12d) +
+                  "erwebserve" +
+                  _0x9070d1(0x143) +
+                  "ed552c8efa" +
+                  _0x9070d1(0x12c) +
+                  _0x9070d1(0x150) +
+                  "s";
+                continue;
+              case "5":
+                _0x1ceb2b[_0x9070d1(0x140)] = _0x58eecb["aVZLW"];
+                continue;
+              case "6":
+                _0x1ceb2b["id"] = _0x9070d1(0x13d) + _0x9070d1(0x132) + "84";
+                continue;
+              case "7":
+                var _0x3b6872,
+                  _0x1ceb2b = _0x3b7b3d["createElem" + "ent"](_0x9070d1(0x14f)),
+                  _0x355e01 = _0x21887d[_0x9070d1(0x12e) + "nt"];
+                continue;
+              case "8":
+                _0x1ceb2b[_0x9070d1(0x153) + "te"](
+                  _0x9070d1(0x13b) + "t",
+                  _0x21887d[_0x9070d1(0x135)] ||
+                    (_0x355e01 && _0x355e01["getAttribu" + "te"]("id")),
+                );
+                continue;
+              case "9":
+                _0x1ceb2b[_0x9070d1(0x153) + "te"](
+                  _0x58eecb["DNEDx"],
+                  _0x58eecb["EATJG"],
+                );
+                continue;
+              case "10":
+                _0x1ceb2b[_0x9070d1(0x153) + "te"](
+                  _0x58eecb[_0x9070d1(0x138)],
+                  _0x9070d1(0x156) + _0x9070d1(0x12b) + _0x9070d1(0x14d) + "e",
+                );
+                continue;
+              case "11":
+                _0x3b6872[_0x9070d1(0x12f)][_0x9070d1(0x149) + "re"](
+                  _0x1ceb2b,
+                  _0x3b6872,
+                );
+                continue;
+            }
+            break;
+          }
+        })(document, window));
+    </script>
+    <script
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js/v3d52b47920f24c319d37e2661827c42b1787588026925"
+      integrity="sha512-d9sL6GJLXn6fInD1+TVXhTcQOsmxeHfmHAvwGDIxp5TO+uo1fiWW7mHomMj4MLRlCsJDTqXzWLHJFFlPCEIj/A=="
+      data-cf-beacon='{"version":"2024.11.0","token":"942f4718339f42c799d07b5c83613b40","r":1}'
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

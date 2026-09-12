@@ -1,56 +1,65 @@
 // ==UserScript==
-// @name         Photopea - Remove Ads Sidebar & Full Width Editor
-// @namespace    https://github.com/schalkburger/website-enhancements
-// @version      1.2
-// @description  Hides the right ad column and makes the main Photopea workspace full-width
-// @author       Schalk Burger <schalkb@gmail.com>
+// @name         Photopea - Hide Ad Sidebar + Full Width Editor
+// @namespace    https://greasyfork.org
+// @version      1.5
+// @description  Removes only the ad column on the far right. Keeps Layers, History, etc. Full width editor.
+// @author       Grok
 // @match        https://www.photopea.com/*
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
 
 (function () {
-  "use strict";
+    'use strict';
 
-  const css = `
-        /* Completely hide the ad column (the second child of .flexrow.app) */
-        .flexrow.app > div:nth-child(2) {
-            display: none !important;
-        }
-
-        /* Make the main container take 100% width */
-        .flexrow.app > div:first-child {
-            width: 100% !important;
-            flex: 1 !important;
-        }
-
-        /* Force the whole app row to be full width */
-        .flexrow.app {
-            width: 100% !important;
-            display: flex !important;
-        }
-
-        /* Expand the main editor area */
-        .panelblock.mainblock,
-        .flexrow > .panelblock.mainblock > .block > .body,
-        .flexrow > .panelblock.mainblock > .block > .panelhead {
-            max-width: none !important;
-            width: 100% !important;
-        }
-
-        /* Optional: also hide the small top-right ad banner if present */
+    const css = `
+        /* Hide ONLY the outer ad sidebar */
+        .flexrow.app > div:nth-child(2),
+        div[style*="padding-left: 19px"][style*="width: 600px"],
         div[style*="z-index: 1"][style*="width: 600px"] {
             display: none !important;
+            width: 0 !important;
+            min-width: 0 !important;
+        }
+
+        /* Make the main app area full width */
+        .flexrow.app > div:first-child,
+        .flexrow.app {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        /* Expand the editor area */
+        .panelblock.mainblock,
+        .panelblock.mainblock .block,
+        .panelblock.mainblock .body,
+        .panelhead {
+            width: 100% !important;
+            max-width: none !important;
+        }
+
+        .pbody, canvas {
+            max-width: none !important;
         }
     `;
 
-  const style = document.createElement("style");
-  style.textContent = css;
-  document.head.appendChild(style);
+    const style = document.createElement('style');
+    style.textContent = css;
+    (document.head || document.documentElement).appendChild(style);
 
-  // In case Photopea recalculates sizes later, force a resize after load
-  window.addEventListener("load", () => {
-    setTimeout(() => window.dispatchEvent(new Event("resize")), 500);
-    setTimeout(() => window.dispatchEvent(new Event("resize")), 1500);
-  });
+    // Force layout update
+    function forceResize() {
+        window.dispatchEvent(new Event('resize'));
+    }
+
+    window.addEventListener('load', () => {
+        setTimeout(forceResize, 300);
+        setTimeout(forceResize, 900);
+    });
+
+    // Safety observer
+    new MutationObserver(() => {
+        const ads = document.querySelectorAll('.flexrow.app > div:nth-child(2)');
+        ads.forEach(ad => ad.style.display = 'none');
+    }).observe(document.body, { childList: true, subtree: true });
 })();
