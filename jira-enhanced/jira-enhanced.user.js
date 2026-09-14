@@ -1,66 +1,43 @@
 // ==UserScript==
-// @name         Jira New Tab Flow: Open Tickets in a New Tab, Not in Popup
-// @namespace    http://tampermonkey.net/
-// @version      2
-// @description  Enhance your Jira experience open any clicked issue in a new tab
-// @icon         https://static-00.iconduck.com/assets.00/jira-icon-512x512-kkop6eik.png
-// @author       Ameer Jamal
-// @match        https://*.atlassian.net/jira/*
-// @match        https://*.atlassian.com/jira/*
-// @grant        none
-// @require      https://unpkg.com/sweetalert@2/dist/sweetalert.min.js
-// @downloadURL https://update.greasyfork.org/scripts/472454/Jira%20New%20Tab%20Flow%3A%20Open%20Tickets%20in%20a%20New%20Tab%2C%20Not%20in%20Popup.user.js
-// @updateURL https://update.greasyfork.org/scripts/472454/Jira%20New%20Tab%20Flow%3A%20Open%20Tickets%20in%20a%20New%20Tab%2C%20Not%20in%20Popup.meta.js
+// @name        Jira New Tab Flow
+// @namespace   https://github.com/schalkburger/website-enhancements
+// @version     2.5.0
+// @author      Schalk Burger <schalkb@gmail.com>
+// @description Open clicked Jira issues in a new tab instead of the sidebar popup
+// @match       https://*.atlassian.net/jira/*
+// @match       https://*.atlassian.com/jira/*
+// @run-at      document-idle
+// @grant       none
+// @license     MIT
 // ==/UserScript==
 
 (function () {
   "use strict";
+  let version = GM_info.script.version;
+  let name = GM_info.script.name;
+  console.log(`${name} ${version}`);
 
   // Variables to store state information
   let lastSelectedIssue = null; // The last issue that was selected
   let isActive = true; // Whether the script is currently active
-  let escapeHitCounter = 0; // Count of consecutive "Ctrl" key presses
   let justActivated = true; // Flag to indicate that the script was just activated
-  let button = null; // Button for toggling script activation
-  let buttonActiveText = "Tickets Currently Open  in New Tab"; // Text for when the script is enabled
-  let buttonInactiveText = "Tickets Currently Open in SideBar"; // Text for when script is disabled
-  let Red = "#DE350B";
-  let Green = "#1F875A";
+  let switchTrack = null; // Switch track element, for reflecting toggle state
+  let isOpeningIssue = false; // Re-entrancy guard: blocks duplicate opens from a burst of mutation events
 
   // Function to toggle the active state of the script
   const toggleActiveState = () => {
     isActive = !isActive; // Toggle active state
     if (isActive) {
       justActivated = true;
-      swal({
-        // Show a success alert when activated
-        title: "Clicking on a ticket now opens it in a new tab",
-        icon: "success",
-        buttons: false,
-        timer: 1500,
-        allowEscapeKey: false,
-      });
     } else {
       lastSelectedIssue = null;
-      swal({
-        // Show an error alert when deactivated
-        title: "Clicking on a ticket opens in the sidebar as default",
-        icon: "error",
-        buttons: false,
-        timer: 1500,
-        allowEscapeKey: false,
-      });
     }
 
-    // Update the button text and color based on the current state
-    if (button) {
-      button.textContent = !isActive ? buttonInactiveText : buttonActiveText; // Set the button text content
-      button.style.color = "white"; // Set the button text color
-      button.style.backgroundColor = !isActive ? Red : Green; // Set the button background color
+    // Reflect the new state on the switch
+    if (switchTrack) {
+      switchTrack.setAttribute("data-state", isActive ? "checked" : "unchecked");
+      switchTrack.querySelector("[data-thumb]").setAttribute("data-state", isActive ? "checked" : "unchecked");
     }
-
-    // Reset the control key press counter
-    escapeHitCounter = 0;
   };
 
   // Function to check if a new issue is selected
@@ -76,15 +53,21 @@
     const selectedIssue = urlParams.get("selectedIssue");
 
     // Open the selected issue in a new tab if it's different from the last one
-    if (selectedIssue && selectedIssue !== lastSelectedIssue && !justActivated) {
+    if (selectedIssue && selectedIssue !== lastSelectedIssue && !justActivated && !isOpeningIssue) {
+      isOpeningIssue = true;
       console.log("Open selected issue");
       window.open(`https://${urlDomain}/browse/${selectedIssue}`, "_blank");
 
-      // Remove the selectedIssue parameter from the URL
-      urlParams.delete("selectedIssue");
-      const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
-      history.replaceState(null, "", newUrl);
-      window.location.reload();
+      // Close Jira's own modal the way a user would (Escape), so its router
+      // unmounts it and cleans up the URL itself. Directly rewriting the URL
+      // via history.replaceState leaves the modal mounted since Jira's router
+      // never observes the change.
+      document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", code: "Escape", bubbles: true }));
+
+      // Release the guard on the next tick, after the DOM settles
+      setTimeout(() => {
+        isOpeningIssue = false;
+      }, 0);
     }
 
     lastSelectedIssue = selectedIssue;
@@ -100,62 +83,83 @@
     subtree: true,
   });
 
-  // Add an event listener for the keyup event
-  window.addEventListener("keyup", (event) => {
-    // Check if the "Ctrl" key was pressed
-    if (event.key === "Control") {
-      escapeHitCounter += 1;
-
-      // Toggle active state if the "Ctrl" key was pressed twice in a row
-      if (escapeHitCounter === 2) {
-        toggleActiveState();
-      }
-
-      // Reset the control key press counter after a short delay
-      setTimeout(() => {
-        escapeHitCounter = 0;
-      }, 300);
+  // shadcn-style switch CSS (https://ui.shadcn.com/docs/components/base/switch), injected once
+  const style = document.createElement("style");
+  style.textContent = `
+    .jira-new-tab-switch-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: #1D2125;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13px;
     }
-  });
+    .jira-new-tab-switch-container label {
+      color: white;
+      cursor: pointer;
+      user-select: none;
+    }
+    .jira-new-tab-switch-track {
+      width: 36px;
+      height: 20px;
+      border-radius: 999px;
+      background: #3A3F45;
+      cursor: pointer;
+      padding: 2px;
+      box-sizing: border-box;
+      transition: background 0.15s ease;
+    }
+    .jira-new-tab-switch-track[data-state="checked"] {
+      background: #1F875A;
+    }
+    .jira-new-tab-switch-thumb {
+      display: flex;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      transition: transform 0.15s ease;
+    }
+    .jira-new-tab-switch-thumb[data-state="checked"] {
+      transform: translateX(16px);
+    }
+  `;
+  document.head.appendChild(style);
 
-  // Function to create the button for toggling script activation
-  const createButton = () => {
-    button = document.createElement("span"); // Create a new span element
-    button.setAttribute("class", "css-1gd7hga"); // Set the class attribute
-    button.textContent = !isActive ? buttonInactiveText : buttonActiveText; // Set the button text content
-    button.style.color = "white"; // Set the button text color
-    button.style.backgroundColor = !isActive ? Red : Green; // Set the button background color
-    button.style.borderRadius = "10px"; // Round the corners of the button
-    button.style.cursor = "pointer"; // Change the cursor when hovering over the button
-    // Add styles to make it look more like a button
-    button.style.padding = "20px 15px"; // 20px top-bottom, 15px left-right
-    button.style.margin = "20px 0"; // 20px top-bottom, 0 left-right
-    button.style.cursor = "pointer"; // Change cursor to pointer on hover to indicate clickability
-    button.style.textDecoration = "none"; // Remove underline from text
-    button.addEventListener("click", toggleActiveState); // Add an event listener for the click event
+  // Function to create the switch for toggling script activation
+  const createSwitch = () => {
+    const container = document.createElement("div");
+    container.className = "jira-new-tab-switch-container";
 
-    return button;
+    const label = document.createElement("label");
+    label.textContent = "New tab";
+
+    switchTrack = document.createElement("span");
+    switchTrack.className = "jira-new-tab-switch-track";
+    switchTrack.setAttribute("role", "switch");
+    switchTrack.setAttribute("data-state", isActive ? "checked" : "unchecked");
+
+    const thumb = document.createElement("span");
+    thumb.className = "jira-new-tab-switch-thumb";
+    thumb.setAttribute("data-thumb", "");
+    thumb.setAttribute("data-state", isActive ? "checked" : "unchecked");
+    switchTrack.appendChild(thumb);
+
+    label.addEventListener("click", toggleActiveState);
+    switchTrack.addEventListener("click", toggleActiveState);
+
+    container.appendChild(label);
+    container.appendChild(switchTrack);
+
+    return container;
   };
 
-  // Function to replace the "Learn more" button with our custom button
-  const replaceButton = () => {
-    const learnMoreButton = document.querySelector("[data-item-description=true] .css-8nt2sa"); // Get the "Learn more" button
-
-    if (learnMoreButton && learnMoreButton.textContent.includes("Learn more")) {
-      // Check if the "Learn more" button exists
-      const newButton = createButton(); // Create our custom button
-      learnMoreButton.parentNode.replaceChild(newButton, learnMoreButton); // Replace the "Learn more" button with our custom button
-    }
-  };
-
-  replaceButton(); // Replace the "Learn more" button immediately when the script is loaded
-
-  // Create another mutation observer to detect when the "Learn more" button is added to the page
-  const buttonObserver = new MutationObserver(replaceButton);
-
-  // Start observing the body of the page for changes in the child list and the subtree
-  buttonObserver.observe(document.querySelector("body"), {
-    childList: true,
-    subtree: true,
-  });
+  document.body.appendChild(createSwitch()); // Add our custom fixed-position toggle switch once on load
 })();
