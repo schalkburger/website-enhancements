@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name        Bitbucket Enhanced 1.7.3
+// @name        Bitbucket Enhanced 1.7.4
 // @namespace   https://github.com/schalkburger/website-enhancements
-// @version     1.7.3
+// @version     1.7.4
 // @author      Schalk Burger <schalkb@gmail.com>
 // @description Auto-reload stale PRs, prefix tab title with PR number, Copy Branch/Copy PR buttons, sticky editor toolbar, copy comment permalink, pipeline finish notifications
 // @match       https://bitbucket.org/*/*/pull-requests/*
@@ -216,7 +216,7 @@
       "background: #3F5224",
       "border-radius: var(--ds-radius-large,8px)",
       "border: 1px solid #ffffff1a",
-      "bottom:50px",
+      "top: 50px",
       "box-shadow: var(--ds-shadow-overlay)",
       "color: #fff",
       "color:#fff",
